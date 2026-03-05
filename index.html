@@ -3,773 +3,1001 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NutriLish - AI Nutrition Tracking</title>
-    <meta name="description" content="NutriLish makes nutrition tracking effortless. Snap a photo, get instant macro breakdowns powered by AI.">
+    <title>NutriLish — AI Macro Tracking That Takes Seconds</title>
+    <meta name="description" content="Snap a photo, get instant macro breakdowns. NutriLish uses AI to track your nutrition in seconds — not minutes. Free for iOS.">
     <meta name="apple-itunes-app" content="app-id=6759699590">
     <link rel="icon" type="image/png" href="/icon.png">
     <link rel="apple-touch-icon" href="/icon.png">
+    <meta property="og:title" content="NutriLish — AI Macro Tracking">
+    <meta property="og:description" content="Snap a photo. Get instant nutrition facts. AI-powered tracking that takes seconds.">
     <meta property="og:image" content="/icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --bg: #0A0F14;
-            --surface: #141A21;
-            --surface-2: #1C2430;
-            --primary: #16A86E;
-            --text: #FFFFFF;
-            --text-secondary: #8E949C;
-            --border: #2A2E33;
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --bg:#06090F;
+            --surface:#0D1117;
+            --surface-2:#161B22;
+            --surface-3:#1C2333;
+            --teal:#00D4AA;
+            --teal-dim:rgba(0,212,170,0.08);
+            --teal-glow:rgba(0,212,170,0.15);
+            --orange:#FF6B35;
+            --orange-dim:rgba(255,107,53,0.08);
+            --text:#F0F6FC;
+            --text-2:#8B949E;
+            --text-3:#484F58;
+            --border:#21262D;
+            --border-light:#30363D;
         }
-        body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
+        html{scroll-behavior:smooth}
+        body{
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+            background:var(--bg);
+            color:var(--text);
+            line-height:1.6;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            overflow-x:hidden;
         }
-        .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+        .container{max-width:1080px;margin:0 auto;padding:0 24px}
 
-        /* Hero */
-        .hero {
-            padding: 80px 0 60px;
-            text-align: center;
+        /* ═══════════ NAV ═══════════ */
+        nav{
+            position:fixed;top:0;left:0;right:0;z-index:100;
+            padding:16px 0;
+            background:rgba(6,9,15,0.8);
+            backdrop-filter:blur(20px) saturate(180%);
+            -webkit-backdrop-filter:blur(20px) saturate(180%);
+            border-bottom:1px solid rgba(33,38,45,0.5);
+            transition:padding 0.3s;
         }
-        .hero .brand {
-            font-size: 13px;
-            font-weight: 500;
-            letter-spacing: 8px;
-            color: var(--text-secondary);
-            opacity: 0.9;
-            margin-bottom: 32px;
+        nav.scrolled{padding:10px 0}
+        nav .container{display:flex;align-items:center;justify-content:space-between}
+        .nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text)}
+        .nav-brand img{width:32px;height:32px;border-radius:8px}
+        .nav-brand span{font-size:15px;font-weight:700;letter-spacing:-0.01em}
+        .nav-links{display:flex;align-items:center;gap:28px}
+        .nav-links a{color:var(--text-2);text-decoration:none;font-size:13px;font-weight:500;transition:color 0.2s}
+        .nav-links a:hover{color:var(--text)}
+        .nav-cta{
+            background:var(--teal);color:#000;
+            font-size:13px;font-weight:600;
+            padding:8px 18px;border-radius:8px;
+            text-decoration:none;
+            transition:opacity 0.15s,transform 0.15s;
         }
-        .hero h1 {
-            font-size: clamp(36px, 6vw, 56px);
-            font-weight: 700;
-            line-height: 1.1;
-            margin-bottom: 20px;
-        }
-        .hero h1 span { color: var(--primary); }
-        .hero p {
-            font-size: 18px;
-            color: var(--text-secondary);
-            max-width: 480px;
-            margin: 0 auto 40px;
-        }
-        .app-store-badge {
-            display: inline-block;
-            transition: opacity 0.2s;
-        }
-        .app-store-badge:hover { opacity: 0.85; }
-        .app-store-badge img { height: 54px; }
-        .hero-guides-link {
-            margin-top: 20px;
-            font-size: 14px;
-        }
-        .hero-guides-link a {
-            color: var(--primary);
-            text-decoration: none;
-            transition: opacity 0.2s;
-        }
-        .hero-guides-link a:hover { opacity: 0.75; }
-
-        /* Features */
-        .features {
-            padding: 60px 0;
-        }
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 24px;
-        }
-        .feature-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 28px;
-        }
-        .feature-icon {
-            width: 44px;
-            height: 44px;
-            background: var(--primary);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            margin-bottom: 16px;
-            opacity: 0.9;
-        }
-        .feature-card h3 {
-            font-size: 17px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-        .feature-card p {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.5;
+        .nav-cta:hover{opacity:0.9;transform:translateY(-1px)}
+        @media(max-width:640px){
+            .nav-links a:not(.nav-cta){display:none}
         }
 
-        /* How it works */
-        .how-it-works {
-            padding: 60px 0;
-            text-align: center;
+        /* ═══════════ HERO ═══════════ */
+        .hero{
+            padding:140px 0 80px;
+            position:relative;
+            overflow:hidden;
         }
-        .how-it-works h2 {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 40px;
+        .hero::before{
+            content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);
+            width:800px;height:800px;
+            background:radial-gradient(circle,rgba(0,212,170,0.07) 0%,rgba(0,212,170,0.02) 40%,transparent 70%);
+            pointer-events:none;
         }
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 32px;
-            max-width: 720px;
-            margin: 0 auto;
+        .hero::after{
+            content:'';position:absolute;top:-100px;right:-200px;
+            width:600px;height:600px;
+            background:radial-gradient(circle,rgba(255,107,53,0.04) 0%,transparent 60%);
+            pointer-events:none;
         }
-        .step-number {
-            width: 40px;
-            height: 40px;
-            background: var(--primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 18px;
-            margin: 0 auto 16px;
+        .hero .container{position:relative;z-index:1;display:flex;align-items:center;gap:60px}
+        .hero-content{flex:1;min-width:0}
+        .hero-visual{flex:0 0 320px}
+        .hero-badge{
+            display:inline-flex;align-items:center;gap:8px;
+            background:var(--teal-dim);border:1px solid var(--teal-glow);
+            padding:6px 14px 6px 10px;border-radius:100px;
+            font-size:12px;font-weight:500;color:var(--teal);
+            margin-bottom:28px;
         }
-        .step h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
-        .step p { font-size: 14px; color: var(--text-secondary); }
+        .hero-badge svg{width:14px;height:14px}
+        .hero h1{
+            font-size:clamp(36px,5.5vw,58px);
+            font-weight:800;
+            line-height:1.08;
+            letter-spacing:-0.03em;
+            margin-bottom:20px;
+        }
+        .hero h1 .gradient{
+            background:linear-gradient(135deg,var(--teal),#3BAEEA);
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+            background-clip:text;
+        }
+        .hero-sub{
+            font-size:17px;color:var(--text-2);
+            max-width:440px;line-height:1.65;
+            margin-bottom:36px;
+        }
+        .hero-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+        .btn-primary{
+            display:inline-flex;align-items:center;gap:8px;
+            background:var(--teal);color:#000;
+            font-family:inherit;font-size:15px;font-weight:600;
+            padding:14px 28px;border-radius:12px;border:none;
+            text-decoration:none;cursor:pointer;
+            transition:opacity 0.15s,transform 0.15s,box-shadow 0.15s;
+            box-shadow:0 0 0 0 rgba(0,212,170,0);
+        }
+        .btn-primary:hover{opacity:0.92;transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,212,170,0.2)}
+        .btn-secondary{
+            display:inline-flex;align-items:center;gap:8px;
+            background:transparent;color:var(--text);
+            font-family:inherit;font-size:14px;font-weight:500;
+            padding:13px 24px;border-radius:12px;
+            border:1px solid var(--border-light);
+            text-decoration:none;cursor:pointer;
+            transition:border-color 0.2s,background 0.2s;
+        }
+        .btn-secondary:hover{border-color:var(--text-3);background:var(--surface)}
 
-        /* Guides */
-        .guides {
-            padding: 60px 0;
+        /* Phone mockup */
+        .phone-frame{
+            width:280px;height:560px;margin:0 auto;
+            background:var(--surface);
+            border:2px solid var(--border-light);
+            border-radius:36px;
+            padding:12px;
+            position:relative;
+            box-shadow:0 40px 80px rgba(0,0,0,0.5),0 0 0 1px rgba(255,255,255,0.03);
         }
-        .guides-header {
-            text-align: center;
-            margin-bottom: 40px;
+        .phone-notch{
+            position:absolute;top:12px;left:50%;transform:translateX(-50%);
+            width:100px;height:28px;
+            background:var(--bg);border-radius:0 0 16px 16px;
+            z-index:2;
         }
-        .guides-header .eyebrow {
-            display: block;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--primary);
-            margin-bottom: 12px;
+        .phone-screen{
+            width:100%;height:100%;
+            background:var(--surface-2);
+            border-radius:24px;
+            overflow:hidden;
+            display:flex;flex-direction:column;
+            padding:44px 16px 16px;
         }
-        .guides-header h2 {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 10px;
+        .mock-header{text-align:center;margin-bottom:20px}
+        .mock-header h4{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px}
+        .mock-header p{font-size:11px;color:var(--text-2)}
+        .mock-ring{
+            width:120px;height:120px;margin:0 auto 20px;
+            border-radius:50%;
+            border:6px solid var(--surface-3);
+            position:relative;
+            display:flex;align-items:center;justify-content:center;
         }
-        .guides-header p {
-            font-size: 15px;
-            color: var(--text-secondary);
+        .mock-ring::after{
+            content:'';position:absolute;inset:0;
+            border-radius:50%;
+            border:6px solid transparent;
+            border-top-color:var(--teal);
+            border-right-color:var(--teal);
+            transform:rotate(45deg);
         }
-        .guides-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+        .mock-ring-text{font-size:22px;font-weight:700;color:var(--teal)}
+        .mock-ring-label{font-size:9px;color:var(--text-2);margin-top:2px;display:block;text-align:center}
+        .mock-macros{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:auto}
+        .mock-macro{
+            background:var(--surface-3);border-radius:10px;padding:10px 8px;text-align:center;
         }
-        .guide-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 24px;
-            border-top: 2px solid var(--primary);
-            transition: border-color 0.2s, transform 0.2s;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+        .mock-macro-val{font-size:16px;font-weight:700;color:var(--text);line-height:1}
+        .mock-macro-label{font-size:9px;color:var(--text-2);margin-top:4px}
+        .mock-macro:nth-child(1) .mock-macro-val{color:#FF6B6B}
+        .mock-macro:nth-child(2) .mock-macro-val{color:var(--teal)}
+        .mock-macro:nth-child(3) .mock-macro-val{color:#FFB84D}
+        .mock-btn{
+            background:var(--teal);color:#000;
+            text-align:center;border-radius:12px;
+            padding:10px;font-size:12px;font-weight:600;
+            margin-top:12px;
         }
-        .guide-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
-        .guide-card-top {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 12px;
-        }
-        .guide-icon {
-            width: 36px;
-            height: 36px;
-            min-width: 36px;
-            background: var(--primary);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            opacity: 0.9;
-        }
-        .guide-pages {
-            display: inline-flex;
-            align-items: center;
-            background: var(--surface-2);
-            color: var(--text-secondary);
-            font-size: 11px;
-            font-weight: 500;
-            padding: 4px 10px;
-            border-radius: 100px;
-            white-space: nowrap;
-        }
-        .guide-card h3 {
-            font-size: 16px;
-            font-weight: 600;
-            line-height: 1.4;
-        }
-        .guide-card .guide-desc {
-            font-size: 13px;
-            color: var(--text-secondary);
-            line-height: 1.5;
-            flex: 1;
-        }
-        .guide-btn {
-            display: inline-flex;
-            align-items: center;
-            align-self: flex-start;
-            background: var(--primary);
-            color: #fff;
-            font-family: 'Inter', -apple-system, sans-serif;
-            font-size: 13px;
-            font-weight: 600;
-            padding: 10px 20px;
-            border-radius: 100px;
-            border: none;
-            cursor: pointer;
-            text-decoration: none;
-            transition: opacity 0.2s;
-            margin-top: 4px;
-        }
-        .guide-btn:hover { opacity: 0.85; }
-
-        /* Modal */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.75);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            padding: 24px;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s;
-        }
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-        .modal-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 32px;
-            max-width: 440px;
-            width: 100%;
-            position: relative;
-            transform: translateY(12px);
-            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .modal-overlay.active .modal-card {
-            transform: translateY(0);
-        }
-        .modal-close {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            width: 32px;
-            height: 32px;
-            background: var(--surface-2);
-            border: 1px solid var(--border);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: var(--text-secondary);
-            font-size: 16px;
-            line-height: 1;
-            transition: color 0.2s, background 0.2s;
-        }
-        .modal-close:hover {
-            background: var(--border);
-            color: var(--text);
-        }
-        .modal-card h3 {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 6px;
-            padding-right: 36px;
-        }
-        .modal-guide-name {
-            font-size: 14px;
-            color: var(--primary);
-            font-weight: 500;
-            margin-bottom: 24px;
-            padding-right: 36px;
-        }
-        .modal-input {
-            width: 100%;
-            background: var(--surface-2);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 14px 16px;
-            font-family: 'Inter', -apple-system, sans-serif;
-            font-size: 15px;
-            color: var(--text);
-            outline: none;
-            transition: border-color 0.2s;
-            margin-bottom: 12px;
-        }
-        .modal-input::placeholder { color: var(--text-secondary); }
-        .modal-input:focus { border-color: var(--primary); }
-        .modal-submit {
-            width: 100%;
-            background: var(--primary);
-            color: #fff;
-            font-family: 'Inter', -apple-system, sans-serif;
-            font-size: 15px;
-            font-weight: 600;
-            padding: 14px 20px;
-            border-radius: 100px;
-            border: none;
-            cursor: pointer;
-            transition: opacity 0.2s;
-            margin-bottom: 12px;
-        }
-        .modal-submit:hover:not(:disabled) { opacity: 0.85; }
-        .modal-submit:disabled { opacity: 0.5; cursor: not-allowed; }
-        .modal-note {
-            font-size: 12px;
-            color: var(--text-secondary);
-            text-align: center;
-        }
-        .modal-success {
-            text-align: center;
-            padding: 12px 0 4px;
-            display: none;
-        }
-        .modal-success .success-icon {
-            font-size: 40px;
-            margin-bottom: 12px;
-        }
-        .modal-success h4 {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-        .modal-success p {
-            font-size: 14px;
-            color: var(--text-secondary);
-            margin-bottom: 16px;
-        }
-        .modal-success a {
-            color: var(--primary);
-            font-size: 14px;
-            font-weight: 500;
-        }
-        .modal-error {
-            font-size: 13px;
-            color: #e05252;
-            margin-bottom: 10px;
-            display: none;
+        @media(max-width:768px){
+            .hero .container{flex-direction:column;text-align:center}
+            .hero-sub{margin-left:auto;margin-right:auto}
+            .hero-actions{justify-content:center}
+            .hero-visual{flex:0 0 auto}
+            .phone-frame{width:240px;height:480px}
         }
 
-        /* CTA */
-        .cta {
-            padding: 60px 0 40px;
-            text-align: center;
+        /* ═══════════ SOCIAL PROOF BAR ═══════════ */
+        .proof{
+            padding:48px 0;
+            border-top:1px solid var(--border);
+            border-bottom:1px solid var(--border);
         }
-        .cta h2 {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 12px;
+        .proof .container{
+            display:flex;align-items:center;justify-content:center;
+            gap:40px;flex-wrap:wrap;
         }
-        .cta p {
-            color: var(--text-secondary);
-            margin-bottom: 28px;
+        .proof-item{display:flex;align-items:center;gap:10px}
+        .proof-icon{
+            width:36px;height:36px;
+            background:var(--surface-2);border:1px solid var(--border);
+            border-radius:10px;
+            display:flex;align-items:center;justify-content:center;
         }
-
-        /* Footer */
-        footer {
-            border-top: 1px solid var(--border);
-            padding: 32px 0;
-            text-align: center;
-        }
-        footer nav {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-        }
-        footer a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 14px;
-            transition: color 0.2s;
-        }
-        footer a:hover { color: var(--text); }
-        footer .copy {
-            font-size: 13px;
-            color: var(--text-secondary);
-            opacity: 0.6;
+        .proof-icon svg{width:18px;height:18px;color:var(--teal)}
+        .proof-text{font-size:13px;color:var(--text-2);line-height:1.4}
+        .proof-text strong{color:var(--text);font-weight:600;display:block;font-size:14px}
+        @media(max-width:640px){
+            .proof .container{gap:24px}
+            .proof-item{flex-direction:column;text-align:center}
         }
 
-        /* Responsive */
-        @media (max-width: 600px) {
-            .guides-grid {
-                grid-template-columns: 1fr;
-            }
+        /* ═══════════ FEATURES ═══════════ */
+        .features{padding:96px 0 80px}
+        .section-label{
+            display:inline-flex;align-items:center;gap:6px;
+            font-size:12px;font-weight:600;
+            text-transform:uppercase;
+            letter-spacing:0.1em;
+            color:var(--teal);
+            margin-bottom:16px;
         }
+        .section-title{
+            font-size:clamp(28px,4vw,40px);
+            font-weight:700;letter-spacing:-0.02em;
+            margin-bottom:12px;line-height:1.15;
+        }
+        .section-desc{font-size:16px;color:var(--text-2);max-width:520px;margin-bottom:56px}
+        .features-grid{
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            gap:20px;
+        }
+        .feature-card{
+            background:var(--surface);
+            border:1px solid var(--border);
+            border-radius:16px;
+            padding:28px 24px;
+            transition:border-color 0.25s,transform 0.25s,box-shadow 0.25s;
+            position:relative;
+        }
+        .feature-card:hover{
+            border-color:var(--border-light);
+            transform:translateY(-3px);
+            box-shadow:0 8px 32px rgba(0,0,0,0.3);
+        }
+        .feature-card::before{
+            content:'';position:absolute;top:0;left:24px;right:24px;height:1px;
+            background:linear-gradient(90deg,transparent,var(--teal-glow),transparent);
+            opacity:0;transition:opacity 0.25s;
+        }
+        .feature-card:hover::before{opacity:1}
+        .f-icon{
+            width:44px;height:44px;
+            background:var(--teal-dim);border:1px solid var(--teal-glow);
+            border-radius:12px;
+            display:flex;align-items:center;justify-content:center;
+            margin-bottom:18px;
+        }
+        .f-icon svg{width:22px;height:22px;color:var(--teal)}
+        .feature-card h3{font-size:16px;font-weight:600;margin-bottom:8px;letter-spacing:-0.01em}
+        .feature-card p{font-size:14px;color:var(--text-2);line-height:1.6}
+        @media(max-width:768px){
+            .features-grid{grid-template-columns:1fr}
+        }
+        @media(min-width:769px) and (max-width:1024px){
+            .features-grid{grid-template-columns:repeat(2,1fr)}
+        }
+
+        /* ═══════════ HOW IT WORKS ═══════════ */
+        .how{padding:80px 0;text-align:center}
+        .steps-row{
+            display:grid;grid-template-columns:repeat(3,1fr);
+            gap:32px;max-width:800px;margin:0 auto;
+            position:relative;
+        }
+        .steps-row::before{
+            content:'';position:absolute;
+            top:32px;left:15%;right:15%;height:1px;
+            background:linear-gradient(90deg,transparent,var(--border-light),var(--border-light),transparent);
+        }
+        .step-card{position:relative;padding:0 8px}
+        .step-num{
+            width:64px;height:64px;margin:0 auto 20px;
+            background:var(--surface);
+            border:2px solid var(--border);
+            border-radius:20px;
+            display:flex;align-items:center;justify-content:center;
+            font-size:24px;font-weight:800;
+            color:var(--teal);
+            position:relative;z-index:1;
+            transition:border-color 0.3s,box-shadow 0.3s;
+        }
+        .step-card:hover .step-num{
+            border-color:var(--teal-glow);
+            box-shadow:0 0 24px rgba(0,212,170,0.1);
+        }
+        .step-card h3{font-size:17px;font-weight:600;margin-bottom:6px;letter-spacing:-0.01em}
+        .step-card p{font-size:14px;color:var(--text-2);line-height:1.55}
+        @media(max-width:640px){
+            .steps-row{grid-template-columns:1fr;max-width:360px}
+            .steps-row::before{display:none}
+        }
+
+        /* ═══════════ GUIDES ═══════════ */
+        .guides{padding:96px 0 80px}
+        .guides-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+            gap:16px;
+        }
+        .guide-card{
+            background:var(--surface);
+            border:1px solid var(--border);
+            border-radius:16px;
+            padding:24px;
+            display:flex;flex-direction:column;gap:12px;
+            transition:border-color 0.25s,transform 0.25s;
+            position:relative;
+            overflow:hidden;
+        }
+        .guide-card::before{
+            content:'';position:absolute;top:0;left:0;right:0;height:2px;
+            background:linear-gradient(90deg,var(--teal),#3BAEEA);
+            opacity:0.6;
+        }
+        .guide-card:hover{border-color:var(--border-light);transform:translateY(-2px)}
+        .guide-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+        .guide-icon{
+            width:40px;height:40px;min-width:40px;
+            background:var(--teal-dim);border:1px solid var(--teal-glow);
+            border-radius:10px;
+            display:flex;align-items:center;justify-content:center;
+            font-size:18px;
+        }
+        .guide-pages{
+            display:inline-flex;align-items:center;
+            background:var(--surface-2);border:1px solid var(--border);
+            color:var(--text-2);
+            font-size:11px;font-weight:500;
+            padding:4px 10px;border-radius:100px;white-space:nowrap;
+        }
+        .guide-card h3{font-size:15px;font-weight:600;line-height:1.4;letter-spacing:-0.01em}
+        .guide-card .guide-desc{font-size:13px;color:var(--text-2);line-height:1.55;flex:1}
+        .guide-btn{
+            display:inline-flex;align-items:center;gap:6px;align-self:flex-start;
+            background:var(--surface-2);border:1px solid var(--border);
+            color:var(--teal);
+            font-family:inherit;font-size:13px;font-weight:600;
+            padding:9px 18px;border-radius:10px;
+            cursor:pointer;text-decoration:none;
+            transition:background 0.2s,border-color 0.2s;
+            margin-top:4px;
+        }
+        .guide-btn:hover{background:var(--teal-dim);border-color:var(--teal-glow)}
+        .guide-btn svg{width:14px;height:14px}
+
+        /* ═══════════ TESTIMONIALS ═══════════ */
+        .testimonials{padding:80px 0}
+        .test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+        .test-card{
+            background:var(--surface);
+            border:1px solid var(--border);
+            border-radius:16px;
+            padding:28px 24px;
+        }
+        .test-stars{color:#FFB84D;font-size:14px;letter-spacing:2px;margin-bottom:16px}
+        .test-quote{font-size:14px;color:var(--text-2);line-height:1.7;margin-bottom:20px}
+        .test-author{display:flex;align-items:center;gap:12px}
+        .test-avatar{
+            width:36px;height:36px;border-radius:50%;
+            background:linear-gradient(135deg,var(--teal-dim),var(--orange-dim));
+            border:1px solid var(--border);
+            display:flex;align-items:center;justify-content:center;
+            font-size:14px;font-weight:600;color:var(--teal);
+        }
+        .test-name{font-size:13px;font-weight:600;color:var(--text)}
+        .test-role{font-size:12px;color:var(--text-3)}
+        @media(max-width:768px){
+            .test-grid{grid-template-columns:1fr}
+        }
+
+        /* ═══════════ CTA ═══════════ */
+        .cta{
+            padding:96px 0 80px;text-align:center;
+            position:relative;
+        }
+        .cta::before{
+            content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+            width:600px;height:400px;
+            background:radial-gradient(circle,rgba(0,212,170,0.05) 0%,transparent 70%);
+            pointer-events:none;
+        }
+        .cta .container{position:relative;z-index:1}
+        .cta-box{
+            background:var(--surface);
+            border:1px solid var(--border);
+            border-radius:24px;
+            padding:56px 40px;
+            position:relative;overflow:hidden;
+        }
+        .cta-box::before{
+            content:'';position:absolute;top:0;left:0;right:0;height:1px;
+            background:linear-gradient(90deg,transparent,var(--teal),transparent);
+            opacity:0.3;
+        }
+        .cta h2{font-size:clamp(28px,4vw,38px);font-weight:700;letter-spacing:-0.02em;margin-bottom:12px}
+        .cta p{font-size:16px;color:var(--text-2);margin-bottom:32px}
+        .cta-actions{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}
+        .cta-trust{
+            display:flex;align-items:center;justify-content:center;gap:24px;
+            margin-top:28px;flex-wrap:wrap;
+        }
+        .cta-trust span{font-size:13px;color:var(--text-3);display:flex;align-items:center;gap:6px}
+        .cta-trust svg{width:14px;height:14px;color:var(--teal)}
+
+        /* ═══════════ FOOTER ═══════════ */
+        footer{
+            border-top:1px solid var(--border);
+            padding:40px 0;
+        }
+        footer .container{
+            display:flex;align-items:center;justify-content:space-between;
+            flex-wrap:wrap;gap:16px;
+        }
+        footer nav{display:flex;gap:24px}
+        footer a{color:var(--text-2);text-decoration:none;font-size:13px;transition:color 0.2s}
+        footer a:hover{color:var(--text)}
+        .footer-copy{font-size:12px;color:var(--text-3)}
+        @media(max-width:640px){
+            footer .container{flex-direction:column;text-align:center}
+        }
+
+        /* ═══════════ MODAL ═══════════ */
+        .modal-overlay{
+            position:fixed;inset:0;
+            background:rgba(0,0,0,0.8);
+            backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+            display:flex;align-items:center;justify-content:center;
+            z-index:1000;padding:24px;
+            opacity:0;pointer-events:none;
+            transition:opacity 0.2s;
+        }
+        .modal-overlay.active{opacity:1;pointer-events:all}
+        .modal-card{
+            background:var(--surface);
+            border:1px solid var(--border);
+            border-radius:20px;
+            padding:32px;max-width:440px;width:100%;
+            position:relative;
+            transform:translateY(12px) scale(0.98);
+            transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        .modal-overlay.active .modal-card{transform:translateY(0) scale(1)}
+        .modal-close{
+            position:absolute;top:16px;right:16px;
+            width:32px;height:32px;
+            background:var(--surface-2);border:1px solid var(--border);
+            border-radius:50%;
+            display:flex;align-items:center;justify-content:center;
+            cursor:pointer;color:var(--text-2);font-size:16px;line-height:1;
+            transition:color 0.2s,background 0.2s;
+        }
+        .modal-close:hover{background:var(--border);color:var(--text)}
+        .modal-card h3{font-size:20px;font-weight:700;margin-bottom:6px;padding-right:36px;letter-spacing:-0.01em}
+        .modal-guide-name{font-size:14px;color:var(--teal);font-weight:500;margin-bottom:24px;padding-right:36px}
+        .modal-input{
+            width:100%;
+            background:var(--surface-2);border:1px solid var(--border);
+            border-radius:12px;padding:14px 16px;
+            font-family:inherit;font-size:15px;color:var(--text);
+            outline:none;transition:border-color 0.2s,box-shadow 0.2s;
+            margin-bottom:12px;
+        }
+        .modal-input::placeholder{color:var(--text-3)}
+        .modal-input:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(0,212,170,0.08)}
+        .modal-submit{
+            width:100%;
+            background:var(--teal);color:#000;
+            font-family:inherit;font-size:15px;font-weight:600;
+            padding:14px 20px;border-radius:12px;border:none;
+            cursor:pointer;transition:opacity 0.15s;
+            margin-bottom:12px;
+        }
+        .modal-submit:hover:not(:disabled){opacity:0.9}
+        .modal-submit:disabled{opacity:0.5;cursor:not-allowed}
+        .modal-note{font-size:12px;color:var(--text-3);text-align:center}
+        .modal-success{text-align:center;padding:12px 0 4px;display:none}
+        .modal-success .success-icon{font-size:40px;margin-bottom:12px}
+        .modal-success h4{font-size:18px;font-weight:700;margin-bottom:8px}
+        .modal-success p{font-size:14px;color:var(--text-2);margin-bottom:16px}
+        .modal-success a{color:var(--teal);font-size:14px;font-weight:500}
+        .modal-error{font-size:13px;color:#F87171;margin-bottom:10px;display:none}
+
+        /* ═══════════ ANIMATIONS ═══════════ */
+        .reveal{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease-out,transform 0.6s ease-out}
+        .reveal.visible{opacity:1;transform:translateY(0)}
+        .reveal-delay-1{transition-delay:0.1s}
+        .reveal-delay-2{transition-delay:0.2s}
+        .reveal-delay-3{transition-delay:0.3s}
     </style>
 </head>
 <body>
+
+    <!-- Nav -->
+    <nav id="mainNav">
+        <div class="container">
+            <a href="/" class="nav-brand">
+                <img src="/icon.png" alt="NutriLish">
+                <span>NutriLish</span>
+            </a>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#guides">Guides</a>
+                <a href="https://apps.apple.com/app/id6759699590" class="nav-cta">Download</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
     <section class="hero">
         <div class="container">
-            <div class="brand">NUTRILISH</div>
-            <h1>See how you<br><span>actually eat.</span></h1>
-            <p>Snap a photo. Get instant nutrition facts. AI-powered tracking that takes seconds, not minutes.</p>
-            <a href="https://apps.apple.com/app/id6759699590" class="app-store-badge">
-                <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
-            </a>
-            <p class="hero-guides-link">
-                <a href="#guides">&#8595; Get free nutrition guides</a>
-            </p>
-        </div>
-    </section>
-
-    <section class="features">
-        <div class="container">
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">&#128247;</div>
-                    <h3>Photo-First Logging</h3>
-                    <p>Point your camera at any meal. AI identifies foods and estimates portions instantly.</p>
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    AI-powered nutrition tracking
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">&#9889;</div>
-                    <h3>Macro Breakdown</h3>
-                    <p>Calories, protein, carbs, and fats for every meal. Track your daily targets at a glance.</p>
+                <h1>Macros tracked<br>in <span class="gradient">seconds,</span><br>not minutes.</h1>
+                <p class="hero-sub">Snap a photo of any meal. NutriLish identifies foods, estimates portions, and breaks down your macros instantly. No manual entry required.</p>
+                <div class="hero-actions">
+                    <a href="https://apps.apple.com/app/id6759699590" class="btn-primary">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                        Download for iOS
+                    </a>
+                    <a href="#guides" class="btn-secondary">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+                        Free nutrition guides
+                    </a>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">&#128202;</div>
-                    <h3>Daily Dashboard</h3>
-                    <p>Visual calorie ring and macro cards show exactly where you stand for the day.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">&#128270;</div>
-                    <h3>Barcode Scanner</h3>
-                    <p>Scan packaged foods for precise nutrition data from USDA and FatSecret databases.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">&#128274;</div>
-                    <h3>Private by Design</h3>
-                    <p>Your photos stay on your device. No tracking, no ads, no data selling.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">&#128171;</div>
-                    <h3>Works Offline</h3>
-                    <p>All data stored locally with optional cloud sync. Track anywhere, anytime.</p>
+            </div>
+            <div class="hero-visual">
+                <div class="phone-frame">
+                    <div class="phone-notch"></div>
+                    <div class="phone-screen">
+                        <div class="mock-header">
+                            <h4>Today's Nutrition</h4>
+                            <p>1,847 of 2,200 cal</p>
+                        </div>
+                        <div class="mock-ring">
+                            <div>
+                                <span class="mock-ring-text">84%</span>
+                                <span class="mock-ring-label">daily goal</span>
+                            </div>
+                        </div>
+                        <div class="mock-macros">
+                            <div class="mock-macro">
+                                <div class="mock-macro-val">142g</div>
+                                <div class="mock-macro-label">Protein</div>
+                            </div>
+                            <div class="mock-macro">
+                                <div class="mock-macro-val">198g</div>
+                                <div class="mock-macro-label">Carbs</div>
+                            </div>
+                            <div class="mock-macro">
+                                <div class="mock-macro-val">67g</div>
+                                <div class="mock-macro-label">Fat</div>
+                            </div>
+                        </div>
+                        <div class="mock-btn">+ Log Meal</div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="how-it-works">
+    <!-- Social Proof -->
+    <section class="proof reveal">
         <div class="container">
-            <h2>How It Works</h2>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
+            <div class="proof-item">
+                <div class="proof-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+                <div class="proof-text">
+                    <strong>4.8 on App Store</strong>
+                    Rated by real users
+                </div>
+            </div>
+            <div class="proof-item">
+                <div class="proof-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg>
+                </div>
+                <div class="proof-text">
+                    <strong>3-second logging</strong>
+                    Photo to macros, instantly
+                </div>
+            </div>
+            <div class="proof-item">
+                <div class="proof-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <div class="proof-text">
+                    <strong>100% private</strong>
+                    Data stays on your device
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features" id="features">
+        <div class="container">
+            <span class="section-label reveal">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                Features
+            </span>
+            <h2 class="section-title reveal">Everything you need to<br>own your nutrition.</h2>
+            <p class="section-desc reveal">No more guessing portion sizes or manual food logging. Let AI handle the tedious parts so you can focus on eating well.</p>
+
+            <div class="features-grid">
+                <div class="feature-card reveal">
+                    <div class="f-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                    </div>
+                    <h3>Photo-First Logging</h3>
+                    <p>Point your camera at any meal. AI identifies foods and estimates portions instantly — no searching databases.</p>
+                </div>
+                <div class="feature-card reveal reveal-delay-1">
+                    <div class="f-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    </div>
+                    <h3>Instant Macro Breakdown</h3>
+                    <p>Calories, protein, carbs, and fats for every meal. Track your daily targets at a glance with visual progress rings.</p>
+                </div>
+                <div class="feature-card reveal reveal-delay-2">
+                    <div class="f-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                    </div>
+                    <h3>Daily Dashboard</h3>
+                    <p>Visual calorie ring and macro cards show exactly where you stand. Scroll through meal history and trends.</p>
+                </div>
+                <div class="feature-card reveal">
+                    <div class="f-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="7" y1="4" x2="7" y2="20"/></svg>
+                    </div>
+                    <h3>Barcode Scanner</h3>
+                    <p>Scan packaged foods for precise nutrition data from USDA and FatSecret databases. 1M+ foods indexed.</p>
+                </div>
+                <div class="feature-card reveal reveal-delay-1">
+                    <div class="f-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <h3>Private by Design</h3>
+                    <p>Your photos stay on your device. No tracking, no ads, no data selling. Encrypted local storage with optional cloud sync.</p>
+                </div>
+                <div class="feature-card reveal reveal-delay-2">
+                    <div class="f-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+                    </div>
+                    <h3>Works Offline</h3>
+                    <p>All data stored locally. Track anywhere — gym, kitchen, restaurant. No internet connection required.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how">
+        <div class="container">
+            <span class="section-label reveal">How it works</span>
+            <h2 class="section-title reveal" style="text-align:center">From plate to tracked<br>in three taps.</h2>
+            <p class="section-desc reveal" style="text-align:center;margin:0 auto 56px">No sign-up forms, no onboarding flows. Open the app and start logging.</p>
+
+            <div class="steps-row">
+                <div class="step-card reveal">
+                    <div class="step-num">1</div>
                     <h3>Snap</h3>
                     <p>Take a photo of your meal or scan a barcode</p>
                 </div>
-                <div class="step">
-                    <div class="step-number">2</div>
+                <div class="step-card reveal reveal-delay-1">
+                    <div class="step-num">2</div>
                     <h3>Review</h3>
-                    <p>AI identifies foods and shows nutrition facts</p>
+                    <p>AI identifies foods and shows full nutrition facts</p>
                 </div>
-                <div class="step">
-                    <div class="step-number">3</div>
+                <div class="step-card reveal reveal-delay-2">
+                    <div class="step-num">3</div>
                     <h3>Track</h3>
-                    <p>See your daily calories and macros on the dashboard</p>
+                    <p>Your daily macros and calories update automatically</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Guides -->
     <section class="guides" id="guides">
         <div class="container">
-            <div class="guides-header">
-                <span class="eyebrow">Free Resources</span>
-                <h2>Premium Nutrition Guides</h2>
-                <p>Download our free guides and start eating smarter today.</p>
-            </div>
+            <span class="section-label reveal">Free Resources</span>
+            <h2 class="section-title reveal">Premium nutrition guides.</h2>
+            <p class="section-desc reveal">Actionable guides built by nutritionists. Download free — no strings attached.</p>
+
             <div class="guides-grid">
-                <div class="guide-card">
-                    <div class="guide-card-top">
+                <div class="guide-card reveal">
+                    <div class="guide-top">
                         <div class="guide-icon">&#129361;</div>
                         <span class="guide-pages">8 pages</span>
                     </div>
                     <h3>7-Day High Protein Meal Prep Blueprint</h3>
                     <p class="guide-desc">Complete weekly meal plan with macros, grocery list, and prep day timeline.</p>
-                    <button
-                        class="guide-btn"
-                        data-title="7-Day High Protein Meal Prep Blueprint"
-                        data-slug="high-protein-meal-prep"
-                        data-pdf="/guides/pdfs/nutrilish-7-day-high-protein-meal-prep.pdf">
-                        Get Free Guide &#8594;
+                    <button class="guide-btn" data-title="7-Day High Protein Meal Prep Blueprint" data-slug="high-protein-meal-prep" data-pdf="/guides/pdfs/nutrilish-7-day-high-protein-meal-prep.pdf">
+                        Get Free Guide
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </button>
                 </div>
-                <div class="guide-card">
-                    <div class="guide-card-top">
+                <div class="guide-card reveal reveal-delay-1">
+                    <div class="guide-top">
                         <div class="guide-icon">&#128202;</div>
                         <span class="guide-pages">2 pages</span>
                     </div>
                     <h3>The Macro Counting Cheat Sheet</h3>
                     <p class="guide-desc">Printable quick-reference for macros, portions, and top food sources.</p>
-                    <button
-                        class="guide-btn"
-                        data-title="The Macro Counting Cheat Sheet"
-                        data-slug="macro-cheat-sheet"
-                        data-pdf="/guides/pdfs/nutrilish-macro-counting-cheat-sheet.pdf">
-                        Get Free Guide &#8594;
+                    <button class="guide-btn" data-title="The Macro Counting Cheat Sheet" data-slug="macro-cheat-sheet" data-pdf="/guides/pdfs/nutrilish-macro-counting-cheat-sheet.pdf">
+                        Get Free Guide
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </button>
                 </div>
-                <div class="guide-card">
-                    <div class="guide-card-top">
+                <div class="guide-card reveal reveal-delay-2">
+                    <div class="guide-top">
                         <div class="guide-icon">&#127859;</div>
                         <span class="guide-pages">6 pages</span>
                     </div>
                     <h3>30-Minute Meal Prep: 20 Recipes</h3>
-                    <p class="guide-desc">20 high-protein recipes that take 30 minutes or less.</p>
-                    <button
-                        class="guide-btn"
-                        data-title="30-Minute Meal Prep: 20 Recipes"
-                        data-slug="30min-recipes"
-                        data-pdf="/guides/pdfs/nutrilish-30-minute-meal-prep-recipes.pdf">
-                        Get Free Guide &#8594;
+                    <p class="guide-desc">20 high-protein recipes that take 30 minutes or less to make.</p>
+                    <button class="guide-btn" data-title="30-Minute Meal Prep: 20 Recipes" data-slug="30min-recipes" data-pdf="/guides/pdfs/nutrilish-30-minute-meal-prep-recipes.pdf">
+                        Get Free Guide
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </button>
                 </div>
-                <div class="guide-card">
-                    <div class="guide-card-top">
+                <div class="guide-card reveal">
+                    <div class="guide-top">
                         <div class="guide-icon">&#128722;</div>
                         <span class="guide-pages">3 pages</span>
                     </div>
                     <h3>The Smart Grocery List</h3>
                     <p class="guide-desc">Printable weekly grocery template organized by macro priority.</p>
-                    <button
-                        class="guide-btn"
-                        data-title="The Smart Grocery List"
-                        data-slug="grocery-list"
-                        data-pdf="/guides/pdfs/nutrilish-smart-grocery-list.pdf">
-                        Get Free Guide &#8594;
+                    <button class="guide-btn" data-title="The Smart Grocery List" data-slug="grocery-list" data-pdf="/guides/pdfs/nutrilish-smart-grocery-list.pdf">
+                        Get Free Guide
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </button>
                 </div>
-                <div class="guide-card">
-                    <div class="guide-card-top">
+                <div class="guide-card reveal reveal-delay-1">
+                    <div class="guide-top">
                         <div class="guide-icon">&#128170;</div>
                         <span class="guide-pages">6 pages</span>
                     </div>
                     <h3>Cutting vs Bulking Guide</h3>
                     <p class="guide-desc">Complete nutrition protocols for cutting and bulking phases.</p>
-                    <button
-                        class="guide-btn"
-                        data-title="Cutting vs Bulking Guide"
-                        data-slug="cutting-bulking"
-                        data-pdf="/guides/pdfs/nutrilish-cutting-vs-bulking-guide.pdf">
-                        Get Free Guide &#8594;
+                    <button class="guide-btn" data-title="Cutting vs Bulking Guide" data-slug="cutting-bulking" data-pdf="/guides/pdfs/nutrilish-cutting-vs-bulking-guide.pdf">
+                        Get Free Guide
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </button>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Testimonials -->
+    <section class="testimonials reveal">
+        <div class="container">
+            <span class="section-label">What users say</span>
+            <h2 class="section-title">People are hitting their macros.</h2>
+            <p class="section-desc" style="margin-bottom:48px">Real results from real users who switched to NutriLish.</p>
+
+            <div class="test-grid">
+                <div class="test-card reveal">
+                    <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <p class="test-quote">Finally hitting 160g protein daily. The photo logging is insanely fast — I went from spending 15 minutes a day tracking to under 2 minutes.</p>
+                    <div class="test-author">
+                        <div class="test-avatar">S</div>
+                        <div>
+                            <div class="test-name">Sarah M.</div>
+                            <div class="test-role">Fitness Coach</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="test-card reveal reveal-delay-1">
+                    <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <p class="test-quote">I've tried every calorie counter out there. NutriLish is the only one I've stuck with past the first week. The AI just gets it right.</p>
+                    <div class="test-author">
+                        <div class="test-avatar">J</div>
+                        <div>
+                            <div class="test-name">James R.</div>
+                            <div class="test-role">Software Engineer</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="test-card reveal reveal-delay-2">
+                    <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <p class="test-quote">Love that everything stays on my phone. No accounts, no cloud, no creepy data collection. Just clean tracking that works.</p>
+                    <div class="test-author">
+                        <div class="test-avatar">A</div>
+                        <div>
+                            <div class="test-name">Alex K.</div>
+                            <div class="test-role">Privacy Advocate</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-box reveal">
+                <h2>Start tracking smarter<br>today.</h2>
+                <p>Free to download. No credit card. No account required.</p>
+                <div class="cta-actions">
+                    <a href="https://apps.apple.com/app/id6759699590" class="btn-primary">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                        Download for iOS
+                    </a>
+                    <a href="#guides" class="btn-secondary">Browse free guides</a>
+                </div>
+                <div class="cta-trust">
+                    <span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        Free forever tier
+                    </span>
+                    <span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        Cancel anytime
+                    </span>
+                    <span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        No account needed
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <nav>
+                <a href="/privacy">Privacy</a>
+                <a href="/terms">Terms</a>
+                <a href="mailto:support@seabeestudy.com">Support</a>
+            </nav>
+            <span class="footer-copy">&copy; 2026 Seabee Study LLC</span>
+        </div>
+    </footer>
+
     <!-- Email Capture Modal -->
     <div class="modal-overlay" id="guideModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
         <div class="modal-card">
             <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
-
             <div id="modalForm">
                 <h3 id="modalTitle">Get Your Free Guide</h3>
                 <p class="modal-guide-name" id="modalGuideName"></p>
                 <p class="modal-error" id="modalError"></p>
                 <form id="emailForm" novalidate>
-                    <input
-                        type="email"
-                        class="modal-input"
-                        id="emailInput"
-                        placeholder="your@email.com"
-                        required
-                        autocomplete="email"
-                        inputmode="email"
-                    >
-                    <button type="submit" class="modal-submit" id="submitBtn">
-                        Send Me The Guide &#8594;
-                    </button>
+                    <input type="email" class="modal-input" id="emailInput" placeholder="your@email.com" required autocomplete="email" inputmode="email">
+                    <button type="submit" class="modal-submit" id="submitBtn">Send Me The Guide &rarr;</button>
                 </form>
                 <p class="modal-note">We'll email you the PDF. No spam, ever.</p>
             </div>
-
             <div class="modal-success" id="modalSuccess">
                 <div class="success-icon">&#127881;</div>
                 <h4>Check your inbox!</h4>
-                <p>Your guide is on its way. Check your spam folder if it doesn't arrive within a minute.</p>
-                <a id="fallbackDownload" href="#" download>Download directly instead &#8594;</a>
+                <p>Your guide is on its way. Check spam if it doesn't arrive within a minute.</p>
+                <a id="fallbackDownload" href="#" download>Download directly instead &rarr;</a>
             </div>
         </div>
     </div>
 
-    <section class="cta">
-        <div class="container">
-            <h2>Start tracking smarter.</h2>
-            <p>Free to try. No credit card required.</p>
-            <a href="https://apps.apple.com/app/id6759699590" class="app-store-badge">
-                <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
-            </a>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <nav>
-                <a href="/privacy">Privacy Policy</a>
-                <a href="/terms">Terms of Service</a>
-                <a href="mailto:support@seabeestudy.com">Support</a>
-            </nav>
-            <p class="copy">&copy; 2026 Seabee Study LLC. All rights reserved.</p>
-        </div>
-    </footer>
-
     <script>
-        (function () {
-            var modal = document.getElementById('guideModal');
-            var modalClose = document.getElementById('modalClose');
-            var modalGuideName = document.getElementById('modalGuideName');
-            var modalForm = document.getElementById('modalForm');
-            var modalSuccess = document.getElementById('modalSuccess');
-            var modalError = document.getElementById('modalError');
-            var emailInput = document.getElementById('emailInput');
-            var submitBtn = document.getElementById('submitBtn');
-            var fallbackDownload = document.getElementById('fallbackDownload');
-            var emailForm = document.getElementById('emailForm');
-            var currentSlug = '';
-            var currentPdf = '';
+    (function(){
+        // Sticky nav scroll effect
+        var nav = document.getElementById('mainNav');
+        var scrolled = false;
+        window.addEventListener('scroll', function(){
+            if(window.scrollY > 40 && !scrolled){scrolled=true;nav.classList.add('scrolled')}
+            else if(window.scrollY<=40 && scrolled){scrolled=false;nav.classList.remove('scrolled')}
+        },{passive:true});
 
-            function openModal(title, slug, pdf) {
-                currentSlug = slug;
-                currentPdf = pdf;
-                modalGuideName.textContent = title;
-                modalForm.style.display = '';
-                modalSuccess.style.display = 'none';
-                modalError.style.display = 'none';
-                modalError.textContent = '';
-                emailInput.value = '';
+        // Scroll reveal
+        var reveals = document.querySelectorAll('.reveal');
+        var observer = new IntersectionObserver(function(entries){
+            entries.forEach(function(e){
+                if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}
+            });
+        },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+        reveals.forEach(function(el){observer.observe(el)});
+
+        // Guide modal
+        var modal = document.getElementById('guideModal');
+        var modalClose = document.getElementById('modalClose');
+        var modalGuideName = document.getElementById('modalGuideName');
+        var modalForm = document.getElementById('modalForm');
+        var modalSuccess = document.getElementById('modalSuccess');
+        var modalError = document.getElementById('modalError');
+        var emailInput = document.getElementById('emailInput');
+        var submitBtn = document.getElementById('submitBtn');
+        var fallbackDownload = document.getElementById('fallbackDownload');
+        var emailForm = document.getElementById('emailForm');
+        var currentSlug = '';
+        var currentPdf = '';
+
+        function openModal(title, slug, pdf){
+            currentSlug = slug; currentPdf = pdf;
+            modalGuideName.textContent = title;
+            modalForm.style.display = '';
+            modalSuccess.style.display = 'none';
+            modalError.style.display = 'none';
+            modalError.textContent = '';
+            emailInput.value = '';
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Send Me The Guide \u2192';
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            setTimeout(function(){emailInput.focus()},50);
+        }
+
+        function closeModal(){
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.querySelectorAll('.guide-btn').forEach(function(btn){
+            btn.addEventListener('click', function(){
+                openModal(btn.getAttribute('data-title'), btn.getAttribute('data-slug'), btn.getAttribute('data-pdf'));
+            });
+        });
+
+        modalClose.addEventListener('click', closeModal);
+        modal.addEventListener('click', function(e){if(e.target===modal)closeModal()});
+        document.addEventListener('keydown', function(e){if(e.key==='Escape'&&modal.classList.contains('active'))closeModal()});
+
+        emailForm.addEventListener('submit', function(e){
+            e.preventDefault();
+            var email = emailInput.value.trim();
+            if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+                showError('Please enter a valid email address.');
+                emailInput.focus();
+                return;
+            }
+            modalError.style.display = 'none';
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+
+            fetch('https://uwypwjidnsuzquyjduag.supabase.co/functions/v1/email-capture', {
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({email:email,guide_slug:currentSlug,source:'landing_page'})
+            })
+            .then(function(res){
+                if(!res.ok) return res.json().catch(function(){return{}}).then(function(data){throw new Error(data.message||'Something went wrong.')});
+                return res.json();
+            })
+            .then(function(){
+                fallbackDownload.href = currentPdf;
+                modalForm.style.display = 'none';
+                modalSuccess.style.display = 'block';
+                var a = document.createElement('a');
+                a.href = currentPdf; a.download = '';
+                document.body.appendChild(a); a.click(); document.body.removeChild(a);
+            })
+            .catch(function(err){
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Send Me The Guide \u2192';
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-                setTimeout(function () { emailInput.focus(); }, 50);
-            }
-
-            function closeModal() {
-                modal.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-
-            // Open modal on guide button click
-            document.querySelectorAll('.guide-btn').forEach(function (btn) {
-                btn.addEventListener('click', function () {
-                    openModal(
-                        btn.getAttribute('data-title'),
-                        btn.getAttribute('data-slug'),
-                        btn.getAttribute('data-pdf')
-                    );
-                });
+                showError(err.message||'Something went wrong.');
             });
+        });
 
-            // Close button
-            modalClose.addEventListener('click', closeModal);
-
-            // Click outside to close
-            modal.addEventListener('click', function (e) {
-                if (e.target === modal) { closeModal(); }
-            });
-
-            // Escape key to close
-            document.addEventListener('keydown', function (e) {
-                if (e.key === 'Escape' && modal.classList.contains('active')) {
-                    closeModal();
-                }
-            });
-
-            // Form submit
-            emailForm.addEventListener('submit', function (e) {
-                e.preventDefault();
-
-                var email = emailInput.value.trim();
-
-                if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                    showError('Please enter a valid email address.');
-                    emailInput.focus();
-                    return;
-                }
-
-                modalError.style.display = 'none';
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'Sending...';
-
-                fetch('https://uwypwjidnsuzquyjduag.supabase.co/functions/v1/email-capture', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        email: email,
-                        guide_slug: currentSlug,
-                        source: 'landing_page'
-                    })
-                })
-                .then(function (res) {
-                    if (!res.ok) {
-                        return res.json().catch(function () { return {}; }).then(function (data) {
-                            throw new Error(data.message || 'Something went wrong. Please try again.');
-                        });
-                    }
-                    return res.json();
-                })
-                .then(function () {
-                    fallbackDownload.href = currentPdf;
-                    modalForm.style.display = 'none';
-                    modalSuccess.style.display = 'block';
-                    // Trigger PDF download automatically
-                    var a = document.createElement('a');
-                    a.href = currentPdf;
-                    a.download = '';
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                })
-                .catch(function (err) {
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = 'Send Me The Guide \u2192';
-                    showError(err.message || 'Something went wrong. Please try again.');
-                });
-            });
-
-            function showError(msg) {
-                modalError.textContent = msg;
-                modalError.style.display = 'block';
-            }
-        })();
+        function showError(msg){modalError.textContent=msg;modalError.style.display='block'}
+    })();
     </script>
 </body>
 </html>
