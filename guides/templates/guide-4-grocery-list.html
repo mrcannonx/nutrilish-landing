@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Smart Grocery List — NutriLish</title>
+  <link rel="stylesheet" href="shared-styles.css" />
+  <style>
+    /* ─── Page 1: Cover + Quick Reference ─── */
+    .page-1 {
+      background: var(--bg);
+      padding: 0.6in 0.8in 0.5in;
+    }
+
+    .cover-strip {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0.45in 0.5in 0.4in;
+      background:
+        radial-gradient(ellipse at 30% 0%, rgba(22, 168, 110, 0.18) 0%, transparent 55%),
+        radial-gradient(ellipse at 70% 100%, rgba(255, 181, 71, 0.07) 0%, transparent 55%),
+        var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .cover-strip::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-light), var(--accent));
+    }
+
+    .cover-strip .logo-lockup {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .cover-strip .logo-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--primary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 4px 16px rgba(22, 168, 110, 0.35);
+      flex-shrink: 0;
+    }
+
+    .cover-strip .brand-name {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--primary-light);
+    }
+
+    .cover-strip h1 {
+      font-size: 38px;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+
+    .cover-strip h1 .accent { color: var(--primary-light); }
+
+    .cover-strip .subtitle {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      max-width: 440px;
+      margin-bottom: 18px;
+    }
+
+    .cover-strip .badge-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .cover-strip .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(22, 168, 110, 0.1);
+      border: 1px solid rgba(22, 168, 110, 0.3);
+      border-radius: 100px;
+      padding: 6px 14px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--primary-light);
+      letter-spacing: 0.03em;
+    }
+
+    .cover-strip .pill .dot {
+      width: 5px;
+      height: 5px;
+      background: var(--primary);
+      border-radius: 50%;
+    }
+
+    /* Quick reference section */
+    .quick-ref-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .before-shop-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .before-shop-card .card-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--primary);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .before-shop-card .card-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .pre-shop-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .pre-shop-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 0;
+      font-size: 12px;
+      color: var(--text-secondary);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .pre-shop-list li:last-child { border-bottom: none; }
+
+    .pre-shop-list .sq {
+      width: 16px;
+      height: 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    /* Right column — budget guide */
+    .right-ref {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .budget-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px 20px;
+    }
+
+    .budget-card .card-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .budget-card .card-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .budget-tiers {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .budget-tier {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .budget-tier .amount {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--primary-light);
+      white-space: nowrap;
+      min-width: 72px;
+      line-height: 1.3;
+    }
+
+    .budget-tier .amount.mid { color: var(--accent); }
+    .budget-tier .amount.high { color: #C084FC; }
+
+    .budget-tier .desc {
+      font-size: 11px;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    .budget-tier .tier-label {
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 1px;
+    }
+
+    /* ─── Page 2: Main Grocery List ─── */
+    .page-2 {
+      background: var(--surface);
+      padding: 0.5in 0.65in 0.55in;
+    }
+
+    .page-2::before {
+      background:
+        radial-gradient(ellipse at 15% 0%, rgba(22, 168, 110, 0.08) 0%, transparent 45%),
+        radial-gradient(ellipse at 85% 100%, rgba(255, 181, 71, 0.03) 0%, transparent 45%);
+    }
+
+    .list-page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .list-page-header .left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .list-page-header .logo-small {
+      width: 30px;
+      height: 30px;
+      background: var(--primary);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+
+    .list-page-header .title-block .brand-sm {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--primary);
+    }
+
+    .list-page-header .title-block h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin: 0;
+      color: var(--text);
+      line-height: 1.1;
+    }
+
+    .list-page-header .title-block h2 .accent { color: var(--primary-light); }
+
+    /* Two-column grocery list */
+    .grocery-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      flex: 1;
+    }
+
+    .grocery-category {
+      margin-bottom: 14px;
+    }
+
+    .grocery-category:last-child { margin-bottom: 0; }
+
+    .cat-header {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 7px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cat-header .cat-emoji {
+      font-size: 13px;
+      line-height: 1;
+    }
+
+    .cat-header .cat-name {
+      font-size: 9.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--primary);
+    }
+
+    /* Grocery list items */
+    .grocery-items {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .grocery-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 3.5px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.035);
+    }
+
+    .grocery-item:last-child { border-bottom: none; }
+
+    .grocery-item .gcheck {
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .grocery-item .item-name {
+      font-size: 11px;
+      color: var(--text-secondary);
+      flex: 1;
+      line-height: 1.2;
+    }
+
+    .grocery-item .item-line {
+      flex: 1;
+      max-width: 62px;
+      border-bottom: 1px dashed rgba(255,255,255,0.18);
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    .grocery-item.blank-item .item-name {
+      color: transparent;
+      border-bottom: 1px dashed rgba(255,255,255,0.18);
+      flex: 1;
+      height: 13px;
+      min-width: 0;
+    }
+
+    .grocery-item.blank-item .item-line {
+      display: none;
+    }
+
+    /* Footer bar */
+    .list-footer-bar {
+      margin-top: 12px;
+      padding: 10px 16px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .list-footer-bar .footer-fields {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex: 1;
+      font-size: 10.5px;
+      color: var(--text-muted);
+    }
+
+    .list-footer-bar .field-group {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .list-footer-bar .field-group + .field-group {
+      margin-left: 18px;
+    }
+
+    .list-footer-bar .field-label {
+      font-weight: 600;
+      font-size: 10px;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .list-footer-bar .field-blank {
+      width: 90px;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      height: 14px;
+    }
+
+    .list-footer-bar .field-blank.short { width: 60px; }
+
+    .list-footer-bar .brand-sm {
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .list-footer-bar .brand-sm .green { color: var(--primary); }
+
+    /* ─── Page 3: Seasonal Guide + CTA ─── */
+    .page-3 {
+      background: var(--bg);
+      padding: 0.6in 0.8in 0.5in;
+    }
+
+    .seasonal-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .season-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .season-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+    }
+
+    .season-card.spring::before { background: linear-gradient(90deg, #4ADE80, #86EFAC); }
+    .season-card.summer::before { background: linear-gradient(90deg, #FB923C, #FBBF24); }
+    .season-card.fall::before   { background: linear-gradient(90deg, #F97316, #DC2626); }
+    .season-card.winter::before { background: linear-gradient(90deg, #60A5FA, #818CF8); }
+
+    .season-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .season-header .season-icon { font-size: 18px; line-height: 1; }
+
+    .season-header .season-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .season-card.spring .season-label { color: #4ADE80; }
+    .season-card.summer .season-label { color: #FBBF24; }
+    .season-card.fall .season-label   { color: #FB923C; }
+    .season-card.winter .season-label { color: #60A5FA; }
+
+    .season-header .season-months {
+      font-size: 9px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .season-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .season-item-tag {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 6px;
+      padding: 3px 9px;
+      font-size: 11px;
+      color: var(--text-secondary);
+      font-weight: 400;
+    }
+
+    /* Page 3 section header */
+    .p3-section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .p3-section-title h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      margin: 0;
+      color: var(--text);
+    }
+
+    .p3-section-title h2 .accent { color: var(--primary-light); }
+
+    .p3-section-title .tag-chip {
+      background: rgba(22, 168, 110, 0.12);
+      border: 1px solid rgba(22, 168, 110, 0.3);
+      border-radius: 100px;
+      padding: 4px 12px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--primary-light);
+    }
+
+    /* CTA banner override for page 3 */
+    .cta-banner-lg {
+      background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+      border: 1px solid var(--primary);
+      border-radius: 16px;
+      padding: 28px 36px;
+      text-align: center;
+      box-shadow: 0 4px 40px var(--primary-glow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-banner-lg::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+    }
+
+    .cta-banner-lg .cta-eyebrow {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .cta-banner-lg h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    .cta-banner-lg h3 .accent { color: var(--primary-light); }
+
+    .cta-banner-lg p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      max-width: 380px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .cta-banner-lg .btn-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary);
+      color: white;
+      padding: 13px 32px;
+      border-radius: 100px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(22, 168, 110, 0.4);
+    }
+
+    .cta-banner-lg .btn-cta .arrow {
+      font-size: 16px;
+    }
+
+    .cta-sub {
+      margin-top: 12px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* ─── Food Photography Images ─── */
+    .guide-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 16px;
+      border: 1px solid var(--border, #2A3040);
+      margin: 16px 0;
+    }
+
+    .guide-img-sm {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid var(--border, #2A3040);
+      margin: 12px 0;
+    }
+
+    .guide-img-banner {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid var(--border, #2A3040);
+      margin: 12px 0;
+    }
+
+    .cover-img {
+      width: 80%;
+      max-width: 400px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 20px;
+      margin: 24px auto;
+      display: block;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+
+    /* ─── Print Optimizations ─── */
+    @media print {
+      body { background: var(--bg); }
+
+      /* Page 2 lighter for writing */
+      .page-2 { background: var(--surface) !important; }
+
+      .grocery-item .gcheck {
+        border-color: #4A5568;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+
+      .grocery-item .item-line {
+        border-bottom-color: #3A4050;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+
+      .grocery-item.blank-item .item-name {
+        border-bottom-color: #3A4050;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+
+      * {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════
+       PAGE 1 — Cover Strip + Quick Reference
+  ════════════════════════════════════════════════════════════ -->
+  <div class="page page-1">
+
+    <!-- Cover strip (half-page feel) -->
+    <div class="cover-strip">
+      <div class="logo-lockup">
+        <div class="logo-icon">🍃</div>
+        <span class="brand-name">NutriLish</span>
+      </div>
+
+      <h1>The <span class="accent">Smart</span> Grocery List</h1>
+      <p class="subtitle">A printable weekly shopping template organized by macro priority</p>
+
+      <div class="badge-row">
+        <span class="pill"><span class="dot"></span>Print Weekly</span>
+        <span class="pill"><span class="dot"></span>Take Shopping</span>
+        <span class="pill"><span class="dot"></span>Save Money</span>
+      </div>
+
+      <img src="../assets/grocery-produce.png" alt="Fresh grocery produce" class="cover-img" />
+    </div>
+
+    <!-- Quick Reference Cards -->
+    <div class="quick-ref-grid">
+
+      <!-- Left: Before You Shop checklist -->
+      <div class="before-shop-card">
+        <div class="card-title">Before You Shop</div>
+        <ul class="pre-shop-list">
+          <li>
+            <span class="sq"></span>
+            Check what's already in fridge &amp; pantry
+          </li>
+          <li>
+            <span class="sq"></span>
+            Plan 3–5 meals for the week
+          </li>
+          <li>
+            <span class="sq"></span>
+            Set a budget ($50–$100/person/week)
+          </li>
+          <li>
+            <span class="sq"></span>
+            Eat before shopping (never shop hungry!)
+          </li>
+          <li>
+            <span class="sq"></span>
+            Bring reusable bags
+          </li>
+        </ul>
+
+        <div class="pro-tip" style="margin-top: 14px; margin-bottom: 0;">
+          <div class="tip-label">Pro Tip</div>
+          <p>Buy proteins in bulk when on sale. Freeze in individual portions for up to 3 months.</p>
+        </div>
+      </div>
+
+      <!-- Right: Budget Guide -->
+      <div class="right-ref">
+        <div class="budget-card">
+          <div class="card-title">Budget Guide</div>
+          <div class="budget-tiers">
+            <div class="budget-tier">
+              <div class="amount">$50–70<br><span style="font-size:9px;font-weight:500;color:var(--text-muted)">/week</span></div>
+              <div>
+                <div class="tier-label">Budget</div>
+                <div class="desc">Rice, chicken, eggs, frozen veggies</div>
+              </div>
+            </div>
+            <div class="budget-tier">
+              <div class="amount mid">$70–100<br><span style="font-size:9px;font-weight:500;color:var(--text-muted)">/week</span></div>
+              <div>
+                <div class="tier-label">Balanced</div>
+                <div class="desc">+ Salmon, fresh produce, Greek yogurt</div>
+              </div>
+            </div>
+            <div class="budget-tier">
+              <div class="amount high">$100–130<br><span style="font-size:9px;font-weight:500;color:var(--text-muted)">/week</span></div>
+              <div>
+                <div class="tier-label">Premium</div>
+                <div class="desc">+ Grass-fed beef, organic, specialty items</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pro-tip" style="margin: 0;">
+          <div class="tip-label">Money Saver</div>
+          <p>Shop the perimeter of the store first — that's where all the whole foods live. Processed items are in the aisles.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="page-watermark">NUTRILISH</div>
+    <div class="page-number">1 / 3</div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       PAGE 2 — The Grocery List (STAR PAGE)
+  ════════════════════════════════════════════════════════════ -->
+  <div class="page page-2">
+
+    <!-- Compact header -->
+    <div class="list-page-header">
+      <div class="left">
+        <div class="logo-small">🍃</div>
+        <div class="title-block">
+          <div class="brand-sm">NutriLish</div>
+          <h2>Weekly <span class="accent">Shopping</span> List</h2>
+        </div>
+      </div>
+      <div style="font-size:10px; color:var(--text-muted); text-align:right; line-height:1.6;">
+        <div style="font-weight:600; color:var(--text-secondary);">Buy macro-first.</div>
+        <div>Proteins → Veg → Grains → Fruit → Pantry</div>
+      </div>
+    </div>
+
+    <!-- Two-column grocery list -->
+    <div class="grocery-columns">
+
+      <!-- LEFT COLUMN -->
+      <div class="col-left">
+
+        <!-- PROTEINS -->
+        <div class="grocery-category">
+          <div class="cat-header">
+            <span class="cat-emoji">🥩</span>
+            <span class="cat-name">Proteins</span>
+          </div>
+          <ul class="grocery-items">
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Chicken breast</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Ground turkey</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Salmon / fish</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Eggs</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Greek yogurt</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Cottage cheese</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Tofu</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Shrimp</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Ground beef</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Turkey breast deli</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item blank-item">
+              <span class="gcheck"></span>
+              <span class="item-name">&nbsp;</span>
+            </li>
+            <li class="grocery-item blank-item">
+              <span class="gcheck"></span>
+              <span class="item-name">&nbsp;</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- GRAINS & STARCHES -->
+        <div class="grocery-category">
+          <div class="cat-header">
+            <span class="cat-emoji">🍚</span>
+            <span class="cat-name">Grains &amp; Starches</span>
+          </div>
+          <ul class="grocery-items">
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Rice (white/brown)</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Bread / wraps</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Oats</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Pasta</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Sweet potatoes</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Potatoes</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Quinoa</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Tortillas</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item blank-item">
+              <span class="gcheck"></span>
+              <span class="item-name">&nbsp;</span>
+            </li>
+            <li class="grocery-item blank-item">
+              <span class="gcheck"></span>
+              <span class="item-name">&nbsp;</span>
+            </li>
+          </ul>
+        </div>
+
+      </div><!-- /col-left -->
+
+      <!-- RIGHT COLUMN -->
+      <div class="col-right">
+
+        <!-- VEGETABLES -->
+        <div class="grocery-category">
+          <div class="cat-header">
+            <span class="cat-emoji">🥦</span>
+            <span class="cat-name">Vegetables</span>
+          </div>
+          <ul class="grocery-items">
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Broccoli</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Spinach / greens</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Bell peppers</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Onions</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Tomatoes</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Zucchini</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Asparagus</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Carrots</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Avocado</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item blank-item">
+              <span class="gcheck"></span>
+              <span class="item-name">&nbsp;</span>
+            </li>
+            <li class="grocery-item blank-item">
+              <span class="gcheck"></span>
+              <span class="item-name">&nbsp;</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- FRUITS -->
+        <div class="grocery-category">
+          <div class="cat-header">
+            <span class="cat-emoji">🍎</span>
+            <span class="cat-name">Fruits</span>
+          </div>
+          <ul class="grocery-items">
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Bananas</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Berries</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Apples</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Lemons / limes</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item blank-item">
+              <span class="gcheck"></span>
+              <span class="item-name">&nbsp;</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- PANTRY & OTHER -->
+        <div class="grocery-category">
+          <div class="cat-header">
+            <span class="cat-emoji">🫙</span>
+            <span class="cat-name">Pantry &amp; Other</span>
+          </div>
+          <ul class="grocery-items">
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Olive oil</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Nuts / nut butter</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Protein powder</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Soy sauce</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name" style="min-width:48px;">Spices:</span>
+              <span class="item-line" style="max-width:none; flex:1;"></span>
+            </li>
+            <li class="grocery-item">
+              <span class="gcheck"></span>
+              <span class="item-name">Honey</span>
+              <span class="item-line"></span>
+            </li>
+            <li class="grocery-item blank-item">
+              <span class="gcheck"></span>
+              <span class="item-name">&nbsp;</span>
+            </li>
+            <li class="grocery-item blank-item">
+              <span class="gcheck"></span>
+              <span class="item-name">&nbsp;</span>
+            </li>
+          </ul>
+        </div>
+
+      </div><!-- /col-right -->
+    </div><!-- /grocery-columns -->
+
+    <!-- Bottom footer bar -->
+    <div class="list-footer-bar">
+      <div class="footer-fields">
+        <div class="field-group">
+          <span class="field-label">Week of:</span>
+          <span class="field-blank"></span>
+        </div>
+        <div class="field-group">
+          <span class="field-label">Budget: $</span>
+          <span class="field-blank short"></span>
+        </div>
+        <div class="field-group">
+          <span class="field-label">Meals planned:</span>
+          <span class="field-blank short"></span>
+        </div>
+      </div>
+      <div class="brand-sm"><span class="green">🍃 NUTRILISH</span> — nutrilish.vercel.app</div>
+    </div>
+
+    <div class="page-watermark">NUTRILISH</div>
+    <div class="page-number">2 / 3</div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       PAGE 3 — Seasonal Guide + CTA
+  ════════════════════════════════════════════════════════════ -->
+  <div class="page page-3">
+
+    <!-- Section header -->
+    <div class="p3-section-title" style="margin-bottom: 14px;">
+      <h2>Seasonal <span class="accent">Produce</span> Guide</h2>
+      <span class="tag-chip">Buy Fresh. Save More.</span>
+    </div>
+
+    <!-- 2x2 season cards -->
+    <div class="seasonal-grid">
+
+      <div class="season-card spring">
+        <div class="season-header">
+          <span class="season-icon">🌱</span>
+          <div>
+            <div class="season-label">Spring</div>
+            <div class="season-months">Mar – May</div>
+          </div>
+        </div>
+        <div class="season-items">
+          <span class="season-item-tag">Asparagus</span>
+          <span class="season-item-tag">Peas</span>
+          <span class="season-item-tag">Artichokes</span>
+          <span class="season-item-tag">Strawberries</span>
+          <span class="season-item-tag">Spinach</span>
+          <span class="season-item-tag">Radishes</span>
+        </div>
+      </div>
+
+      <div class="season-card summer">
+        <div class="season-header">
+          <span class="season-icon">☀️</span>
+          <div>
+            <div class="season-label">Summer</div>
+            <div class="season-months">Jun – Aug</div>
+          </div>
+        </div>
+        <div class="season-items">
+          <span class="season-item-tag">Tomatoes</span>
+          <span class="season-item-tag">Corn</span>
+          <span class="season-item-tag">Zucchini</span>
+          <span class="season-item-tag">Berries</span>
+          <span class="season-item-tag">Peaches</span>
+          <span class="season-item-tag">Watermelon</span>
+        </div>
+      </div>
+
+      <div class="season-card fall">
+        <div class="season-header">
+          <span class="season-icon">🍂</span>
+          <div>
+            <div class="season-label">Fall</div>
+            <div class="season-months">Sep – Nov</div>
+          </div>
+        </div>
+        <div class="season-items">
+          <span class="season-item-tag">Sweet Potatoes</span>
+          <span class="season-item-tag">Squash</span>
+          <span class="season-item-tag">Apples</span>
+          <span class="season-item-tag">Pears</span>
+          <span class="season-item-tag">Brussels Sprouts</span>
+          <span class="season-item-tag">Cranberries</span>
+        </div>
+      </div>
+
+      <div class="season-card winter">
+        <div class="season-header">
+          <span class="season-icon">❄️</span>
+          <div>
+            <div class="season-label">Winter</div>
+            <div class="season-months">Dec – Feb</div>
+          </div>
+        </div>
+        <div class="season-items">
+          <span class="season-item-tag">Citrus</span>
+          <span class="season-item-tag">Kale</span>
+          <span class="season-item-tag">Root Vegetables</span>
+          <span class="season-item-tag">Pomegranates</span>
+          <span class="season-item-tag">Cabbage</span>
+          <span class="season-item-tag">Turnips</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pro-tip" style="margin-bottom: 20px;">
+      <div class="tip-label">Pro Tip — Seasonal Savings</div>
+      <p>Buying in season saves 30–50% and tastes better. Frozen is also a great year-round option — flash-frozen produce retains most nutrients.</p>
+    </div>
+
+    <div class="divider-accent"></div>
+
+    <!-- CTA Banner -->
+    <div class="cta-banner-lg">
+      <div class="cta-eyebrow">NutriLish App</div>
+      <h3>Never forget what you <span class="accent">need</span> again</h3>
+      <p>NutriLish tracks what you eat and can help you plan what to buy — personalized to your macros, your goals, your week.</p>
+      <a href="https://apps.apple.com/app/id6759699590" class="btn-cta">
+        Download NutriLish Free <span class="arrow">→</span>
+      </a>
+      <div class="cta-sub">Free to download &nbsp;·&nbsp; iOS 17+ &nbsp;·&nbsp; nutrilish.vercel.app</div>
+    </div>
+
+    <div class="page-watermark">NUTRILISH</div>
+    <div class="page-number">3 / 3</div>
+  </div>
+
+</body>
+</html>

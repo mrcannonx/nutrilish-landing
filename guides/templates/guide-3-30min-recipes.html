@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>30-Minute Meal Prep: 20 High-Protein Recipes — NutriLish</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    /* ─── Guide-specific overrides for compact 5-recipe pages ─── */
+    .recipe-page {
+      padding: 0.5in 0.65in 0.55in;
+    }
+
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .page-header .brand-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--primary);
+    }
+
+    .page-header .guide-title-sm {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-weight: 500;
+      letter-spacing: 0.05em;
+    }
+
+    /* ─── Food Photography Images ─── */
+    .guide-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 16px;
+      border: 1px solid var(--border, #2A3040);
+      margin: 16px 0;
+    }
+
+    .guide-img-sm {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid var(--border, #2A3040);
+      margin: 12px 0;
+    }
+
+    .guide-img-banner {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid var(--border, #2A3040);
+      margin: 12px 0;
+    }
+
+    .cover-img {
+      width: 80%;
+      max-width: 400px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 20px;
+      margin: 24px auto;
+      display: block;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+
+    /* Compact recipe card for 5-per-page layout */
+    .recipe-card {
+      margin-bottom: 13px;
+    }
+
+    .recipe-header {
+      padding: 10px 16px 8px;
+    }
+
+    .recipe-header h3 {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 3px;
+      line-height: 1.2;
+    }
+
+    .recipe-meta {
+      gap: 12px;
+      font-size: 10px;
+      margin-bottom: 0;
+    }
+
+    /* Compact macro row inline in header */
+    .macro-row-compact {
+      display: flex;
+      gap: 6px;
+      margin: 6px 0 0;
+    }
+
+    .macro-badge-sm {
+      flex: 1;
+      background: var(--surface-2);
+      border-radius: 8px;
+      padding: 5px 6px;
+      text-align: center;
+    }
+
+    .macro-badge-sm .value {
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 1px;
+    }
+
+    .macro-badge-sm .label {
+      font-size: 8px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+    }
+
+    .macro-badge-sm.cal .value { color: var(--accent); }
+    .macro-badge-sm.protein .value { color: #FF6B6B; }
+    .macro-badge-sm.carbs .value { color: #4DABF7; }
+    .macro-badge-sm.fat .value { color: #C084FC; }
+
+    .recipe-body {
+      padding: 8px 16px 10px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 16px;
+    }
+
+    .recipe-body .ingredients {
+      margin-bottom: 0;
+    }
+
+    .recipe-body .instructions {
+      margin-bottom: 0;
+    }
+
+    .recipe-body .ingredients h4,
+    .recipe-body .instructions h4 {
+      font-size: 9px;
+      margin-bottom: 4px;
+    }
+
+    .recipe-body .ingredients ul {
+      columns: 1;
+      font-size: 10px;
+    }
+
+    .recipe-body .ingredients li {
+      padding: 1.5px 0;
+      padding-left: 12px;
+      font-size: 10px;
+      line-height: 1.4;
+    }
+
+    .recipe-body ol {
+      font-size: 10px;
+      padding-left: 16px;
+    }
+
+    .recipe-body ol li {
+      padding: 1.5px 0;
+      line-height: 1.4;
+    }
+
+    /* Recipe index table on page 2 */
+    .index-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 24px;
+      margin: 12px 0;
+    }
+
+    .index-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .index-item:last-child { border-bottom: none; }
+
+    .index-num {
+      width: 22px;
+      height: 22px;
+      background: var(--surface-2);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+
+    .index-name {
+      flex: 1;
+      font-weight: 500;
+      color: var(--text);
+      font-size: 11px;
+    }
+
+    /* Intro page specific */
+    .intro-page {
+      padding: 0.65in 0.8in 0.6in;
+    }
+
+    .stat-row {
+      display: flex;
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .stat-pill {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+
+    .stat-pill .sp-val {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--primary-light);
+      line-height: 1;
+      margin-bottom: 3px;
+    }
+
+    .stat-pill .sp-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════
+       PAGE 1 — COVER
+  ════════════════════════════════════════════════════ -->
+  <div class="page cover">
+    <div class="logo-mark">🍃</div>
+    <div class="brand">Nutrilish</div>
+
+    <h1>
+      <span class="accent">30-Minute</span><br>
+      Meal Prep
+    </h1>
+    <h1 style="font-size: 32px; margin-top: 8px; color: var(--text-secondary); font-family: 'Inter', sans-serif; font-weight: 300; letter-spacing: 0.02em;">
+      20 High-Protein Recipes
+    </h1>
+
+    <p class="subtitle">
+      Fast, delicious meals for people who actually have things to do.
+    </p>
+
+    <img src="../assets/honey-garlic-chicken.png" alt="Honey garlic chicken" class="cover-img" />
+
+    <div class="badge">
+      <span class="dot"></span>
+      Free Recipe Collection &bull; 2026
+    </div>
+
+    <div class="footer-line">nutrilish.vercel.app</div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       PAGE 2 — INTRO + RECIPE INDEX
+  ════════════════════════════════════════════════════ -->
+  <div class="page intro-page">
+
+    <div class="page-header">
+      <div class="brand-pill">🍃 Nutrilish</div>
+      <div class="guide-title-sm">30-Minute Meal Prep — Recipe Collection</div>
+    </div>
+
+    <div class="section-header" style="margin-bottom: 16px;">
+      <div class="section-number" style="background: var(--accent); color: #1a1a1a;">⚡</div>
+      <h2 style="margin-bottom: 0; font-size: 22px;">Why 30 Minutes Changes Everything</h2>
+    </div>
+
+    <p class="lead" style="font-size: 14px; margin-bottom: 10px;">
+      Most meal prep fails not because of willpower — it fails because Sunday cooking sessions turn into 3-hour ordeals. These 20 recipes were engineered with a single constraint: <strong style="color: var(--text);">30 minutes, start to finish.</strong>
+    </p>
+    <p style="font-size: 12px; margin-bottom: 16px;">
+      Every recipe uses one pan, one pot, or one sheet. Proteins hit 30g+ per serving. Macros are pre-calculated. No fancy equipment, no obscure ingredients. Just real food, built fast, with enough flavor to make you actually look forward to eating it.
+    </p>
+
+    <div class="stat-row">
+      <div class="stat-pill">
+        <div class="sp-val">20</div>
+        <div class="sp-label">Recipes</div>
+      </div>
+      <div class="stat-pill">
+        <div class="sp-val">30<span style="font-size: 14px;">min</span></div>
+        <div class="sp-label">Max Cook Time</div>
+      </div>
+      <div class="stat-pill">
+        <div class="sp-val">30<span style="font-size: 14px;">g+</span></div>
+        <div class="sp-label">Protein Per Serving</div>
+      </div>
+      <div class="stat-pill">
+        <div class="sp-val">4</div>
+        <div class="sp-label">Servings Each</div>
+      </div>
+    </div>
+
+    <div class="pro-tip" style="margin-bottom: 18px;">
+      <div class="tip-label">Pro Tip — Batch Cooking Strategy</div>
+      <p>Each recipe makes 4 servings. Prep 3–4 recipes on Sunday and you're set for the week. Mix proteins — do a chicken recipe, a fish recipe, and a beef recipe for variety without extra work.</p>
+    </div>
+
+    <h4 style="margin-bottom: 10px; font-size: 11px;">Recipe Index</h4>
+    <div class="index-grid">
+      <!-- Left column: 1–10 -->
+      <div>
+        <div class="index-item">
+          <div class="index-num">1</div>
+          <div class="index-name">Honey Garlic Chicken + Rice</div>
+        </div>
+        <div class="index-item">
+          <div class="index-num">2</div>
+          <div class="index-name">Turkey Taco Bowl</div>
+        </div>
+        <div class="index-item">
+          <div class="index-num">3</div>
+          <div class="index-name">Lemon Herb Salmon</div>
+        </div>
+        <div class="index-item">
+          <div class="index-num">4</div>
+          <div class="index-name">Greek Chicken Meatballs</div>
+        </div>
+        <div class="index-item">
+          <div class="index-num">5</div>
+          <div class="index-name">Beef + Broccoli Stir-Fry</div>
+        </div>
+        <div class="index-item">
+          <div class="index-num">6</div>
+          <div class="index-name">Cajun Shrimp Bowl</div>
+        </div>
+        <div class="index-item">
+          <div class="index-num">7</div>
+          <div class="index-name">Chicken Burrito Bowl</div>
+        </div>
+        <div class="index-item">
+          <div class="index-num">8</div>
+          <div class="index-name">Sesame Ginger Tofu</div>
+        </div>
+        <div class="index-item">
+          <div class="index-num">9</div>
+          <div class="index-name">Mediterranean Turkey Skillet</div>
+        </div>
+        <div class="index-item">
+          <div class="index-num">10</div>
+          <div class="index-name">BBQ Chicken Sweet Potato</div>
+        </div>
+      </div>
+      <!-- Right column: 11–20 -->
+      <div>
+        <div class="index-item">
+          <div class="index-num">11</div>
+          <div class="index-name">Teriyaki Salmon Bowl</div>
+        </div>
+        <div class="index-item">
+          <div class="index-num">12</div>
+          <div class="index-name">Southwest Black Bean Bowl</div>
+        </div>
+        <div class="index-item">
+          <div class="index-num">13</div>
+          <div class="index-name">Thai Peanut Chicken</div>
+        </div>
+        <div class="index-item">
+          <div class="index-num">14</div>
+          <div class="index-name">Italian Sausage + Peppers</div>
+        </div>
+        <div class="index-item">
+          <div class="index-num">15</div>
+          <div class="index-name">Garlic Butter Shrimp + Zoodles</div>
+        </div>
+        <div class="index-item">
+          <div class="index-num">16</div>
+          <div class="index-name">Korean Beef Lettuce Wraps</div>
+        </div>
+        <div class="index-item">
+          <div class="index-num">17</div>
+          <div class="index-name">Chicken Tikka Bowl</div>
+        </div>
+        <div class="index-item">
+          <div class="index-num">18</div>
+          <div class="index-name">Egg Roll in a Bowl</div>
+        </div>
+        <div class="index-item">
+          <div class="index-num">19</div>
+          <div class="index-name">Lemon Pepper Cod</div>
+        </div>
+        <div class="index-item">
+          <div class="index-num">20</div>
+          <div class="index-name">Protein-Packed Fried Rice</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-number">2 / 6</div>
+    <div class="page-watermark">NUTRILISH</div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       PAGE 3 — RECIPES 1–5
+  ════════════════════════════════════════════════════ -->
+  <div class="page recipe-page">
+
+    <div class="page-header">
+      <div class="brand-pill">🍃 Nutrilish</div>
+      <div class="guide-title-sm">Recipes 1–5</div>
+    </div>
+
+    <!-- Recipe 1 -->
+    <div class="recipe-card">
+      <div class="recipe-header">
+        <h3>🍯 1. Honey Garlic Chicken + Rice</h3>
+        <div class="recipe-meta">
+          <span>⏱ Prep: 5 min</span>
+          <span>🍳 Cook: 25 min</span>
+          <span>🍽 Servings: 4</span>
+        </div>
+        <div class="macro-row-compact">
+          <div class="macro-badge-sm cal"><div class="value">485</div><div class="label">Cal</div></div>
+          <div class="macro-badge-sm protein"><div class="value">42g</div><div class="label">Protein</div></div>
+          <div class="macro-badge-sm carbs"><div class="value">48g</div><div class="label">Carbs</div></div>
+          <div class="macro-badge-sm fat"><div class="value">12g</div><div class="label">Fat</div></div>
+        </div>
+      </div>
+      <div class="recipe-body">
+        <div class="ingredients">
+          <h4>Ingredients</h4>
+          <ul>
+            <li>1.5 lb chicken breast</li>
+            <li>3 tbsp honey</li>
+            <li>3 tbsp soy sauce</li>
+            <li>4 cloves garlic, minced</li>
+            <li>1 tbsp olive oil</li>
+            <li>2 cups jasmine rice</li>
+            <li>Salt &amp; pepper</li>
+            <li>Sesame seeds</li>
+          </ul>
+        </div>
+        <div class="instructions">
+          <h4>Instructions</h4>
+          <ol>
+            <li>Cook rice per package directions.</li>
+            <li>Cut chicken into strips, season with salt and pepper.</li>
+            <li>Heat oil in skillet, cook chicken 5–6 min per side.</li>
+            <li>Mix honey + soy sauce + garlic, pour over chicken.</li>
+            <li>Simmer 2 min until glazed.</li>
+            <li>Serve over rice, top with sesame seeds.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recipe 2 -->
+    <div class="recipe-card">
+      <div class="recipe-header">
+        <h3>🌮 2. Turkey Taco Bowl</h3>
+        <div class="recipe-meta">
+          <span>⏱ Prep: 5 min</span>
+          <span>🍳 Cook: 15 min</span>
+          <span>🍽 Servings: 4</span>
+        </div>
+        <div class="macro-row-compact">
+          <div class="macro-badge-sm cal"><div class="value">440</div><div class="label">Cal</div></div>
+          <div class="macro-badge-sm protein"><div class="value">38g</div><div class="label">Protein</div></div>
+          <div class="macro-badge-sm carbs"><div class="value">40g</div><div class="label">Carbs</div></div>
+          <div class="macro-badge-sm fat"><div class="value">14g</div><div class="label">Fat</div></div>
+        </div>
+      </div>
+      <div class="recipe-body">
+        <div class="ingredients">
+          <h4>Ingredients</h4>
+          <ul>
+            <li>1.5 lb ground turkey</li>
+            <li>1 packet taco seasoning</li>
+            <li>2 cups brown rice (cooked)</li>
+            <li>1 can black beans, drained</li>
+            <li>1 cup corn</li>
+            <li>1 cup salsa</li>
+            <li>1 avocado</li>
+          </ul>
+        </div>
+        <div class="instructions">
+          <h4>Instructions</h4>
+          <ol>
+            <li>Brown turkey in skillet, drain fat.</li>
+            <li>Add taco seasoning + 1/2 cup water, simmer 5 min.</li>
+            <li>Divide rice into 4 meal prep containers.</li>
+            <li>Top with seasoned turkey, black beans, and corn.</li>
+            <li>Add salsa and fresh avocado slices before serving.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recipe 3 -->
+    <div class="recipe-card">
+      <div class="recipe-header">
+        <h3>🐟 3. Lemon Herb Salmon</h3>
+        <div class="recipe-meta">
+          <span>⏱ Prep: 5 min</span>
+          <span>🍳 Cook: 15 min</span>
+          <span>🍽 Servings: 4</span>
+        </div>
+        <div class="macro-row-compact">
+          <div class="macro-badge-sm cal"><div class="value">520</div><div class="label">Cal</div></div>
+          <div class="macro-badge-sm protein"><div class="value">38g</div><div class="label">Protein</div></div>
+          <div class="macro-badge-sm carbs"><div class="value">42g</div><div class="label">Carbs</div></div>
+          <div class="macro-badge-sm fat"><div class="value">18g</div><div class="label">Fat</div></div>
+        </div>
+      </div>
+      <div class="recipe-body">
+        <div class="ingredients">
+          <h4>Ingredients</h4>
+          <ul>
+            <li>4 salmon fillets (6oz each)</li>
+            <li>2 lemons</li>
+            <li>3 tbsp olive oil</li>
+            <li>2 tsp Italian herbs</li>
+            <li>1 lb asparagus</li>
+            <li>2 cups couscous</li>
+            <li>Salt &amp; pepper</li>
+          </ul>
+        </div>
+        <div class="instructions">
+          <h4>Instructions</h4>
+          <ol>
+            <li>Preheat oven to 400°F.</li>
+            <li>Place salmon and asparagus on a sheet pan.</li>
+            <li>Drizzle with oil, squeeze lemon over top, season.</li>
+            <li>Bake 12–15 min until salmon flakes easily.</li>
+            <li>Cook couscous per package directions.</li>
+            <li>Plate and portion into 4 containers.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recipe 4 -->
+    <div class="recipe-card">
+      <div class="recipe-header">
+        <h3>🫙 4. Greek Chicken Meatballs</h3>
+        <div class="recipe-meta">
+          <span>⏱ Prep: 10 min</span>
+          <span>🍳 Cook: 20 min</span>
+          <span>🍽 Servings: 4</span>
+        </div>
+        <div class="macro-row-compact">
+          <div class="macro-badge-sm cal"><div class="value">460</div><div class="label">Cal</div></div>
+          <div class="macro-badge-sm protein"><div class="value">40g</div><div class="label">Protein</div></div>
+          <div class="macro-badge-sm carbs"><div class="value">36g</div><div class="label">Carbs</div></div>
+          <div class="macro-badge-sm fat"><div class="value">16g</div><div class="label">Fat</div></div>
+        </div>
+      </div>
+      <div class="recipe-body">
+        <div class="ingredients">
+          <h4>Ingredients</h4>
+          <ul>
+            <li>1.5 lb ground chicken</li>
+            <li>1/2 cup feta, crumbled</li>
+            <li>2 tbsp fresh dill</li>
+            <li>1 egg</li>
+            <li>1/3 cup breadcrumbs</li>
+            <li>4 whole wheat pitas</li>
+            <li>Tzatziki, cucumber, tomato</li>
+          </ul>
+        </div>
+        <div class="instructions">
+          <h4>Instructions</h4>
+          <ol>
+            <li>Mix chicken, feta, dill, egg, and breadcrumbs.</li>
+            <li>Form into 20 meatballs.</li>
+            <li>Bake at 400°F for 18 min until golden.</li>
+            <li>Slice cucumber and tomato.</li>
+            <li>Serve with pita and tzatziki on the side.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recipe 5 -->
+    <div class="recipe-card">
+      <div class="recipe-header">
+        <h3>🥩 5. Beef + Broccoli Stir-Fry</h3>
+        <div class="recipe-meta">
+          <span>⏱ Prep: 10 min</span>
+          <span>🍳 Cook: 15 min</span>
+          <span>🍽 Servings: 4</span>
+        </div>
+        <div class="macro-row-compact">
+          <div class="macro-badge-sm cal"><div class="value">510</div><div class="label">Cal</div></div>
+          <div class="macro-badge-sm protein"><div class="value">40g</div><div class="label">Protein</div></div>
+          <div class="macro-badge-sm carbs"><div class="value">44g</div><div class="label">Carbs</div></div>
+          <div class="macro-badge-sm fat"><div class="value">16g</div><div class="label">Fat</div></div>
+        </div>
+      </div>
+      <div class="recipe-body">
+        <div class="ingredients">
+          <h4>Ingredients</h4>
+          <ul>
+            <li>1.5 lb flank steak, sliced thin</li>
+            <li>4 cups broccoli florets</li>
+            <li>3 tbsp soy sauce</li>
+            <li>2 tbsp oyster sauce</li>
+            <li>1 tbsp sesame oil</li>
+            <li>2 cloves garlic</li>
+            <li>1 tbsp cornstarch</li>
+            <li>2 cups white rice (cooked)</li>
+          </ul>
+        </div>
+        <div class="instructions">
+          <h4>Instructions</h4>
+          <ol>
+            <li>Cook rice. Mix soy + oyster sauce + cornstarch + 2 tbsp water.</li>
+            <li>Sear beef in hot wok 2 min, remove.</li>
+            <li>Stir-fry broccoli + garlic 3 min.</li>
+            <li>Return beef, pour sauce over top.</li>
+            <li>Simmer until sauce thickens, 2 min. Serve over rice.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- Visual break between recipes 5 and 6 -->
+    <img src="../assets/beef-stir-fry.png" alt="Beef stir-fry" class="guide-img-banner" />
+
+    <div class="page-number">3 / 6</div>
+    <div class="page-watermark">NUTRILISH</div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       PAGE 4 — RECIPES 6–10
+  ════════════════════════════════════════════════════ -->
+  <div class="page recipe-page">
+
+    <div class="page-header">
+      <div class="brand-pill">🍃 Nutrilish</div>
+      <div class="guide-title-sm">Recipes 6–10</div>
+    </div>
+
+    <!-- Recipe 6 -->
+    <div class="recipe-card">
+      <div class="recipe-header">
+        <h3>🦐 6. Cajun Shrimp Bowl</h3>
+        <div class="recipe-meta">
+          <span>⏱ Prep: 5 min</span>
+          <span>🍳 Cook: 10 min</span>
+          <span>🍽 Servings: 4</span>
+        </div>
+        <div class="macro-row-compact">
+          <div class="macro-badge-sm cal"><div class="value">420</div><div class="label">Cal</div></div>
+          <div class="macro-badge-sm protein"><div class="value">36g</div><div class="label">Protein</div></div>
+          <div class="macro-badge-sm carbs"><div class="value">42g</div><div class="label">Carbs</div></div>
+          <div class="macro-badge-sm fat"><div class="value">12g</div><div class="label">Fat</div></div>
+        </div>
+      </div>
+      <div class="recipe-body">
+        <div class="ingredients">
+          <h4>Ingredients</h4>
+          <ul>
+            <li>1.5 lb shrimp, peeled</li>
+            <li>2 tbsp cajun seasoning</li>
+            <li>2 cups rice</li>
+            <li>1 can black beans</li>
+            <li>1 cup corn</li>
+            <li>1 bell pepper, diced</li>
+            <li>Lime &amp; cilantro</li>
+          </ul>
+        </div>
+        <div class="instructions">
+          <h4>Instructions</h4>
+          <ol>
+            <li>Cook rice per package directions.</li>
+            <li>Toss shrimp with cajun seasoning.</li>
+            <li>Sear shrimp in hot pan 2–3 min per side.</li>
+            <li>Build bowls: rice + black beans + corn + pepper.</li>
+            <li>Top with shrimp, fresh lime, and cilantro.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recipe 7 -->
+    <div class="recipe-card">
+      <div class="recipe-header">
+        <h3>🌯 7. Chicken Burrito Bowl</h3>
+        <div class="recipe-meta">
+          <span>⏱ Prep: 5 min</span>
+          <span>🍳 Cook: 20 min</span>
+          <span>🍽 Servings: 4</span>
+        </div>
+        <div class="macro-row-compact">
+          <div class="macro-badge-sm cal"><div class="value">490</div><div class="label">Cal</div></div>
+          <div class="macro-badge-sm protein"><div class="value">42g</div><div class="label">Protein</div></div>
+          <div class="macro-badge-sm carbs"><div class="value">46g</div><div class="label">Carbs</div></div>
+          <div class="macro-badge-sm fat"><div class="value">14g</div><div class="label">Fat</div></div>
+        </div>
+      </div>
+      <div class="recipe-body">
+        <div class="ingredients">
+          <h4>Ingredients</h4>
+          <ul>
+            <li>1.5 lb chicken breast</li>
+            <li>2 tsp cumin</li>
+            <li>2 tsp chili powder</li>
+            <li>2 cups cilantro lime rice</li>
+            <li>1 can black beans</li>
+            <li>1 cup pico de gallo</li>
+            <li>1/2 cup cheese, lime wedges</li>
+          </ul>
+        </div>
+        <div class="instructions">
+          <h4>Instructions</h4>
+          <ol>
+            <li>Season chicken with cumin and chili powder.</li>
+            <li>Grill or pan-sear 6–7 min per side.</li>
+            <li>Cook cilantro lime rice.</li>
+            <li>Slice chicken into strips.</li>
+            <li>Build bowls: rice + beans + chicken + pico + cheese + lime.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recipe 8 -->
+    <div class="recipe-card">
+      <div class="recipe-header">
+        <h3>🥢 8. Sesame Ginger Tofu</h3>
+        <div class="recipe-meta">
+          <span>⏱ Prep: 10 min</span>
+          <span>🍳 Cook: 20 min</span>
+          <span>🍽 Servings: 4</span>
+        </div>
+        <div class="macro-row-compact">
+          <div class="macro-badge-sm cal"><div class="value">380</div><div class="label">Cal</div></div>
+          <div class="macro-badge-sm protein"><div class="value">22g</div><div class="label">Protein</div></div>
+          <div class="macro-badge-sm carbs"><div class="value">40g</div><div class="label">Carbs</div></div>
+          <div class="macro-badge-sm fat"><div class="value">14g</div><div class="label">Fat</div></div>
+        </div>
+      </div>
+      <div class="recipe-body">
+        <div class="ingredients">
+          <h4>Ingredients</h4>
+          <ul>
+            <li>2 blocks extra-firm tofu</li>
+            <li>3 tbsp soy sauce</li>
+            <li>1 tbsp sesame oil</li>
+            <li>1 tbsp fresh ginger</li>
+            <li>2 tbsp maple syrup</li>
+            <li>2 cups brown rice</li>
+            <li>Steamed bok choy</li>
+          </ul>
+        </div>
+        <div class="instructions">
+          <h4>Instructions</h4>
+          <ol>
+            <li>Press tofu 15 min, then cube into 1-inch pieces.</li>
+            <li>Mix soy sauce + sesame oil + ginger + maple syrup.</li>
+            <li>Bake tofu at 400°F for 20 min until crispy.</li>
+            <li>Toss crispy tofu in sauce.</li>
+            <li>Serve over brown rice with bok choy.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recipe 9 -->
+    <div class="recipe-card">
+      <div class="recipe-header">
+        <h3>🫒 9. Mediterranean Turkey Skillet</h3>
+        <div class="recipe-meta">
+          <span>⏱ Prep: 5 min</span>
+          <span>🍳 Cook: 15 min</span>
+          <span>🍽 Servings: 4</span>
+        </div>
+        <div class="macro-row-compact">
+          <div class="macro-badge-sm cal"><div class="value">430</div><div class="label">Cal</div></div>
+          <div class="macro-badge-sm protein"><div class="value">36g</div><div class="label">Protein</div></div>
+          <div class="macro-badge-sm carbs"><div class="value">32g</div><div class="label">Carbs</div></div>
+          <div class="macro-badge-sm fat"><div class="value">16g</div><div class="label">Fat</div></div>
+        </div>
+      </div>
+      <div class="recipe-body">
+        <div class="ingredients">
+          <h4>Ingredients</h4>
+          <ul>
+            <li>1.5 lb ground turkey</li>
+            <li>1 can diced tomatoes</li>
+            <li>1/2 cup kalamata olives</li>
+            <li>1/2 cup feta cheese</li>
+            <li>2 cups spinach</li>
+            <li>2 tsp Italian herbs</li>
+            <li>4 whole wheat pitas</li>
+          </ul>
+        </div>
+        <div class="instructions">
+          <h4>Instructions</h4>
+          <ol>
+            <li>Brown turkey in a large skillet, drain excess fat.</li>
+            <li>Add diced tomatoes + Italian herbs, simmer 8 min.</li>
+            <li>Stir in spinach until wilted, about 2 min.</li>
+            <li>Top with kalamata olives and crumbled feta.</li>
+            <li>Serve alongside warm whole wheat pita.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recipe 10 -->
+    <div class="recipe-card">
+      <div class="recipe-header">
+        <h3>🍠 10. BBQ Chicken Sweet Potato</h3>
+        <div class="recipe-meta">
+          <span>⏱ Prep: 5 min</span>
+          <span>🍳 Cook: 25 min</span>
+          <span>🍽 Servings: 4</span>
+        </div>
+        <div class="macro-row-compact">
+          <div class="macro-badge-sm cal"><div class="value">470</div><div class="label">Cal</div></div>
+          <div class="macro-badge-sm protein"><div class="value">40g</div><div class="label">Protein</div></div>
+          <div class="macro-badge-sm carbs"><div class="value">48g</div><div class="label">Carbs</div></div>
+          <div class="macro-badge-sm fat"><div class="value">12g</div><div class="label">Fat</div></div>
+        </div>
+      </div>
+      <div class="recipe-body">
+        <div class="ingredients">
+          <h4>Ingredients</h4>
+          <ul>
+            <li>1.5 lb chicken breast</li>
+            <li>1/2 cup BBQ sauce</li>
+            <li>4 large sweet potatoes</li>
+            <li>1 cup coleslaw mix</li>
+            <li>2 tbsp ranch dressing</li>
+            <li>Green onions</li>
+          </ul>
+        </div>
+        <div class="instructions">
+          <h4>Instructions</h4>
+          <ol>
+            <li>Microwave sweet potatoes 8–10 min until tender.</li>
+            <li>Season chicken, cook 6–7 min per side until done.</li>
+            <li>Shred chicken and toss with BBQ sauce.</li>
+            <li>Split open sweet potatoes, stuff with BBQ chicken.</li>
+            <li>Top with coleslaw, ranch, and sliced green onions.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- Visual break between recipes 10 and 11 -->
+    <img src="../assets/turkey-taco-bowl.png" alt="Turkey taco bowl" class="guide-img-banner" />
+
+    <div class="page-number">4 / 6</div>
+    <div class="page-watermark">NUTRILISH</div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       PAGE 5 — RECIPES 11–15
+  ════════════════════════════════════════════════════ -->
+  <div class="page recipe-page">
+
+    <div class="page-header">
+      <div class="brand-pill">🍃 Nutrilish</div>
+      <div class="guide-title-sm">Recipes 11–15</div>
+    </div>
+
+    <!-- Recipe 11 -->
+    <div class="recipe-card">
+      <div class="recipe-header">
+        <h3>🐟 11. Teriyaki Salmon Bowl</h3>
+        <div class="recipe-meta">
+          <span>⏱ Prep: 5 min</span>
+          <span>🍳 Cook: 15 min</span>
+          <span>🍽 Servings: 4</span>
+        </div>
+        <div class="macro-row-compact">
+          <div class="macro-badge-sm cal"><div class="value">530</div><div class="label">Cal</div></div>
+          <div class="macro-badge-sm protein"><div class="value">36g</div><div class="label">Protein</div></div>
+          <div class="macro-badge-sm carbs"><div class="value">50g</div><div class="label">Carbs</div></div>
+          <div class="macro-badge-sm fat"><div class="value">18g</div><div class="label">Fat</div></div>
+        </div>
+      </div>
+      <div class="recipe-body">
+        <div class="ingredients">
+          <h4>Ingredients</h4>
+          <ul>
+            <li>4 salmon fillets</li>
+            <li>1/4 cup teriyaki sauce</li>
+            <li>2 cups sushi rice</li>
+            <li>1 cucumber, sliced</li>
+            <li>1 avocado</li>
+            <li>Edamame, sesame seeds</li>
+            <li>Sriracha mayo</li>
+          </ul>
+        </div>
+        <div class="instructions">
+          <h4>Instructions</h4>
+          <ol>
+            <li>Cook sushi rice per package directions.</li>
+            <li>Brush salmon fillets with teriyaki sauce.</li>
+            <li>Pan-sear or bake at 400°F for 12 min.</li>
+            <li>Build bowls with rice, cucumber, and edamame.</li>
+            <li>Top with salmon, avocado, sesame seeds, and sriracha mayo.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recipe 12 -->
+    <div class="recipe-card">
+      <div class="recipe-header">
+        <h3>🫘 12. Southwest Black Bean Bowl</h3>
+        <div class="recipe-meta">
+          <span>⏱ Prep: 5 min</span>
+          <span>🍳 Cook: 10 min</span>
+          <span>🍽 Servings: 4</span>
+        </div>
+        <div class="macro-row-compact">
+          <div class="macro-badge-sm cal"><div class="value">410</div><div class="label">Cal</div></div>
+          <div class="macro-badge-sm protein"><div class="value">24g</div><div class="label">Protein</div></div>
+          <div class="macro-badge-sm carbs"><div class="value">52g</div><div class="label">Carbs</div></div>
+          <div class="macro-badge-sm fat"><div class="value">14g</div><div class="label">Fat</div></div>
+        </div>
+      </div>
+      <div class="recipe-body">
+        <div class="ingredients">
+          <h4>Ingredients</h4>
+          <ul>
+            <li>2 cans black beans</li>
+            <li>1 cup corn</li>
+            <li>1 cup rice</li>
+            <li>1 bell pepper, diced</li>
+            <li>1 avocado</li>
+            <li>Salsa verde, cotija cheese</li>
+            <li>Cumin, lime, cilantro</li>
+          </ul>
+        </div>
+        <div class="instructions">
+          <h4>Instructions</h4>
+          <ol>
+            <li>Cook rice with a pinch of cumin.</li>
+            <li>Warm black beans and corn in a saucepan.</li>
+            <li>Dice bell pepper and slice avocado.</li>
+            <li>Build bowls: cumin rice + warm beans + corn.</li>
+            <li>Top with pepper, avocado, salsa verde, and cotija.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recipe 13 -->
+    <div class="recipe-card">
+      <div class="recipe-header">
+        <h3>🥜 13. Thai Peanut Chicken</h3>
+        <div class="recipe-meta">
+          <span>⏱ Prep: 10 min</span>
+          <span>🍳 Cook: 15 min</span>
+          <span>🍽 Servings: 4</span>
+        </div>
+        <div class="macro-row-compact">
+          <div class="macro-badge-sm cal"><div class="value">500</div><div class="label">Cal</div></div>
+          <div class="macro-badge-sm protein"><div class="value">42g</div><div class="label">Protein</div></div>
+          <div class="macro-badge-sm carbs"><div class="value">38g</div><div class="label">Carbs</div></div>
+          <div class="macro-badge-sm fat"><div class="value">18g</div><div class="label">Fat</div></div>
+        </div>
+      </div>
+      <div class="recipe-body">
+        <div class="ingredients">
+          <h4>Ingredients</h4>
+          <ul>
+            <li>1.5 lb chicken breast</li>
+            <li>3 tbsp peanut butter</li>
+            <li>2 tbsp soy sauce</li>
+            <li>1 tbsp sriracha</li>
+            <li>1 tbsp lime juice + honey</li>
+            <li>Rice noodles</li>
+            <li>Shredded carrots, peanuts, cilantro</li>
+          </ul>
+        </div>
+        <div class="instructions">
+          <h4>Instructions</h4>
+          <ol>
+            <li>Cook rice noodles per package, drain.</li>
+            <li>Whisk PB + soy sauce + sriracha + lime + honey.</li>
+            <li>Cook chicken, slice into strips.</li>
+            <li>Toss noodles and carrots with half the peanut sauce.</li>
+            <li>Top with chicken, remaining sauce, peanuts, and cilantro.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recipe 14 -->
+    <div class="recipe-card">
+      <div class="recipe-header">
+        <h3>🌶 14. Italian Sausage + Peppers</h3>
+        <div class="recipe-meta">
+          <span>⏱ Prep: 5 min</span>
+          <span>🍳 Cook: 20 min</span>
+          <span>🍽 Servings: 4</span>
+        </div>
+        <div class="macro-row-compact">
+          <div class="macro-badge-sm cal"><div class="value">480</div><div class="label">Cal</div></div>
+          <div class="macro-badge-sm protein"><div class="value">32g</div><div class="label">Protein</div></div>
+          <div class="macro-badge-sm carbs"><div class="value">40g</div><div class="label">Carbs</div></div>
+          <div class="macro-badge-sm fat"><div class="value">20g</div><div class="label">Fat</div></div>
+        </div>
+      </div>
+      <div class="recipe-body">
+        <div class="ingredients">
+          <h4>Ingredients</h4>
+          <ul>
+            <li>1.5 lb Italian turkey sausage</li>
+            <li>3 bell peppers, sliced</li>
+            <li>1 onion, sliced</li>
+            <li>1 can crushed tomatoes</li>
+            <li>4 hoagie rolls</li>
+            <li>Italian herbs</li>
+          </ul>
+        </div>
+        <div class="instructions">
+          <h4>Instructions</h4>
+          <ol>
+            <li>Slice sausage into rounds.</li>
+            <li>Sear sausage in skillet over medium-high, 5 min.</li>
+            <li>Add sliced peppers and onion, cook 8 min.</li>
+            <li>Add crushed tomatoes + Italian herbs, simmer 5 min.</li>
+            <li>Serve on hoagie rolls or over rice.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recipe 15 -->
+    <div class="recipe-card">
+      <div class="recipe-header">
+        <h3>🧄 15. Garlic Butter Shrimp + Zoodles</h3>
+        <div class="recipe-meta">
+          <span>⏱ Prep: 5 min</span>
+          <span>🍳 Cook: 10 min</span>
+          <span>🍽 Servings: 4</span>
+        </div>
+        <div class="macro-row-compact">
+          <div class="macro-badge-sm cal"><div class="value">320</div><div class="label">Cal</div></div>
+          <div class="macro-badge-sm protein"><div class="value">34g</div><div class="label">Protein</div></div>
+          <div class="macro-badge-sm carbs"><div class="value">12g</div><div class="label">Carbs</div></div>
+          <div class="macro-badge-sm fat"><div class="value">16g</div><div class="label">Fat</div></div>
+        </div>
+      </div>
+      <div class="recipe-body">
+        <div class="ingredients">
+          <h4>Ingredients</h4>
+          <ul>
+            <li>1.5 lb shrimp, peeled</li>
+            <li>4 zucchini, spiralized</li>
+            <li>3 tbsp butter</li>
+            <li>5 cloves garlic</li>
+            <li>Red pepper flakes</li>
+            <li>Lemon, parsley</li>
+            <li>Parmesan</li>
+          </ul>
+        </div>
+        <div class="instructions">
+          <h4>Instructions</h4>
+          <ol>
+            <li>Spiralize zucchini into noodles.</li>
+            <li>Melt butter in pan, saute garlic 1 min.</li>
+            <li>Add shrimp + red pepper flakes, cook 2–3 min per side.</li>
+            <li>Toss in zoodles for 2 min until just tender.</li>
+            <li>Squeeze lemon, top with parmesan and fresh parsley.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- Visual break between recipes 15 and 16 -->
+    <img src="../assets/shrimp-zoodles.png" alt="Shrimp zoodles" class="guide-img-banner" />
+
+    <div class="page-number">5 / 6</div>
+    <div class="page-watermark">NUTRILISH</div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       PAGE 6 — RECIPES 16–20 + CTA
+  ════════════════════════════════════════════════════ -->
+  <div class="page recipe-page">
+
+    <div class="page-header">
+      <div class="brand-pill">🍃 Nutrilish</div>
+      <div class="guide-title-sm">Recipes 16–20</div>
+    </div>
+
+    <!-- Recipe 16 -->
+    <div class="recipe-card">
+      <div class="recipe-header">
+        <h3>🥬 16. Korean Beef Lettuce Wraps</h3>
+        <div class="recipe-meta">
+          <span>⏱ Prep: 5 min</span>
+          <span>🍳 Cook: 10 min</span>
+          <span>🍽 Servings: 4</span>
+        </div>
+        <div class="macro-row-compact">
+          <div class="macro-badge-sm cal"><div class="value">440</div><div class="label">Cal</div></div>
+          <div class="macro-badge-sm protein"><div class="value">38g</div><div class="label">Protein</div></div>
+          <div class="macro-badge-sm carbs"><div class="value">24g</div><div class="label">Carbs</div></div>
+          <div class="macro-badge-sm fat"><div class="value">20g</div><div class="label">Fat</div></div>
+        </div>
+      </div>
+      <div class="recipe-body">
+        <div class="ingredients">
+          <h4>Ingredients</h4>
+          <ul>
+            <li>1.5 lb lean ground beef</li>
+            <li>3 tbsp soy sauce</li>
+            <li>2 tbsp gochujang</li>
+            <li>1 tbsp sesame oil</li>
+            <li>2 cloves garlic</li>
+            <li>Bibb lettuce, rice</li>
+            <li>Kimchi, green onions, sesame</li>
+          </ul>
+        </div>
+        <div class="instructions">
+          <h4>Instructions</h4>
+          <ol>
+            <li>Brown ground beef in skillet, drain fat.</li>
+            <li>Add soy sauce + gochujang + sesame oil + garlic.</li>
+            <li>Cook 3 min until sauce reduces and coats the beef.</li>
+            <li>Spoon beef mixture into bibb lettuce cups.</li>
+            <li>Top with rice, kimchi, green onions, and sesame seeds.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recipe 17 -->
+    <div class="recipe-card">
+      <div class="recipe-header">
+        <h3>🍛 17. Chicken Tikka Bowl</h3>
+        <div class="recipe-meta">
+          <span>⏱ Prep: 10 min</span>
+          <span>🍳 Cook: 15 min</span>
+          <span>🍽 Servings: 4</span>
+        </div>
+        <div class="macro-row-compact">
+          <div class="macro-badge-sm cal"><div class="value">470</div><div class="label">Cal</div></div>
+          <div class="macro-badge-sm protein"><div class="value">40g</div><div class="label">Protein</div></div>
+          <div class="macro-badge-sm carbs"><div class="value">44g</div><div class="label">Carbs</div></div>
+          <div class="macro-badge-sm fat"><div class="value">14g</div><div class="label">Fat</div></div>
+        </div>
+      </div>
+      <div class="recipe-body">
+        <div class="ingredients">
+          <h4>Ingredients</h4>
+          <ul>
+            <li>1.5 lb chicken breast, cubed</li>
+            <li>1/2 cup plain yogurt</li>
+            <li>2 tbsp tikka masala paste</li>
+            <li>Basmati rice, naan</li>
+            <li>Cucumber, red onion</li>
+            <li>Fresh mint</li>
+          </ul>
+        </div>
+        <div class="instructions">
+          <h4>Instructions</h4>
+          <ol>
+            <li>Marinate chicken in yogurt + tikka masala paste.</li>
+            <li>Cook basmati rice per package directions.</li>
+            <li>Sear marinated chicken over high heat, 5–6 min.</li>
+            <li>Build bowls with rice and chicken.</li>
+            <li>Top with diced cucumber, red onion, and fresh mint. Serve with naan.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recipe 18 -->
+    <div class="recipe-card">
+      <div class="recipe-header">
+        <h3>🥟 18. Egg Roll in a Bowl</h3>
+        <div class="recipe-meta">
+          <span>⏱ Prep: 5 min</span>
+          <span>🍳 Cook: 12 min</span>
+          <span>🍽 Servings: 4</span>
+        </div>
+        <div class="macro-row-compact">
+          <div class="macro-badge-sm cal"><div class="value">390</div><div class="label">Cal</div></div>
+          <div class="macro-badge-sm protein"><div class="value">32g</div><div class="label">Protein</div></div>
+          <div class="macro-badge-sm carbs"><div class="value">22g</div><div class="label">Carbs</div></div>
+          <div class="macro-badge-sm fat"><div class="value">18g</div><div class="label">Fat</div></div>
+        </div>
+      </div>
+      <div class="recipe-body">
+        <div class="ingredients">
+          <h4>Ingredients</h4>
+          <ul>
+            <li>1 lb ground pork</li>
+            <li>1 bag coleslaw mix</li>
+            <li>3 tbsp soy sauce</li>
+            <li>1 tbsp sesame oil</li>
+            <li>2 cloves garlic</li>
+            <li>1 tbsp ginger</li>
+            <li>Green onions, sriracha</li>
+          </ul>
+        </div>
+        <div class="instructions">
+          <h4>Instructions</h4>
+          <ol>
+            <li>Brown ground pork in skillet, drain excess fat.</li>
+            <li>Add minced garlic + ginger, cook 1 min.</li>
+            <li>Add coleslaw mix, stir-fry 4 min until softened.</li>
+            <li>Add soy sauce + sesame oil, toss to combine.</li>
+            <li>Top with sliced green onions and a drizzle of sriracha.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recipe 19 -->
+    <div class="recipe-card">
+      <div class="recipe-header">
+        <h3>🐟 19. Lemon Pepper Cod</h3>
+        <div class="recipe-meta">
+          <span>⏱ Prep: 5 min</span>
+          <span>🍳 Cook: 12 min</span>
+          <span>🍽 Servings: 4</span>
+        </div>
+        <div class="macro-row-compact">
+          <div class="macro-badge-sm cal"><div class="value">380</div><div class="label">Cal</div></div>
+          <div class="macro-badge-sm protein"><div class="value">34g</div><div class="label">Protein</div></div>
+          <div class="macro-badge-sm carbs"><div class="value">36g</div><div class="label">Carbs</div></div>
+          <div class="macro-badge-sm fat"><div class="value">10g</div><div class="label">Fat</div></div>
+        </div>
+      </div>
+      <div class="recipe-body">
+        <div class="ingredients">
+          <h4>Ingredients</h4>
+          <ul>
+            <li>4 cod fillets (6oz each)</li>
+            <li>2 tbsp lemon pepper seasoning</li>
+            <li>1 lb green beans</li>
+            <li>2 cups rice pilaf</li>
+            <li>2 tbsp butter</li>
+            <li>Lemon wedges</li>
+          </ul>
+        </div>
+        <div class="instructions">
+          <h4>Instructions</h4>
+          <ol>
+            <li>Cook rice pilaf per package directions.</li>
+            <li>Season cod fillets generously with lemon pepper.</li>
+            <li>Melt butter in pan over medium-high heat.</li>
+            <li>Sear cod 4 min per side until flaky and golden.</li>
+            <li>Roast or steam green beans. Plate with lemon wedges.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recipe 20 -->
+    <div class="recipe-card">
+      <div class="recipe-header">
+        <h3>🍳 20. Protein-Packed Fried Rice</h3>
+        <div class="recipe-meta">
+          <span>⏱ Prep: 5 min</span>
+          <span>🍳 Cook: 15 min</span>
+          <span>🍽 Servings: 4</span>
+        </div>
+        <div class="macro-row-compact">
+          <div class="macro-badge-sm cal"><div class="value">460</div><div class="label">Cal</div></div>
+          <div class="macro-badge-sm protein"><div class="value">36g</div><div class="label">Protein</div></div>
+          <div class="macro-badge-sm carbs"><div class="value">44g</div><div class="label">Carbs</div></div>
+          <div class="macro-badge-sm fat"><div class="value">14g</div><div class="label">Fat</div></div>
+        </div>
+      </div>
+      <div class="recipe-body">
+        <div class="ingredients">
+          <h4>Ingredients</h4>
+          <ul>
+            <li>3 cups cooked rice (cold)</li>
+            <li>1 lb chicken breast, diced</li>
+            <li>4 eggs</li>
+            <li>1 cup frozen mixed veggies</li>
+            <li>3 tbsp soy sauce</li>
+            <li>1 tbsp sesame oil</li>
+            <li>Green onions, garlic</li>
+          </ul>
+        </div>
+        <div class="instructions">
+          <h4>Instructions</h4>
+          <ol>
+            <li>Scramble eggs in wok, set aside.</li>
+            <li>Cook diced chicken 5–6 min until done, remove.</li>
+            <li>Stir-fry frozen veggies + garlic 2 min.</li>
+            <li>Add cold rice, stir-fry 3 min until heated through.</li>
+            <li>Return chicken + eggs, add soy sauce + sesame oil.</li>
+            <li>Top with sliced green onions and serve hot.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA Banner -->
+    <div class="cta-banner" style="margin-top: 14px; padding: 20px 28px;">
+      <h3 style="font-size: 18px; margin-bottom: 6px;">
+        Get AI-powered nutrition tracking
+      </h3>
+      <p style="margin-bottom: 12px; font-size: 12px;">
+        Snap a photo of these meals and let NutriLish track your macros automatically — no manual logging, no guesswork.
+      </p>
+      <a href="https://nutrilish.vercel.app" class="btn" style="font-size: 13px; padding: 10px 24px;">
+        Download NutriLish Free →
+      </a>
+    </div>
+
+    <div class="page-number">6 / 6</div>
+    <div class="page-watermark">NUTRILISH</div>
+  </div>
+
+</body>
+</html>

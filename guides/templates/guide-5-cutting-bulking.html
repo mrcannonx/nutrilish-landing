@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cutting vs Bulking: The Complete Nutrition Guide — NutriLish</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    /* ─── Guide-Specific: Cutting / Bulking Color System ─── */
+    :root {
+      --cut: #FF6B6B;
+      --cut-glow: rgba(255, 107, 107, 0.12);
+      --cut-border: rgba(255, 107, 107, 0.35);
+      --bulk: #4DABF7;
+      --bulk-glow: rgba(77, 171, 247, 0.12);
+      --bulk-border: rgba(77, 171, 247, 0.35);
+    }
+
+    /* ─── Cover overrides for dual-color title ─── */
+    .cover-dual {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: 11in;
+      padding: 1in;
+      background:
+        radial-gradient(ellipse at 25% 30%, var(--cut-glow) 0%, transparent 55%),
+        radial-gradient(ellipse at 75% 70%, var(--bulk-glow) 0%, transparent 55%),
+        radial-gradient(ellipse at 50% 50%, rgba(22, 168, 110, 0.06) 0%, transparent 60%),
+        var(--bg);
+    }
+
+    .cover-dual .title-line {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      margin-bottom: 6px;
+    }
+
+    .cover-dual .title-cut {
+      font-family: 'Playfair Display', serif;
+      font-size: 58px;
+      font-weight: 900;
+      color: var(--cut);
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    .cover-dual .title-vs {
+      font-family: 'Inter', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      align-self: center;
+    }
+
+    .cover-dual .title-bulk {
+      font-family: 'Playfair Display', serif;
+      font-size: 58px;
+      font-weight: 900;
+      color: var(--bulk);
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    .cover-dual .title-sub {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin-bottom: 20px;
+    }
+
+    /* ─── Phase Cards (Cut / Bulk) ─── */
+    .phase-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px;
+      margin-bottom: 0;
+    }
+
+    .phase-card.cut {
+      border-left: 4px solid var(--cut);
+      background: linear-gradient(135deg, rgba(255,107,107,0.05) 0%, var(--surface) 60%);
+    }
+
+    .phase-card.bulk {
+      border-left: 4px solid var(--bulk);
+      background: linear-gradient(135deg, rgba(77,171,247,0.05) 0%, var(--surface) 60%);
+    }
+
+    .phase-card .phase-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .phase-card .phase-title {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .phase-card.cut .phase-title { color: var(--cut); }
+    .phase-card.bulk .phase-title { color: var(--bulk); }
+
+    .phase-card .phase-emoji { font-size: 22px; }
+
+    .phase-fact {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 12px;
+    }
+
+    .phase-fact:last-child { border-bottom: none; }
+
+    .phase-fact .fact-label {
+      color: var(--text-muted);
+      font-weight: 500;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .phase-fact .fact-value {
+      color: var(--text);
+      font-weight: 600;
+      font-size: 12px;
+      text-align: right;
+    }
+
+    /* ─── Decision Flowchart ─── */
+    .decision-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .decision-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--surface-2);
+      border-radius: 10px;
+      padding: 10px 14px;
+    }
+
+    .decision-condition {
+      flex: 1;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .decision-arrow {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .decision-action {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+
+    .decision-action.cut {
+      background: var(--cut-glow);
+      border: 1px solid var(--cut-border);
+      color: var(--cut);
+    }
+
+    .decision-action.bulk {
+      background: var(--bulk-glow);
+      border: 1px solid var(--bulk-border);
+      color: var(--bulk);
+    }
+
+    .decision-action.either {
+      background: rgba(22,168,110,0.1);
+      border: 1px solid rgba(22,168,110,0.3);
+      color: var(--primary-light);
+    }
+
+    .decision-action.special {
+      background: rgba(255,181,71,0.1);
+      border: 1px solid rgba(255,181,71,0.3);
+      color: var(--accent);
+    }
+
+    /* ─── Macro badges override for cut/bulk coloring ─── */
+    .macro-badge.cut-cal .value { color: var(--cut); }
+    .macro-badge.bulk-cal .value { color: var(--bulk); }
+
+    /* ─── Day block with cut/bulk label color ─── */
+    .day-block-cut .day-label { color: var(--cut); }
+    .day-block-bulk .day-label { color: var(--bulk); }
+
+    /* ─── Tips checklist with colored dot ─── */
+    .tip-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .tip-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 7px 0;
+      font-size: 12px;
+      color: var(--text-secondary);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      line-height: 1.5;
+    }
+
+    .tip-list li:last-child { border-bottom: none; }
+
+    .tip-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 5px;
+    }
+
+    .tip-dot.cut { background: var(--cut); }
+    .tip-dot.bulk { background: var(--bulk); }
+    .tip-dot.green { background: var(--primary); }
+
+    /* ─── Comparison Table overrides ─── */
+    .compare-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 11.5px;
+    }
+
+    .compare-table thead th {
+      background: var(--surface-2);
+      padding: 10px 14px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .compare-table thead th.col-factor {
+      color: var(--text-muted);
+      text-align: left;
+      border-radius: 8px 0 0 0;
+    }
+
+    .compare-table thead th.col-cut {
+      color: var(--cut);
+      text-align: center;
+      border-left: 1px solid var(--border);
+    }
+
+    .compare-table thead th.col-bulk {
+      color: var(--bulk);
+      text-align: center;
+      border-left: 1px solid var(--border);
+      border-radius: 0 8px 0 0;
+    }
+
+    .compare-table tbody td {
+      padding: 8px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+
+    .compare-table tbody tr:nth-child(even) { background: rgba(255,255,255,0.015); }
+    .compare-table tbody tr:last-child td { border-bottom: none; }
+
+    .compare-table .factor-name {
+      font-weight: 600;
+      font-size: 11px;
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .compare-table .cut-val {
+      text-align: center;
+      color: var(--cut);
+      font-weight: 600;
+      font-size: 11px;
+      border-left: 1px solid var(--border);
+    }
+
+    .compare-table .bulk-val {
+      text-align: center;
+      color: var(--bulk);
+      font-weight: 600;
+      font-size: 11px;
+      border-left: 1px solid var(--border);
+    }
+
+    /* ─── Supplement Card Grid ─── */
+    .supp-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+    }
+
+    .supp-card .supp-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+
+    .supp-card .supp-dose {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--primary-light);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+    }
+
+    .supp-card p {
+      font-size: 10.5px;
+      line-height: 1.5;
+      color: var(--text-muted);
+    }
+
+    /* ─── Timeline (12-month plan) ─── */
+    .year-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 14px 0;
+      position: relative;
+    }
+
+    .year-segment {
+      display: flex;
+      align-items: stretch;
+      position: relative;
+    }
+
+    .year-segment:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 19px;
+      top: 38px;
+      bottom: 0;
+      width: 2px;
+      background: var(--border);
+      z-index: 0;
+    }
+
+    .year-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-top: 14px;
+      margin-right: 14px;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+      border: 2px solid var(--bg);
+    }
+
+    .year-dot.cut {
+      background: var(--cut);
+      box-shadow: 0 0 0 3px var(--cut-glow);
+    }
+
+    .year-dot.bulk {
+      background: var(--bulk);
+      box-shadow: 0 0 0 3px var(--bulk-glow);
+    }
+
+    .year-dot.maintain {
+      background: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+
+    .year-content {
+      flex: 1;
+      padding: 10px 0 16px;
+    }
+
+    .year-period {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 2px;
+    }
+
+    .year-period.cut { color: var(--cut); }
+    .year-period.bulk { color: var(--bulk); }
+    .year-period.maintain { color: var(--primary-light); }
+
+    .year-desc {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    /* ─── Quick Decision Card ─── */
+    .decision-card {
+      background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px;
+    }
+
+    .decision-q {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 12.5px;
+    }
+
+    .decision-q:last-child { border-bottom: none; }
+
+    .decision-q .q-num {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .decision-q .q-text {
+      flex: 1;
+      color: var(--text);
+      line-height: 1.4;
+    }
+
+    .decision-q .q-answer {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 100px;
+      white-space: nowrap;
+      align-self: center;
+    }
+
+    .decision-q .q-answer.cut {
+      background: var(--cut-glow);
+      border: 1px solid var(--cut-border);
+      color: var(--cut);
+    }
+
+    .decision-q .q-answer.bulk {
+      background: var(--bulk-glow);
+      border: 1px solid var(--bulk-border);
+      color: var(--bulk);
+    }
+
+    /* ─── CTA page (full bleed) ─── */
+    .page-cta {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: 11in;
+      padding: 1in;
+      background:
+        radial-gradient(ellipse at 30% 30%, var(--cut-glow) 0%, transparent 55%),
+        radial-gradient(ellipse at 70% 70%, var(--bulk-glow) 0%, transparent 55%),
+        radial-gradient(ellipse at 50% 50%, rgba(22,168,110,0.08) 0%, transparent 60%),
+        var(--bg);
+    }
+
+    .page-cta .app-icon {
+      width: 88px;
+      height: 88px;
+      background: linear-gradient(135deg, var(--primary) 0%, #0e7a50 100%);
+      border-radius: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 44px;
+      margin-bottom: 28px;
+      box-shadow: 0 12px 40px rgba(22,168,110,0.35);
+    }
+
+    .page-cta .cta-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: 34px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 14px;
+      max-width: 500px;
+    }
+
+    .page-cta .cta-sub {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      max-width: 420px;
+      margin-bottom: 36px;
+    }
+
+    .page-cta .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--primary);
+      color: white;
+      padding: 16px 36px;
+      border-radius: 100px;
+      font-size: 16px;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 8px 28px rgba(22,168,110,0.4);
+      margin-bottom: 16px;
+    }
+
+    .page-cta .availability {
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+    }
+
+    .feature-pills {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 32px;
+    }
+
+    .feature-pill {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 7px 16px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .feature-pill .pill-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--primary);
+      border-radius: 50%;
+    }
+
+    /* ─── Day block SM (compact) ─── */
+    .day-block-sm {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 18px;
+      margin-bottom: 12px;
+    }
+
+    .day-block-sm .day-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 10px;
+    }
+
+    .meal-row-sm {
+      display: grid;
+      grid-template-columns: 72px 1fr auto;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 11.5px;
+    }
+
+    .meal-row-sm:last-child { border-bottom: none; }
+
+    .meal-row-sm .meal-type {
+      font-weight: 700;
+      color: var(--text-muted);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .meal-row-sm .meal-name {
+      color: var(--text);
+      font-weight: 500;
+      font-size: 11.5px;
+      line-height: 1.3;
+    }
+
+    .meal-row-sm .meal-macros {
+      color: var(--text-muted);
+      font-size: 10px;
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .day-total {
+      display: flex;
+      justify-content: flex-end;
+      gap: 14px;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+    }
+
+    .day-total .total-item {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .day-total .total-item span { color: var(--text); }
+
+    /* ─── Food Photography Images ─── */
+    .guide-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 16px;
+      border: 1px solid var(--border, #2A3040);
+      margin: 16px 0;
+    }
+
+    .guide-img-sm {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid var(--border, #2A3040);
+      margin: 12px 0;
+    }
+
+    .guide-img-banner {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid var(--border, #2A3040);
+      margin: 12px 0;
+    }
+
+    .cover-img {
+      width: 80%;
+      max-width: 400px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 20px;
+      margin: 24px auto;
+      display: block;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 1 — COVER
+════════════════════════════════════════════════════ -->
+<div class="page cover-dual">
+  <div class="logo-mark">🍃</div>
+  <div class="brand">NUTRILISH</div>
+
+  <div class="title-line">
+    <span class="title-cut">Cutting</span>
+    <span class="title-vs">vs</span>
+    <span class="title-bulk">Bulking</span>
+  </div>
+
+  <div class="title-sub">The Complete Nutrition Guide</div>
+
+  <p class="subtitle">Everything you need to know about eating for your physique goals.</p>
+
+  <div class="badge">
+    <span class="dot"></span>
+    Science-Based &bull; Practical &bull; Free
+  </div>
+
+  <div class="footer-line">nutrilish.vercel.app</div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 2 — UNDERSTANDING THE BASICS
+════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-number">1</div>
+    <h2>Understanding The Basics</h2>
+  </div>
+
+  <h4 style="margin-bottom: 14px;">The Two Phases</h4>
+
+  <div class="two-col" style="margin-bottom: 20px;">
+
+    <!-- CUTTING CARD -->
+    <div class="phase-card cut">
+      <div class="phase-header">
+        <span class="phase-emoji">🔥</span>
+        <span class="phase-title">Cutting</span>
+      </div>
+      <div class="phase-fact">
+        <span class="fact-label">Goal</span>
+        <span class="fact-value">Lose fat, preserve muscle</span>
+      </div>
+      <div class="phase-fact">
+        <span class="fact-label">Calories</span>
+        <span class="fact-value" style="color: var(--cut);">-300 to -500 below TDEE</span>
+      </div>
+      <div class="phase-fact">
+        <span class="fact-label">Duration</span>
+        <span class="fact-value">8–16 weeks</span>
+      </div>
+      <div class="phase-fact">
+        <span class="fact-label">Rate</span>
+        <span class="fact-value">0.5–1% body weight / week</span>
+      </div>
+      <div class="phase-fact">
+        <span class="fact-label">Risk</span>
+        <span class="fact-value" style="color: var(--accent);">Muscle loss if too aggressive</span>
+      </div>
+    </div>
+
+    <!-- BULKING CARD -->
+    <div class="phase-card bulk">
+      <div class="phase-header">
+        <span class="phase-emoji">💪</span>
+        <span class="phase-title">Bulking</span>
+      </div>
+      <div class="phase-fact">
+        <span class="fact-label">Goal</span>
+        <span class="fact-value">Build muscle, minimize fat gain</span>
+      </div>
+      <div class="phase-fact">
+        <span class="fact-label">Calories</span>
+        <span class="fact-value" style="color: var(--bulk);">+200 to +400 above TDEE</span>
+      </div>
+      <div class="phase-fact">
+        <span class="fact-label">Duration</span>
+        <span class="fact-value">12–24 weeks</span>
+      </div>
+      <div class="phase-fact">
+        <span class="fact-label">Rate</span>
+        <span class="fact-value">0.25–0.5% body weight / week</span>
+      </div>
+      <div class="phase-fact">
+        <span class="fact-label">Risk</span>
+        <span class="fact-value" style="color: var(--accent);">Excess fat if surplus too large</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- DECISION FLOWCHART -->
+  <div class="card-highlight">
+    <h3 style="margin-bottom: 14px;">When to Cut vs Bulk</h3>
+    <div class="decision-grid">
+      <div class="decision-row">
+        <span class="decision-condition">Body fat &gt; 20% (men) / &gt; 30% (women)</span>
+        <span class="decision-arrow">&#8594;</span>
+        <span class="decision-action cut">CUT FIRST</span>
+      </div>
+      <div class="decision-row">
+        <span class="decision-condition">Body fat 12–20% (men) / 20–30% (women)</span>
+        <span class="decision-arrow">&#8594;</span>
+        <span class="decision-action either">EITHER</span>
+      </div>
+      <div class="decision-row">
+        <span class="decision-condition">Body fat &lt; 12% (men) / &lt; 20% (women)</span>
+        <span class="decision-arrow">&#8594;</span>
+        <span class="decision-action bulk">BULK</span>
+      </div>
+      <div class="decision-row">
+        <span class="decision-condition">New to lifting? Newbie gains window (first 3–6 months)</span>
+        <span class="decision-arrow">&#8594;</span>
+        <span class="decision-action special">RECOMP</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="pro-tip">
+    <div class="tip-label">Pro Tip</div>
+    <p>Don't bulk above 20% body fat or cut below 10%. Cycling between 12–18% body fat is the sweet spot for most men — you stay lean enough to look good while building meaningful muscle.</p>
+  </div>
+
+  <div class="page-number">2</div>
+  <div class="page-watermark">NUTRILISH</div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 3 — CUTTING PROTOCOL
+════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-number" style="background: var(--cut);">2</div>
+    <h2>Cutting Protocol</h2>
+    <span style="margin-left: auto; font-size: 20px;">🔥</span>
+  </div>
+
+  <h4 style="margin-bottom: 6px; color: var(--cut);">The Cutting Blueprint</h4>
+  <p style="margin-bottom: 4px; font-size: 12px;">Cutting macros for a 180 lb person. Protein goes <strong style="color: var(--text);">UP</strong> during a cut (1–1.2g per lb body weight) — it's your primary defense against muscle loss.</p>
+
+  <div class="macro-row" style="margin-bottom: 18px;">
+    <div class="macro-badge cut-cal">
+      <div class="value">2,100</div>
+      <div class="label">Calories (deficit)</div>
+    </div>
+    <div class="macro-badge protein">
+      <div class="value">175g</div>
+      <div class="label">Protein</div>
+    </div>
+    <div class="macro-badge carbs">
+      <div class="value">174g</div>
+      <div class="label">Carbs</div>
+    </div>
+    <div class="macro-badge fat">
+      <div class="value">62g</div>
+      <div class="label">Fat</div>
+    </div>
+  </div>
+
+  <!-- Cutting meal food photo -->
+  <img src="../assets/cutting-meal.png" alt="Cutting meal example" class="guide-img-sm" />
+
+  <!-- CUTTING DAY SAMPLE -->
+  <div class="day-block-sm" style="border-color: var(--cut-border);">
+    <div class="day-label" style="color: var(--cut);">Cutting Day Sample — 180 lb Person</div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Breakfast</span>
+      <span class="meal-name">🥚 Egg white omelette + whole egg + spinach + 2 toast</span>
+      <span class="meal-macros">420 cal &middot; 38P &middot; 32C &middot; 14F</span>
+    </div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Lunch</span>
+      <span class="meal-name">🍗 Chicken breast + rice + huge salad + light dressing</span>
+      <span class="meal-macros">520 cal &middot; 45P &middot; 44C &middot; 14F</span>
+    </div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Pre-workout</span>
+      <span class="meal-name">🍌 Protein shake + banana + almond butter</span>
+      <span class="meal-macros">380 cal &middot; 32P &middot; 40C &middot; 12F</span>
+    </div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Dinner</span>
+      <span class="meal-name">🐟 Salmon + sweet potato + asparagus</span>
+      <span class="meal-macros">480 cal &middot; 36P &middot; 40C &middot; 18F</span>
+    </div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Snack</span>
+      <span class="meal-name">🧀 Cottage cheese + berries</span>
+      <span class="meal-macros">200 cal &middot; 24P &middot; 18C &middot; 4F</span>
+    </div>
+    <div class="day-total">
+      <div class="total-item">Total: <span>&nbsp;2,000 cal</span></div>
+      <div class="total-item">P: <span style="color: #FF6B6B;">&nbsp;175g</span></div>
+      <div class="total-item">C: <span style="color: #4DABF7;">&nbsp;174g</span></div>
+      <div class="total-item">F: <span style="color: #C084FC;">&nbsp;62g</span></div>
+    </div>
+  </div>
+
+  <!-- CUTTING TIPS -->
+  <div class="card" style="border-color: var(--cut-border);">
+    <h3 style="margin-bottom: 12px; color: var(--cut);">Cutting Tips</h3>
+    <ul class="tip-list">
+      <li><span class="tip-dot cut"></span><span>Protein at every meal — minimum 30g per sitting to maximize muscle protein synthesis</span></li>
+      <li><span class="tip-dot cut"></span><span>High-volume, low-calorie foods: leafy greens, cucumbers, egg whites, broth-based soups</span></li>
+      <li><span class="tip-dot cut"></span><span>Stay hydrated — 1 gallon per day minimum. Thirst masks hunger.</span></li>
+      <li><span class="tip-dot cut"></span><span>Sleep 7–9 hours. Cortisol destroys muscle and spikes appetite when you're under-recovered.</span></li>
+      <li><span class="tip-dot cut"></span><span>Refeed days: 1x per week at maintenance calories with extra carbs to reset leptin</span></li>
+      <li><span class="tip-dot cut"></span><span>Cardio: 2–3x per week, low-intensity (walking, cycling) to preserve muscle glycogen</span></li>
+      <li><span class="tip-dot cut"></span><span>Track everything — "eyeballing" leads to 300–500 hidden calories per day</span></li>
+    </ul>
+  </div>
+
+  <div class="page-number">3</div>
+  <div class="page-watermark">NUTRILISH</div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 4 — BULKING PROTOCOL
+════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-number" style="background: var(--bulk);">3</div>
+    <h2>Bulking Protocol</h2>
+    <span style="margin-left: auto; font-size: 20px;">💪</span>
+  </div>
+
+  <h4 style="margin-bottom: 6px; color: var(--bulk);">The Bulking Blueprint</h4>
+  <p style="margin-bottom: 4px; font-size: 12px;">Bulking macros for a 180 lb person. Carbs go <strong style="color: var(--text);">UP</strong> during a bulk — they fuel training intensity and accelerate recovery between sessions.</p>
+
+  <div class="macro-row" style="margin-bottom: 18px;">
+    <div class="macro-badge bulk-cal">
+      <div class="value">2,900</div>
+      <div class="label">Calories (surplus)</div>
+    </div>
+    <div class="macro-badge protein">
+      <div class="value">180g</div>
+      <div class="label">Protein</div>
+    </div>
+    <div class="macro-badge carbs">
+      <div class="value">330g</div>
+      <div class="label">Carbs</div>
+    </div>
+    <div class="macro-badge fat">
+      <div class="value">90g</div>
+      <div class="label">Fat</div>
+    </div>
+  </div>
+
+  <!-- Bulking meal food photo -->
+  <img src="../assets/bulking-meal.png" alt="Bulking meal example" class="guide-img-sm" />
+
+  <!-- BULKING DAY SAMPLE -->
+  <div class="day-block-sm" style="border-color: var(--bulk-border);">
+    <div class="day-label" style="color: var(--bulk);">Bulking Day Sample — 180 lb Person</div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Breakfast</span>
+      <span class="meal-name">🌾 Protein oats + banana + PB + whole milk</span>
+      <span class="meal-macros">650 cal &middot; 38P &middot; 72C &middot; 22F</span>
+    </div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Lunch</span>
+      <span class="meal-name">🌯 Double chicken burrito bowl + rice + beans + cheese</span>
+      <span class="meal-macros">720 cal &middot; 52P &middot; 68C &middot; 24F</span>
+    </div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Pre-workout</span>
+      <span class="meal-name">🥯 Bagel + honey + protein shake</span>
+      <span class="meal-macros">480 cal &middot; 30P &middot; 72C &middot; 8F</span>
+    </div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Dinner</span>
+      <span class="meal-name">🥩 Lean beef stir-fry + white rice + veggies</span>
+      <span class="meal-macros">680 cal &middot; 44P &middot; 70C &middot; 22F</span>
+    </div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Snack</span>
+      <span class="meal-name">🥜 Trail mix + protein bar</span>
+      <span class="meal-macros">440 cal &middot; 24P &middot; 48C &middot; 18F</span>
+    </div>
+    <div class="day-total">
+      <div class="total-item">Total: <span>&nbsp;2,970 cal</span></div>
+      <div class="total-item">P: <span style="color: #FF6B6B;">&nbsp;188g</span></div>
+      <div class="total-item">C: <span style="color: #4DABF7;">&nbsp;330g</span></div>
+      <div class="total-item">F: <span style="color: #C084FC;">&nbsp;94g</span></div>
+    </div>
+  </div>
+
+  <!-- BULKING TIPS -->
+  <div class="card" style="border-color: var(--bulk-border);">
+    <h3 style="margin-bottom: 12px; color: var(--bulk);">Bulking Tips</h3>
+    <ul class="tip-list">
+      <li><span class="tip-dot bulk"></span><span>Progressive overload in the gym is NON-NEGOTIABLE — a surplus without training stimulus builds fat, not muscle</span></li>
+      <li><span class="tip-dot bulk"></span><span>Eat calorie-dense foods: nuts, oils, whole milk, white rice, oats — volume is your enemy here</span></li>
+      <li><span class="tip-dot bulk"></span><span>Protein: 0.8–1g per lb is sufficient during a bulk — save the extra calories for carbs</span></li>
+      <li><span class="tip-dot bulk"></span><span>Load carbs around workouts: big meal pre-workout, fast carbs post-workout</span></li>
+      <li><span class="tip-dot bulk"></span><span>Don't skip meals — consistency matters more than any single perfect day</span></li>
+      <li><span class="tip-dot bulk"></span><span>Aim for "clean bulk": 80% whole foods, 20% flexible. Dirty bulks add fat, not muscle.</span></li>
+      <li><span class="tip-dot bulk"></span><span>If gaining more than 1% body weight per week, dial back the surplus — you're adding fat</span></li>
+    </ul>
+  </div>
+
+  <div class="page-number">4</div>
+  <div class="page-watermark">NUTRILISH</div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 5 — COMPARISON + SUPPLEMENTS
+════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-number">4</div>
+    <h2>Head-to-Head Comparison</h2>
+  </div>
+
+  <table class="compare-table" style="margin-bottom: 22px;">
+    <thead>
+      <tr>
+        <th class="col-factor">Factor</th>
+        <th class="col-cut">🔥 Cutting</th>
+        <th class="col-bulk">💪 Bulking</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="factor-name">Calories</td>
+        <td class="cut-val">Deficit (-300 to -500)</td>
+        <td class="bulk-val">Surplus (+200 to +400)</td>
+      </tr>
+      <tr>
+        <td class="factor-name">Protein</td>
+        <td class="cut-val">1–1.2g per lb</td>
+        <td class="bulk-val">0.8–1g per lb</td>
+      </tr>
+      <tr>
+        <td class="factor-name">Carbs</td>
+        <td class="cut-val">Moderate–Low</td>
+        <td class="bulk-val">High</td>
+      </tr>
+      <tr>
+        <td class="factor-name">Fat</td>
+        <td class="cut-val">Low–Moderate</td>
+        <td class="bulk-val">Moderate</td>
+      </tr>
+      <tr>
+        <td class="factor-name">Cardio</td>
+        <td class="cut-val">2–3x/week recommended</td>
+        <td class="bulk-val">Optional</td>
+      </tr>
+      <tr>
+        <td class="factor-name">Training Volume</td>
+        <td class="cut-val">Maintain or slight decrease</td>
+        <td class="bulk-val">Progressive overload</td>
+      </tr>
+      <tr>
+        <td class="factor-name">Duration</td>
+        <td class="cut-val">8–16 weeks</td>
+        <td class="bulk-val">12–24 weeks</td>
+      </tr>
+      <tr>
+        <td class="factor-name">Rate of Change</td>
+        <td class="cut-val">0.5–1% BW/week</td>
+        <td class="bulk-val">0.25–0.5% BW/week</td>
+      </tr>
+      <tr>
+        <td class="factor-name">Priority</td>
+        <td class="cut-val">Preserve muscle, lose fat</td>
+        <td class="bulk-val">Build muscle, limit fat</td>
+      </tr>
+      <tr>
+        <td class="factor-name">Meal Frequency</td>
+        <td class="cut-val">4–5 meals (appetite control)</td>
+        <td class="bulk-val">4–6 meals (calorie density)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h4 style="margin-bottom: 12px;">Supplement Essentials</h4>
+
+  <div class="three-col" style="margin-bottom: 14px;">
+    <div class="supp-card">
+      <div class="supp-name">Creatine Monohydrate</div>
+      <div class="supp-dose">5g daily &bull; Year-round</div>
+      <p>Most researched supplement in history. Boosts strength and performance in both phases.</p>
+    </div>
+    <div class="supp-card">
+      <div class="supp-name">Whey Protein</div>
+      <div class="supp-dose">1–2 scoops daily</div>
+      <p>Convenient protein source. Use it to close the gap on daily protein targets.</p>
+    </div>
+    <div class="supp-card">
+      <div class="supp-name">Vitamin D3</div>
+      <div class="supp-dose">2,000–5,000 IU daily</div>
+      <p>Most people are deficient. Supports testosterone, immunity, and recovery.</p>
+    </div>
+    <div class="supp-card">
+      <div class="supp-name">Omega-3 Fish Oil</div>
+      <div class="supp-dose">1–2g EPA+DHA daily</div>
+      <p>Anti-inflammatory. Supports heart health, brain function, and joint recovery.</p>
+    </div>
+    <div class="supp-card">
+      <div class="supp-name">Caffeine</div>
+      <div class="supp-dose">100–200mg pre-workout</div>
+      <p>Improves strength output and endurance. Especially useful during a cut for energy.</p>
+    </div>
+    <div class="supp-card">
+      <div class="supp-name">Magnesium</div>
+      <div class="supp-dose">200–400mg before bed</div>
+      <p>Improves sleep quality and recovery. Most people are chronically deficient.</p>
+    </div>
+  </div>
+
+  <div class="pro-tip">
+    <div class="tip-label">Pro Tip</div>
+    <p>Supplements are the last 5%. Nail your calories, protein, sleep, and training first. No pill replaces consistency — but the right ones make consistency easier.</p>
+  </div>
+
+  <div class="page-number">5</div>
+  <div class="page-watermark">NUTRILISH</div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 6 — DECISION FRAMEWORK + CTA
+════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-number">5</div>
+    <h2>Your 12-Month Plan</h2>
+  </div>
+
+  <div class="two-col" style="gap: 20px; margin-bottom: 20px;">
+
+    <!-- YEARLY TIMELINE -->
+    <div>
+      <h4 style="margin-bottom: 14px;">Sample Year Overview</h4>
+      <div class="card-highlight" style="padding: 20px;">
+        <div class="year-timeline">
+
+          <div class="year-segment">
+            <div class="year-dot bulk"></div>
+            <div class="year-content">
+              <div class="year-period bulk">Jan – Mar &nbsp;(12 weeks)</div>
+              <div class="year-desc">BULK — Focus on building muscle and strength. Train heavy, eat big, prioritize compound lifts.</div>
+            </div>
+          </div>
+
+          <div class="year-segment">
+            <div class="year-dot maintain"></div>
+            <div class="year-content">
+              <div class="year-period maintain">April &nbsp;(4 weeks)</div>
+              <div class="year-desc">Maintenance — Eat at TDEE. Let your body normalize at the new weight before cutting.</div>
+            </div>
+          </div>
+
+          <div class="year-segment">
+            <div class="year-dot cut"></div>
+            <div class="year-content">
+              <div class="year-period cut">May – Jul &nbsp;(12 weeks)</div>
+              <div class="year-desc">CUT — Lean out for summer. Slow deficit, high protein, 2–3x cardio per week.</div>
+            </div>
+          </div>
+
+          <div class="year-segment">
+            <div class="year-dot maintain"></div>
+            <div class="year-content">
+              <div class="year-period maintain">August &nbsp;(4 weeks)</div>
+              <div class="year-desc">Maintenance — Stabilize your new body composition. Lock in the habits.</div>
+            </div>
+          </div>
+
+          <div class="year-segment">
+            <div class="year-dot bulk"></div>
+            <div class="year-content">
+              <div class="year-period bulk">Sep – Nov &nbsp;(12 weeks)</div>
+              <div class="year-desc">BULK — Off-season gains. Leverage lower body fat for a more efficient bulk.</div>
+            </div>
+          </div>
+
+          <div class="year-segment">
+            <div class="year-dot maintain"></div>
+            <div class="year-content">
+              <div class="year-period maintain">December &nbsp;(4 weeks)</div>
+              <div class="year-desc">Maintenance — Enjoy the holidays. Eat at TDEE. Set up for a strong January.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- QUICK DECISION CARD -->
+    <div>
+      <h4 style="margin-bottom: 14px;">Quick Decision Framework</h4>
+      <div class="decision-card" style="margin-bottom: 16px;">
+        <p style="font-size: 12px; color: var(--text); font-weight: 600; margin-bottom: 12px;">Ask yourself these 3 questions:</p>
+        <div class="decision-q">
+          <span class="q-num">1</span>
+          <span class="q-text">Am I above 18% body fat right now?</span>
+          <span class="q-answer cut">Cut First</span>
+        </div>
+        <div class="decision-q">
+          <span class="q-num">2</span>
+          <span class="q-text">Am I satisfied with my current muscle mass?</span>
+          <span class="q-answer bulk">If No, Bulk</span>
+        </div>
+        <div class="decision-q">
+          <span class="q-num">3</span>
+          <span class="q-text">Is there a deadline — vacation, competition, event?</span>
+          <span class="q-answer cut">Cut 12 Wks Out</span>
+        </div>
+      </div>
+
+      <div class="stat-grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 0;">
+        <div class="stat-box">
+          <div class="stat-value" style="color: var(--cut); font-size: 22px;">12–18%</div>
+          <div class="stat-label">Ideal BF range to cycle (men)</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="color: var(--bulk); font-size: 22px;">~0.5 lb</div>
+          <div class="stat-label">Optimal weekly bulk gain</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="color: var(--cut); font-size: 22px;">1g/lb</div>
+          <div class="stat-label">Protein target while cutting</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" style="color: var(--bulk); font-size: 22px;">+300</div>
+          <div class="stat-label">Cal surplus sweet spot</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CTA BANNER -->
+  <div class="cta-banner">
+    <h3>Let NutriLish adapt your nutrition to every phase</h3>
+    <p>AI-powered macro tracking that evolves with your goals. Cut or bulk — NutriLish has you covered.</p>
+    <a class="btn" href="https://apps.apple.com/app/id6759699590">Download NutriLish Free &rarr;</a>
+    <p style="margin-top: 10px; margin-bottom: 0; font-size: 11px; color: var(--text-muted);">Available on the App Store &bull; iOS 17+</p>
+  </div>
+
+  <div class="page-number">6</div>
+  <div class="page-watermark">NUTRILISH</div>
+</div>
+
+</body>
+</html>

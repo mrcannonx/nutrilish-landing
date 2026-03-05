@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Macro Counting Cheat Sheet — NutriLish</title>
+  <link rel="stylesheet" href="shared-styles.css" />
+  <style>
+    /* ─── Cheat Sheet Overrides & Additions ─── */
+
+    /* Slim header bar replaces full cover */
+    .cheat-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      margin-bottom: 20px;
+    }
+
+    .cheat-header .brand-mark {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cheat-header .brand-icon {
+      width: 34px;
+      height: 34px;
+      background: var(--primary);
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 4px 12px rgba(22, 168, 110, 0.35);
+    }
+
+    .cheat-header .brand-name {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--primary);
+    }
+
+    .cheat-header .title-group {
+      text-align: center;
+      flex: 1;
+      padding: 0 16px;
+    }
+
+    .cheat-header .title-group h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+      color: var(--text);
+    }
+
+    .cheat-header .title-group .subtitle {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 400;
+      margin-top: 2px;
+    }
+
+    .cheat-header .guide-badge {
+      background: var(--primary-glow);
+      border: 1px solid var(--primary);
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--primary-light);
+      white-space: nowrap;
+    }
+
+    /* ─── Section Label ─── */
+    .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ─── Macro Stat Boxes (large, infographic-style) ─── */
+    .macro-stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .macro-stat-box {
+      border-radius: 14px;
+      padding: 16px 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .macro-stat-box::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      opacity: 0.08;
+    }
+
+    .macro-stat-box.protein {
+      background: rgba(255, 107, 107, 0.08);
+      border: 1px solid rgba(255, 107, 107, 0.3);
+    }
+    .macro-stat-box.protein::before { background: #FF6B6B; }
+
+    .macro-stat-box.carbs {
+      background: rgba(77, 171, 247, 0.08);
+      border: 1px solid rgba(77, 171, 247, 0.3);
+    }
+    .macro-stat-box.carbs::before { background: #4DABF7; }
+
+    .macro-stat-box.fat {
+      background: rgba(192, 132, 252, 0.08);
+      border: 1px solid rgba(192, 132, 252, 0.3);
+    }
+    .macro-stat-box.fat::before { background: #C084FC; }
+
+    .macro-stat-box .macro-icon {
+      font-size: 22px;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .macro-stat-box .macro-name {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 10px;
+    }
+    .protein .macro-name { color: #FF6B6B; }
+    .carbs .macro-name { color: #4DABF7; }
+    .fat .macro-name { color: #C084FC; }
+
+    .macro-stat-box .macro-cal {
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 2px;
+    }
+    .protein .macro-cal { color: #FF6B6B; }
+    .carbs .macro-cal { color: #4DABF7; }
+    .fat .macro-cal { color: #C084FC; }
+
+    .macro-stat-box .macro-cal-label {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .macro-stat-box .macro-detail {
+      font-size: 11px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .macro-stat-box .pct-pill {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 3px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .protein .pct-pill { background: rgba(255,107,107,0.15); color: #FF6B6B; }
+    .carbs .pct-pill { background: rgba(77,171,247,0.15); color: #4DABF7; }
+    .fat .pct-pill { background: rgba(192,132,252,0.15); color: #C084FC; }
+
+    /* ─── Steps ─── */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .step-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .step-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .step-num.s1 { background: rgba(22,168,110,0.2); color: var(--primary-light); }
+    .step-num.s2 { background: rgba(255,181,71,0.15); color: var(--accent); }
+    .step-num.s3 { background: rgba(77,171,247,0.15); color: #4DABF7; }
+    .step-num.s4 { background: rgba(192,132,252,0.15); color: #C084FC; }
+
+    .step-content .step-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .step-content .step-body {
+      font-size: 11px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .step-content .step-body code {
+      font-family: 'SF Mono', 'JetBrains Mono', 'Courier New', monospace;
+      font-size: 10.5px;
+      background: var(--surface-2);
+      color: var(--primary-light);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+
+    /* ─── Worked Example ─── */
+    .example-box {
+      background: linear-gradient(135deg, rgba(22,168,110,0.07) 0%, rgba(22,168,110,0.03) 100%);
+      border: 1px solid rgba(22,168,110,0.4);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-top: 12px;
+    }
+
+    .example-box .example-label {
+      font-size: 9px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .example-box .example-intro {
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+      font-style: italic;
+    }
+
+    .example-macro-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .example-macro {
+      flex: 1;
+      background: var(--surface);
+      border-radius: 8px;
+      padding: 8px 10px;
+      text-align: center;
+    }
+
+    .example-macro .em-val {
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .example-macro .em-val.p { color: #FF6B6B; }
+    .example-macro .em-val.c { color: #4DABF7; }
+    .example-macro .em-val.f { color: #C084FC; }
+    .example-macro .em-val.cal { color: var(--accent); }
+
+    .example-macro .em-lbl {
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .example-macro .em-sub {
+      font-size: 9px;
+      color: var(--text-muted);
+    }
+
+    /* ─── Arrow chain ─── */
+    .calc-chain {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin: 8px 0;
+    }
+
+    .calc-chain .chain-box {
+      background: var(--surface-2);
+      border-radius: 7px;
+      padding: 5px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .calc-chain .chain-arrow {
+      font-size: 12px;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    /* ─── Activity Table (inline) ─── */
+    .activity-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .activity-item {
+      background: var(--surface-2);
+      border-radius: 8px;
+      padding: 7px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .activity-item .act-name {
+      font-size: 10.5px;
+      color: var(--text-secondary);
+    }
+
+    .activity-item .act-mult {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    /* ─── Data table compact overrides ─── */
+    .data-table.compact thead th {
+      padding: 7px 10px;
+      font-size: 9px;
+    }
+
+    .data-table.compact tbody td {
+      padding: 7px 10px;
+      font-size: 11px;
+    }
+
+    /* Highlight column for protein efficiency */
+    .data-table .efficiency {
+      font-weight: 700;
+      color: var(--primary-light);
+      text-align: right;
+    }
+
+    /* Protein column colored */
+    .data-table .col-protein {
+      color: #FF6B6B;
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .data-table .col-carbs {
+      color: #4DABF7;
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .data-table .col-fat {
+      color: #C084FC;
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .data-table .col-fiber {
+      color: var(--primary);
+      font-weight: 600;
+      text-align: right;
+    }
+
+    /* ─── Portion Guide ─── */
+    .portion-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+    }
+
+    .portion-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 12px;
+      text-align: center;
+    }
+
+    .portion-card .portion-emoji {
+      font-size: 28px;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .portion-card .portion-name {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+
+    .portion-card .portion-equals {
+      font-size: 9.5px;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+      line-height: 1.4;
+    }
+
+    .portion-card .portion-macro {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 100px;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .portion-card .pm-protein { background: rgba(255,107,107,0.15); color: #FF6B6B; }
+    .portion-card .pm-carbs { background: rgba(77,171,247,0.15); color: #4DABF7; }
+    .portion-card .pm-fat { background: rgba(192,132,252,0.15); color: #C084FC; }
+    .portion-card .pm-neutral { background: rgba(22,168,110,0.12); color: var(--primary-light); }
+
+    /* ─── Page layout tweaks for density ─── */
+    .page {
+      padding: 0.55in 0.65in;
+    }
+
+    .section-gap { margin-bottom: 16px; }
+    .section-gap-sm { margin-bottom: 10px; }
+
+    /* ─── Two-column layout for page 2 tables ─── */
+    .table-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .table-col-header {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .color-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .dot-carbs { background: #4DABF7; }
+    .dot-fat { background: #C084FC; }
+    .dot-protein { background: #FF6B6B; }
+    .dot-accent { background: var(--accent); }
+
+    /* Fat type badge */
+    .fat-type {
+      display: inline-block;
+      padding: 1px 7px;
+      border-radius: 100px;
+      font-size: 9px;
+      font-weight: 600;
+    }
+
+    .fat-type.mono { background: rgba(192,132,252,0.15); color: #C084FC; }
+    .fat-type.omega { background: rgba(77,171,247,0.15); color: #4DABF7; }
+
+    /* ─── CTA compact for page 2 ─── */
+    .cta-compact {
+      background: linear-gradient(135deg, rgba(22,168,110,0.12) 0%, rgba(22,168,110,0.05) 100%);
+      border: 1px solid rgba(22,168,110,0.5);
+      border-radius: 14px;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-top: 16px;
+      box-shadow: 0 4px 24px rgba(22,168,110,0.1);
+    }
+
+    .cta-compact .cta-text .cta-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .cta-compact .cta-text .cta-sub {
+      font-size: 11px;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    .cta-compact .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary);
+      color: white;
+      padding: 11px 22px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+      box-shadow: 0 4px 16px rgba(22,168,110,0.4);
+    }
+
+    .cta-compact .cta-btn .arrow {
+      font-size: 14px;
+    }
+
+    /* ─── Food Photography Images ─── */
+    .guide-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 16px;
+      border: 1px solid var(--border, #2A3040);
+      margin: 16px 0;
+    }
+
+    .guide-img-sm {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid var(--border, #2A3040);
+      margin: 12px 0;
+    }
+
+    .guide-img-banner {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid var(--border, #2A3040);
+      margin: 12px 0;
+    }
+
+    .cover-img {
+      width: 80%;
+      max-width: 400px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 20px;
+      margin: 24px auto;
+      display: block;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- PAGE 1: The Macro Breakdown                                    -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <!-- Slim Header Bar -->
+  <header class="cheat-header">
+    <div class="brand-mark">
+      <div class="brand-icon">🍃</div>
+      <span class="brand-name">Nutrilish</span>
+    </div>
+    <div class="title-group">
+      <h1>The Macro Counting Cheat Sheet</h1>
+      <div class="subtitle">Your at-a-glance reference for hitting your nutrition goals</div>
+    </div>
+    <div class="guide-badge">Quick Ref</div>
+  </header>
+
+  <!-- Food Photography Banner -->
+  <img src="../assets/macro-foods-flat-lay.png" alt="Macro foods flat lay" class="guide-img-banner" style="height: 120px;" />
+
+  <!-- Section: What Are Macros? -->
+  <div class="section-gap">
+    <div class="section-label">What Are Macros?</div>
+    <div class="macro-stat-grid">
+
+      <!-- Protein -->
+      <div class="macro-stat-box protein">
+        <span class="macro-icon">🥩</span>
+        <div class="macro-name">Protein</div>
+        <div class="macro-cal">4</div>
+        <div class="macro-cal-label">calories per gram</div>
+        <div class="macro-detail">Builds and repairs muscle tissue. Essential for recovery and body composition.</div>
+        <div class="pct-pill">25–35% of calories</div>
+      </div>
+
+      <!-- Carbs -->
+      <div class="macro-stat-box carbs">
+        <span class="macro-icon">🍚</span>
+        <div class="macro-name">Carbohydrates</div>
+        <div class="macro-cal">4</div>
+        <div class="macro-cal-label">calories per gram</div>
+        <div class="macro-detail">Primary fuel source for brain and muscle. Powers your workouts and daily activity.</div>
+        <div class="pct-pill">40–50% of calories</div>
+      </div>
+
+      <!-- Fat -->
+      <div class="macro-stat-box fat">
+        <span class="macro-icon">🥑</span>
+        <div class="macro-name">Fat</div>
+        <div class="macro-cal">9</div>
+        <div class="macro-cal-label">calories per gram</div>
+        <div class="macro-detail">Supports hormones, brain health, and absorption of fat-soluble vitamins A, D, E, K.</div>
+        <div class="pct-pill">20–30% of calories</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Section: How to Calculate Your Macros -->
+  <div class="section-gap">
+    <div class="section-label">How to Calculate Your Macros</div>
+    <div class="card" style="padding: 16px 20px; margin-bottom: 10px;">
+      <div class="steps">
+
+        <div class="step-row">
+          <div class="step-num s1">1</div>
+          <div class="step-content">
+            <div class="step-title">Calculate Your BMR (Basal Metabolic Rate)</div>
+            <div class="step-body">
+              <strong>Men:</strong> <code>10 × weight(kg) + 6.25 × height(cm) − 5 × age + 5</code><br/>
+              <strong>Women:</strong> <code>10 × weight(kg) + 6.25 × height(cm) − 5 × age − 161</code>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-row" style="margin-top: 6px;">
+          <div class="step-num s2">2</div>
+          <div class="step-content">
+            <div class="step-title">Multiply by Your Activity Factor (TDEE)</div>
+            <div class="activity-grid">
+              <div class="activity-item"><span class="act-name">Sedentary (desk job)</span><span class="act-mult">×1.2</span></div>
+              <div class="activity-item"><span class="act-name">Lightly active (1–3 days/wk)</span><span class="act-mult">×1.375</span></div>
+              <div class="activity-item"><span class="act-name">Moderately active (3–5 days/wk)</span><span class="act-mult">×1.55</span></div>
+              <div class="activity-item"><span class="act-name">Very active (6–7 days/wk)</span><span class="act-mult">×1.725</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-row" style="margin-top: 6px;">
+          <div class="step-num s3">3</div>
+          <div class="step-content">
+            <div class="step-title">Set Your Calorie Goal</div>
+            <div class="step-body">
+              <strong style="color: #FF6B6B;">Cut (lose fat):</strong> TDEE − 500 cal &nbsp;&nbsp;
+              <strong style="color: var(--primary-light);">Maintain:</strong> TDEE ± 0 &nbsp;&nbsp;
+              <strong style="color: #4DABF7;">Bulk (build muscle):</strong> TDEE + 300 cal
+            </div>
+          </div>
+        </div>
+
+        <div class="step-row" style="margin-top: 6px;">
+          <div class="step-num s4">4</div>
+          <div class="step-content">
+            <div class="step-title">Split Your Macros</div>
+            <div class="step-body">
+              Set <strong style="color: #FF6B6B;">Protein = 1g per lb bodyweight</strong> (×4 = protein calories). Divide remaining calories between carbs and fat using your target percentages.
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Worked Example -->
+      <div class="example-box">
+        <div class="example-label">Worked Example</div>
+        <div class="example-intro">180 lb male · moderately active · cutting goal</div>
+        <div class="calc-chain">
+          <div class="chain-box">BMR = 1,890</div>
+          <div class="chain-arrow">→</div>
+          <div class="chain-box">TDEE = 2,930</div>
+          <div class="chain-arrow">→</div>
+          <div class="chain-box" style="color: var(--accent); background: rgba(255,181,71,0.08); border: 1px solid rgba(255,181,71,0.2);">Target = 2,430 cal</div>
+        </div>
+        <div class="example-macro-row">
+          <div class="example-macro">
+            <div class="em-val p">180g</div>
+            <div class="em-lbl">Protein</div>
+            <div class="em-sub">720 cal</div>
+          </div>
+          <div class="example-macro">
+            <div class="em-val c">250g</div>
+            <div class="em-lbl">Carbs</div>
+            <div class="em-sub">1,000 cal</div>
+          </div>
+          <div class="example-macro">
+            <div class="em-val f">79g</div>
+            <div class="em-lbl">Fat</div>
+            <div class="em-sub">710 cal</div>
+          </div>
+          <div class="example-macro">
+            <div class="em-val cal">2,430</div>
+            <div class="em-lbl">Total Cal</div>
+            <div class="em-sub">−500 deficit</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Section: Top Protein Sources -->
+  <div class="section-gap-sm">
+    <div class="section-label">Top Protein Sources — Ranked by Efficiency</div>
+    <table class="data-table compact">
+      <thead>
+        <tr>
+          <th>Food</th>
+          <th>Serving</th>
+          <th class="num" style="color: #FF6B6B;">Protein</th>
+          <th class="num">Calories</th>
+          <th class="num" style="color: var(--primary-light);">Cal / g Protein</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="food-name">Tuna (canned, water)</td>
+          <td>1 can (5 oz)</td>
+          <td class="col-protein">30g</td>
+          <td class="num">120</td>
+          <td class="efficiency">4.0</td>
+        </tr>
+        <tr>
+          <td class="food-name">Chicken Breast</td>
+          <td>6 oz cooked</td>
+          <td class="col-protein">42g</td>
+          <td class="num">187</td>
+          <td class="efficiency">4.5</td>
+        </tr>
+        <tr>
+          <td class="food-name">Shrimp</td>
+          <td>6 oz cooked</td>
+          <td class="col-protein">36g</td>
+          <td class="num">170</td>
+          <td class="efficiency">4.7</td>
+        </tr>
+        <tr>
+          <td class="food-name">Turkey Breast</td>
+          <td>6 oz cooked</td>
+          <td class="col-protein">38g</td>
+          <td class="num">180</td>
+          <td class="efficiency">4.7</td>
+        </tr>
+        <tr>
+          <td class="food-name">Egg Whites</td>
+          <td>1 cup (243g)</td>
+          <td class="col-protein">26g</td>
+          <td class="num">126</td>
+          <td class="efficiency">4.8</td>
+        </tr>
+        <tr>
+          <td class="food-name">Whey Protein</td>
+          <td>1 scoop (~32g)</td>
+          <td class="col-protein">25g</td>
+          <td class="num">120</td>
+          <td class="efficiency">4.8</td>
+        </tr>
+        <tr>
+          <td class="food-name">Greek Yogurt (0% fat)</td>
+          <td>1 cup (227g)</td>
+          <td class="col-protein">20g</td>
+          <td class="num">100</td>
+          <td class="efficiency">5.0</td>
+        </tr>
+        <tr>
+          <td class="food-name">Cottage Cheese (1% fat)</td>
+          <td>1 cup (226g)</td>
+          <td class="col-protein">28g</td>
+          <td class="num">163</td>
+          <td class="efficiency">5.8</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="font-size: 9.5px; color: var(--text-muted); margin-top: 4px;">Lower Cal/g Protein = more protein per calorie. Prioritize foods under 5.0 when cutting.</div>
+  </div>
+
+  <!-- Page number and watermark -->
+  <div class="page-watermark">NUTRILISH.APP</div>
+  <div class="page-number">1 of 2</div>
+
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- PAGE 2: Quick Reference Tables                                 -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <!-- Slim Header Bar (repeated) -->
+  <header class="cheat-header">
+    <div class="brand-mark">
+      <div class="brand-icon">🍃</div>
+      <span class="brand-name">Nutrilish</span>
+    </div>
+    <div class="title-group">
+      <h1>The Macro Counting Cheat Sheet</h1>
+      <div class="subtitle">Quick reference tables &amp; portion guide</div>
+    </div>
+    <div class="guide-badge">Quick Ref</div>
+  </header>
+
+  <!-- Two-column: Carbs + Fats tables -->
+  <div class="table-cols section-gap">
+
+    <!-- Carb Sources -->
+    <div>
+      <div class="table-col-header">
+        <span class="color-dot dot-carbs"></span>
+        Carbohydrate Sources
+      </div>
+      <table class="data-table compact">
+        <thead>
+          <tr>
+            <th>Food</th>
+            <th>Serving</th>
+            <th class="num" style="color: #4DABF7;">Carbs</th>
+            <th class="num">Cal</th>
+            <th class="num" style="color: var(--primary);">Fiber</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="food-name">White Rice</td>
+            <td>1 cup cooked</td>
+            <td class="col-carbs">45g</td>
+            <td class="num">206</td>
+            <td class="col-fiber">0.6g</td>
+          </tr>
+          <tr>
+            <td class="food-name">Brown Rice</td>
+            <td>1 cup cooked</td>
+            <td class="col-carbs">45g</td>
+            <td class="num">216</td>
+            <td class="col-fiber">3.5g</td>
+          </tr>
+          <tr>
+            <td class="food-name">Oats (rolled)</td>
+            <td>1/2 cup dry</td>
+            <td class="col-carbs">27g</td>
+            <td class="num">150</td>
+            <td class="col-fiber">4g</td>
+          </tr>
+          <tr>
+            <td class="food-name">Sweet Potato</td>
+            <td>1 medium (130g)</td>
+            <td class="col-carbs">27g</td>
+            <td class="num">112</td>
+            <td class="col-fiber">4g</td>
+          </tr>
+          <tr>
+            <td class="food-name">Banana</td>
+            <td>1 medium</td>
+            <td class="col-carbs">27g</td>
+            <td class="num">105</td>
+            <td class="col-fiber">3g</td>
+          </tr>
+          <tr>
+            <td class="food-name">Quinoa</td>
+            <td>1 cup cooked</td>
+            <td class="col-carbs">39g</td>
+            <td class="num">222</td>
+            <td class="col-fiber">5g</td>
+          </tr>
+          <tr>
+            <td class="food-name">Whole Wheat Bread</td>
+            <td>2 slices</td>
+            <td class="col-carbs">24g</td>
+            <td class="num">140</td>
+            <td class="col-fiber">4g</td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="font-size: 9px; color: var(--text-muted); margin-top: 4px;">Prefer higher-fiber sources for satiety and blood sugar control.</div>
+    </div>
+
+    <!-- Healthy Fat Sources -->
+    <div>
+      <div class="table-col-header">
+        <span class="color-dot dot-fat"></span>
+        Healthy Fat Sources
+      </div>
+      <table class="data-table compact">
+        <thead>
+          <tr>
+            <th>Food</th>
+            <th>Serving</th>
+            <th class="num" style="color: #C084FC;">Fat</th>
+            <th class="num">Cal</th>
+            <th class="num">Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="food-name">Avocado</td>
+            <td>1/2 medium</td>
+            <td class="col-fat">15g</td>
+            <td class="num">160</td>
+            <td><span class="fat-type mono">Mono</span></td>
+          </tr>
+          <tr>
+            <td class="food-name">Olive Oil</td>
+            <td>1 tbsp</td>
+            <td class="col-fat">14g</td>
+            <td class="num">119</td>
+            <td><span class="fat-type mono">Mono</span></td>
+          </tr>
+          <tr>
+            <td class="food-name">Almonds</td>
+            <td>1 oz (23 nuts)</td>
+            <td class="col-fat">14g</td>
+            <td class="num">164</td>
+            <td><span class="fat-type mono">Mono</span></td>
+          </tr>
+          <tr>
+            <td class="food-name">Peanut Butter</td>
+            <td>2 tbsp</td>
+            <td class="col-fat">16g</td>
+            <td class="num">190</td>
+            <td><span class="fat-type mono">Mono</span></td>
+          </tr>
+          <tr>
+            <td class="food-name">Salmon</td>
+            <td>6 oz cooked</td>
+            <td class="col-fat">18g</td>
+            <td class="num">311</td>
+            <td><span class="fat-type omega">Omega-3</span></td>
+          </tr>
+          <tr>
+            <td class="food-name">Chia Seeds</td>
+            <td>2 tbsp</td>
+            <td class="col-fat">9g</td>
+            <td class="num">138</td>
+            <td><span class="fat-type omega">Omega-3</span></td>
+          </tr>
+          <tr>
+            <td class="food-name">Walnuts</td>
+            <td>1 oz (14 halves)</td>
+            <td class="col-fat">18g</td>
+            <td class="num">185</td>
+            <td><span class="fat-type omega">Omega-3</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="font-size: 9px; color: var(--text-muted); margin-top: 4px;">Prioritize omega-3 sources (salmon, walnuts, chia) to reduce inflammation.</div>
+    </div>
+
+  </div>
+
+  <!-- Section: Quick Portion Guide -->
+  <div class="section-gap-sm">
+    <div class="section-label">Quick Portion Guide — No Scale Needed</div>
+    <div class="portion-grid">
+
+      <div class="portion-card">
+        <span class="portion-emoji">✋</span>
+        <div class="portion-name">Palm</div>
+        <div class="portion-equals">1 serving protein<br/>~4 oz cooked</div>
+        <span class="portion-macro pm-protein">25–35g protein</span>
+      </div>
+
+      <div class="portion-card">
+        <span class="portion-emoji">✊</span>
+        <div class="portion-name">Fist</div>
+        <div class="portion-equals">1 serving carbs<br/>~1 cup cooked grain</div>
+        <span class="portion-macro pm-carbs">30–45g carbs</span>
+      </div>
+
+      <div class="portion-card">
+        <span class="portion-emoji">👍</span>
+        <div class="portion-name">Thumb</div>
+        <div class="portion-equals">1 serving fat<br/>~1 tbsp nut butter / oil</div>
+        <span class="portion-macro pm-fat">10–15g fat</span>
+      </div>
+
+      <div class="portion-card">
+        <span class="portion-emoji">🤲</span>
+        <div class="portion-name">Cupped Hand</div>
+        <div class="portion-equals">1 serving snack<br/>~1 oz nuts / seeds</div>
+        <span class="portion-macro pm-fat">14g fat</span>
+      </div>
+
+      <div class="portion-card">
+        <span class="portion-emoji">👐</span>
+        <div class="portion-name">Two Hands</div>
+        <div class="portion-equals">1 serving veggies<br/>leafy greens / salad</div>
+        <span class="portion-macro pm-neutral">Unlimited</span>
+      </div>
+
+      <div class="portion-card">
+        <span class="portion-emoji">☝️</span>
+        <div class="portion-name">Fingertip</div>
+        <div class="portion-equals">1 serving cooking oil<br/>~1 tsp</div>
+        <span class="portion-macro pm-fat">~5g fat</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CTA Banner -->
+  <div class="cta-compact">
+    <div class="cta-text">
+      <div class="cta-headline">Track your macros effortlessly with NutriLish</div>
+      <div class="cta-sub">Snap a photo. Get instant macro breakdowns. AI-powered nutrition tracking that does the math for you.</div>
+    </div>
+    <a class="cta-btn" href="https://apps.apple.com/app/id6759699590">
+      Download Free <span class="arrow">→</span>
+    </a>
+  </div>
+
+  <!-- Page number and watermark -->
+  <div class="page-watermark">NUTRILISH.APP</div>
+  <div class="page-number">2 of 2</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>7-Day High Protein Meal Prep Blueprint — NutriLish</title>
+  <link rel="stylesheet" href="shared-styles.css">
+  <style>
+    /* ─── Guide-specific overrides & extras ─── */
+
+    /* Timeline for prep day */
+    .timeline {
+      position: relative;
+      padding-left: 28px;
+      margin: 12px 0;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 9px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--primary), rgba(22,168,110,0.1));
+      border-radius: 2px;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 12px;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -23px;
+      top: 6px;
+      width: 10px;
+      height: 10px;
+      background: var(--primary);
+      border-radius: 50%;
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 0 2px var(--primary);
+    }
+
+    .timeline-item .time {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--primary-light);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 1px;
+    }
+
+    .timeline-item .task {
+      font-size: 12px;
+      color: var(--text);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    /* Grocery two-col layout override */
+    .grocery-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    .grocery-category {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+    }
+
+    .grocery-category h4 {
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .grocery-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 5px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+      font-size: 11.5px;
+      color: var(--text-secondary);
+    }
+
+    .grocery-item:last-child { border-bottom: none; }
+
+    .grocery-item .check {
+      width: 17px;
+      height: 17px;
+      border: 1.5px solid var(--border);
+      border-radius: 5px;
+      flex-shrink: 0;
+    }
+
+    .grocery-item .qty {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-muted);
+      white-space: nowrap;
+      margin-left: auto;
+    }
+
+    /* CTA page full-bleed treatment */
+    .page-cta {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: 11in;
+      padding: 1in;
+      background:
+        radial-gradient(ellipse at 50% 30%, rgba(22, 168, 110, 0.18) 0%, transparent 65%),
+        radial-gradient(ellipse at 30% 80%, rgba(255, 181, 71, 0.07) 0%, transparent 55%),
+        var(--bg);
+    }
+
+    .page-cta .app-icon {
+      width: 88px;
+      height: 88px;
+      background: linear-gradient(135deg, var(--primary) 0%, #0e7a50 100%);
+      border-radius: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 44px;
+      margin-bottom: 28px;
+      box-shadow: 0 12px 40px rgba(22,168,110,0.35);
+    }
+
+    .page-cta .cta-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 14px;
+      max-width: 520px;
+    }
+
+    .page-cta .cta-sub {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      max-width: 420px;
+      margin-bottom: 36px;
+    }
+
+    .page-cta .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--primary);
+      color: white;
+      padding: 16px 36px;
+      border-radius: 100px;
+      font-size: 16px;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 8px 28px rgba(22,168,110,0.4);
+      margin-bottom: 16px;
+    }
+
+    .page-cta .availability {
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+    }
+
+    /* Feature pills for CTA page */
+    .feature-pills {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 32px;
+    }
+
+    .feature-pill {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 7px 16px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .feature-pill .pill-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--primary);
+      border-radius: 50%;
+    }
+
+    /* Macro framework explanation */
+    .macro-explain-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      margin: 12px 0;
+    }
+
+    .macro-explain-card {
+      background: var(--surface-2);
+      border-radius: 10px;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .macro-explain-card .mec-emoji {
+      font-size: 22px;
+      margin-bottom: 6px;
+    }
+
+    .macro-explain-card .mec-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+
+    .macro-explain-card .mec-label.protein { color: #FF6B6B; }
+    .macro-explain-card .mec-label.carbs { color: #4DABF7; }
+    .macro-explain-card .mec-label.fat { color: #C084FC; }
+
+    .macro-explain-card p {
+      font-size: 10px;
+      line-height: 1.4;
+      color: var(--text-muted);
+    }
+
+    /* Table emoji column */
+    .data-table .source-emoji {
+      font-size: 15px;
+      text-align: center;
+      width: 30px;
+    }
+
+    /* Day block compact for 4-day pages */
+    .day-block-sm {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+    }
+
+    .day-block-sm .day-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .meal-row-sm {
+      display: grid;
+      grid-template-columns: 62px 1fr auto;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 11.5px;
+    }
+
+    .meal-row-sm:last-child { border-bottom: none; }
+
+    .meal-row-sm .meal-type {
+      font-weight: 700;
+      color: var(--text-muted);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .meal-row-sm .meal-name {
+      color: var(--text);
+      font-weight: 500;
+      font-size: 11.5px;
+      line-height: 1.3;
+    }
+
+    .meal-row-sm .meal-macros {
+      color: var(--text-muted);
+      font-size: 10px;
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    /* Daily total row */
+    .day-total {
+      display: flex;
+      justify-content: flex-end;
+      gap: 16px;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+    }
+
+    .day-total .total-item {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .day-total .total-item span {
+      color: var(--text);
+    }
+
+    /* Food photography images */
+    .guide-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      margin: 16px 0;
+    }
+
+    .guide-img-sm {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      margin: 12px 0;
+    }
+
+    .cover-img {
+      width: 80%;
+      max-width: 400px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 20px;
+      margin: 24px auto;
+      display: block;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 1 — COVER
+════════════════════════════════════════════════════ -->
+<div class="page cover">
+  <div class="logo-mark">🍃</div>
+  <div class="brand">NUTRILISH</div>
+  <h1>
+    7-Day<br>
+    <span class="accent">High Protein</span><br>
+    Meal Prep Blueprint
+  </h1>
+  <p class="subtitle">Simplify your week. Hit your macros. No guesswork.</p>
+  <img src="../assets/hero-meal-prep.png" alt="Meal prep containers arranged for the week" class="cover-img">
+  <div class="badge">
+    <span class="dot"></span>
+    Free Guide &bull; 2026 Edition
+  </div>
+  <div class="footer-line">nutrilish.vercel.app</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 2 — OVERVIEW + WHY MEAL PREP
+════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-number">1</div>
+    <h2>Why Meal Prep Works</h2>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-box">
+      <div class="stat-value">3–5 hrs</div>
+      <div class="stat-label">Saved per week</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value">30%</div>
+      <div class="stat-label">Less food waste</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value">$50–80</div>
+      <div class="stat-label">Saved monthly</div>
+    </div>
+  </div>
+
+  <p class="lead" style="margin: 16px 0 10px;">
+    Most people fail their diet on Wednesday — not because they lack willpower, but because they're hungry, it's 7pm, and the easiest option is a drive-through. Meal prep closes that gap.
+  </p>
+  <p style="margin-bottom: 16px;">
+    Spending a few hours on Sunday means every meal this week is already decided, portioned, and ready to heat. No decision fatigue. No emergency takeout. Just consistency, compounding over time into real results.
+  </p>
+
+  <div class="pro-tip">
+    <div class="tip-label">Pro Tip</div>
+    <p>Start with just 2 meals per day. Perfect those, then expand. Trying to prep all 5 meals on day one is how you burn out in week two.</p>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-bottom: 14px;">🛒 What You'll Need</h3>
+    <ul class="checklist">
+      <li><span class="check"></span><span>Glass meal prep containers (10–12 pack, 2–4 cup sizes)</span></li>
+      <li><span class="check"></span><span>Kitchen scale — non-negotiable for accurate macros</span></li>
+      <li><span class="check"></span><span>Large cutting board + sharp chef's knife</span></li>
+      <li><span class="check"></span><span>Sheet pans (2–3) for roasting proteins + vegetables at once</span></li>
+      <li><span class="check"></span><span>Slow cooker or Instant Pot for hands-off batch cooking</span></li>
+      <li><span class="check"></span><span>Freezer bags for smoothie packs and batch-frozen portions</span></li>
+    </ul>
+  </div>
+
+  <div class="page-number">2</div>
+  <div class="page-watermark">NUTRILISH</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 3 — MACRO FRAMEWORK
+════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-number">2</div>
+    <h2>Your Macro Framework</h2>
+  </div>
+
+  <p style="margin-bottom: 4px;">These targets are calibrated for an active adult (150–180 lb) in a slight deficit with muscle retention as the priority. Adjust up or down by 100–200 calories based on your weight and activity level.</p>
+
+  <div class="macro-row">
+    <div class="macro-badge cal">
+      <div class="value">2,100</div>
+      <div class="label">Calories / day</div>
+    </div>
+    <div class="macro-badge protein">
+      <div class="value">180g</div>
+      <div class="label">Protein</div>
+    </div>
+    <div class="macro-badge carbs">
+      <div class="value">200g</div>
+      <div class="label">Carbs</div>
+    </div>
+    <div class="macro-badge fat">
+      <div class="value">65g</div>
+      <div class="label">Fat</div>
+    </div>
+  </div>
+
+  <div class="card-highlight" style="margin-bottom: 14px;">
+    <h3 style="margin-bottom: 8px;">Protein First. Always.</h3>
+    <p style="color: var(--text); font-size: 12px; line-height: 1.6; margin-bottom: 10px;">
+      Protein is the only macro that directly builds and preserves muscle. At 180g/day, you're eating roughly 1g per pound of goal bodyweight — the research-backed sweet spot. Fill your plate with protein first, then add carbs and fat to reach your calorie target.
+    </p>
+    <div class="macro-explain-grid">
+      <div class="macro-explain-card">
+        <div class="mec-emoji">🥩</div>
+        <div class="mec-label protein">Protein</div>
+        <p>Muscle repair, satiety, thermogenic — burns more calories digesting than fat or carbs</p>
+      </div>
+      <div class="macro-explain-card">
+        <div class="mec-emoji">🍚</div>
+        <div class="mec-label carbs">Carbs</div>
+        <p>Primary fuel for workouts and brain function. Time them around training for best results</p>
+      </div>
+      <div class="macro-explain-card">
+        <div class="mec-emoji">🥑</div>
+        <div class="mec-label fat">Fat</div>
+        <p>Hormone production, joint health, fat-soluble vitamin absorption. Never go below 40g/day</p>
+      </div>
+    </div>
+  </div>
+
+  <img src="../assets/chicken-rice-bowl.png" alt="Chicken and rice bowl with vegetables" class="guide-img">
+
+  <h4>Protein Sources Cheat Sheet</h4>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Source</th>
+        <th>Serving</th>
+        <th class="num">Protein</th>
+        <th class="num">Calories</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="source-emoji">🍗</td>
+        <td class="food-name">Chicken Breast</td>
+        <td>6 oz cooked</td>
+        <td class="num" style="color: #FF6B6B; font-weight: 700;">42g</td>
+        <td class="num">187</td>
+      </tr>
+      <tr>
+        <td class="source-emoji">🦃</td>
+        <td class="food-name">Ground Turkey 93%</td>
+        <td>6 oz cooked</td>
+        <td class="num" style="color: #FF6B6B; font-weight: 700;">33g</td>
+        <td class="num">240</td>
+      </tr>
+      <tr>
+        <td class="source-emoji">🐟</td>
+        <td class="food-name">Salmon Fillet</td>
+        <td>6 oz cooked</td>
+        <td class="num" style="color: #FF6B6B; font-weight: 700;">34g</td>
+        <td class="num">311</td>
+      </tr>
+      <tr>
+        <td class="source-emoji">🥛</td>
+        <td class="food-name">Greek Yogurt 0%</td>
+        <td>1 cup (227g)</td>
+        <td class="num" style="color: #FF6B6B; font-weight: 700;">20g</td>
+        <td class="num">100</td>
+      </tr>
+      <tr>
+        <td class="source-emoji">🥚</td>
+        <td class="food-name">Eggs</td>
+        <td>3 large</td>
+        <td class="num" style="color: #FF6B6B; font-weight: 700;">18g</td>
+        <td class="num">210</td>
+      </tr>
+      <tr>
+        <td class="source-emoji">🧀</td>
+        <td class="food-name">Cottage Cheese</td>
+        <td>1 cup (226g)</td>
+        <td class="num" style="color: #FF6B6B; font-weight: 700;">28g</td>
+        <td class="num">163</td>
+      </tr>
+      <tr>
+        <td class="source-emoji">🌿</td>
+        <td class="food-name">Tofu (firm)</td>
+        <td>6 oz</td>
+        <td class="num" style="color: #FF6B6B; font-weight: 700;">15g</td>
+        <td class="num">126</td>
+      </tr>
+      <tr>
+        <td class="source-emoji">🥩</td>
+        <td class="food-name">Lean Ground Beef 90%</td>
+        <td>6 oz cooked</td>
+        <td class="num" style="color: #FF6B6B; font-weight: 700;">36g</td>
+        <td class="num">290</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="page-number">3</div>
+  <div class="page-watermark">NUTRILISH</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 4 — DAYS 1–3 MEAL PLAN
+════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-number">3</div>
+    <h2>Days 1–3</h2>
+  </div>
+
+  <!-- Day 1 -->
+  <div class="day-block-sm">
+    <div class="day-label">Day 1 — Monday</div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Breakfast</span>
+      <span class="meal-name">🥛 Greek yogurt parfait with berries &amp; granola</span>
+      <span class="meal-macros">380 cal · 35P · 40C · 8F</span>
+    </div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Lunch</span>
+      <span class="meal-name">🍗 Chicken + rice + broccoli bowl</span>
+      <span class="meal-macros">520 cal · 45P · 48C · 12F</span>
+    </div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Snack</span>
+      <span class="meal-name">🧀 Cottage cheese + almonds</span>
+      <span class="meal-macros">280 cal · 22P · 12C · 16F</span>
+    </div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Dinner</span>
+      <span class="meal-name">🐟 Salmon + sweet potato + asparagus</span>
+      <span class="meal-macros">550 cal · 38P · 52C · 18F</span>
+    </div>
+    <div class="day-total">
+      <div class="total-item">Total: <span>&nbsp;1,730 cal</span></div>
+      <div class="total-item">Protein: <span style="color: #FF6B6B;">&nbsp;140g</span></div>
+      <div class="total-item">Carbs: <span style="color: #4DABF7;">&nbsp;152C</span></div>
+      <div class="total-item">Fat: <span style="color: #C084FC;">&nbsp;54g</span></div>
+    </div>
+  </div>
+
+  <!-- Day 2 -->
+  <div class="day-block-sm">
+    <div class="day-label">Day 2 — Tuesday</div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Breakfast</span>
+      <span class="meal-name">🥚 Egg white omelette with spinach + whole grain toast</span>
+      <span class="meal-macros">350 cal · 32P · 28C · 10F</span>
+    </div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Lunch</span>
+      <span class="meal-name">🦃 Turkey meatballs + quinoa + roasted veggies</span>
+      <span class="meal-macros">490 cal · 40P · 44C · 14F</span>
+    </div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Snack</span>
+      <span class="meal-name">🍌 Protein shake + banana</span>
+      <span class="meal-macros">310 cal · 30P · 38C · 4F</span>
+    </div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Dinner</span>
+      <span class="meal-name">🥩 Lean beef stir-fry + brown rice</span>
+      <span class="meal-macros">580 cal · 42P · 50C · 20F</span>
+    </div>
+    <div class="day-total">
+      <div class="total-item">Total: <span>&nbsp;1,730 cal</span></div>
+      <div class="total-item">Protein: <span style="color: #FF6B6B;">&nbsp;144g</span></div>
+      <div class="total-item">Carbs: <span style="color: #4DABF7;">&nbsp;160C</span></div>
+      <div class="total-item">Fat: <span style="color: #C084FC;">&nbsp;48g</span></div>
+    </div>
+  </div>
+
+  <!-- Day 3 -->
+  <div class="day-block-sm">
+    <div class="day-label">Day 3 — Wednesday</div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Breakfast</span>
+      <span class="meal-name">🌾 Overnight oats + protein powder</span>
+      <span class="meal-macros">420 cal · 34P · 52C · 8F</span>
+    </div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Lunch</span>
+      <span class="meal-name">🍗 Chicken Caesar salad wrap</span>
+      <span class="meal-macros">460 cal · 38P · 36C · 16F</span>
+    </div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Snack</span>
+      <span class="meal-name">🥚 Hard-boiled eggs + hummus + veggies</span>
+      <span class="meal-macros">250 cal · 18P · 16C · 14F</span>
+    </div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Dinner</span>
+      <span class="meal-name">🦃 Turkey chili + cornbread</span>
+      <span class="meal-macros">510 cal · 36P · 48C · 16F</span>
+    </div>
+    <div class="day-total">
+      <div class="total-item">Total: <span>&nbsp;1,640 cal</span></div>
+      <div class="total-item">Protein: <span style="color: #FF6B6B;">&nbsp;126g</span></div>
+      <div class="total-item">Carbs: <span style="color: #4DABF7;">&nbsp;152C</span></div>
+      <div class="total-item">Fat: <span style="color: #C084FC;">&nbsp;54g</span></div>
+    </div>
+  </div>
+
+  <div class="pro-tip">
+    <div class="tip-label">Prep Tip</div>
+    <p>Cook your chicken breast in bulk — all 3 servings at once on a sheet pan. Season differently per day to avoid taste fatigue.</p>
+  </div>
+
+  <div class="page-number">4</div>
+  <div class="page-watermark">NUTRILISH</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 5 — DAYS 4–7 MEAL PLAN
+════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-number">4</div>
+    <h2>Days 4–7</h2>
+  </div>
+
+  <!-- Day 4 -->
+  <div class="day-block-sm">
+    <div class="day-label">Day 4 — Thursday</div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Breakfast</span>
+      <span class="meal-name">🫐 Protein pancakes + blueberries</span>
+      <span class="meal-macros">390 cal · 30P · 44C · 10F</span>
+    </div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Lunch</span>
+      <span class="meal-name">🐟 Tuna poke bowl</span>
+      <span class="meal-macros">480 cal · 42P · 40C · 14F</span>
+    </div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Snack</span>
+      <span class="meal-name">🥛 Greek yogurt + granola</span>
+      <span class="meal-macros">300 cal · 24P · 34C · 8F</span>
+    </div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Dinner</span>
+      <span class="meal-name">🍗 Baked chicken thighs + roasted potatoes</span>
+      <span class="meal-macros">560 cal · 40P · 46C · 18F</span>
+    </div>
+    <div class="day-total">
+      <div class="total-item">Total: <span>&nbsp;1,730 cal</span></div>
+      <div class="total-item">Protein: <span style="color: #FF6B6B;">&nbsp;136g</span></div>
+      <div class="total-item">Carbs: <span style="color: #4DABF7;">&nbsp;164C</span></div>
+      <div class="total-item">Fat: <span style="color: #C084FC;">&nbsp;50g</span></div>
+    </div>
+  </div>
+
+  <!-- Day 5 -->
+  <div class="day-block-sm">
+    <div class="day-label">Day 5 — Friday</div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Breakfast</span>
+      <span class="meal-name">🥬 Smoothie bowl (protein, spinach, PB)</span>
+      <span class="meal-macros">410 cal · 32P · 42C · 12F</span>
+    </div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Lunch</span>
+      <span class="meal-name">🦃 Ground turkey lettuce wraps</span>
+      <span class="meal-macros">440 cal · 36P · 24C · 22F</span>
+    </div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Snack</span>
+      <span class="meal-name">🍫 Protein bar</span>
+      <span class="meal-macros">260 cal · 20P · 28C · 8F</span>
+    </div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Dinner</span>
+      <span class="meal-name">🦐 Shrimp + zucchini noodles + garlic sauce</span>
+      <span class="meal-macros">420 cal · 38P · 22C · 18F</span>
+    </div>
+    <div class="day-total">
+      <div class="total-item">Total: <span>&nbsp;1,530 cal</span></div>
+      <div class="total-item">Protein: <span style="color: #FF6B6B;">&nbsp;126g</span></div>
+      <div class="total-item">Carbs: <span style="color: #4DABF7;">&nbsp;116C</span></div>
+      <div class="total-item">Fat: <span style="color: #C084FC;">&nbsp;60g</span></div>
+    </div>
+  </div>
+
+  <!-- Day 6 -->
+  <div class="day-block-sm">
+    <div class="day-label">Day 6 — Saturday</div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Breakfast</span>
+      <span class="meal-name">🥚 Egg muffins + avocado toast</span>
+      <span class="meal-macros">430 cal · 28P · 32C · 20F</span>
+    </div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Lunch</span>
+      <span class="meal-name">🍗 Chicken burrito bowl (no tortilla)</span>
+      <span class="meal-macros">530 cal · 44P · 46C · 16F</span>
+    </div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Snack</span>
+      <span class="meal-name">🫘 Edamame + string cheese</span>
+      <span class="meal-macros">240 cal · 22P · 14C · 10F</span>
+    </div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Dinner</span>
+      <span class="meal-name">🐟 Herb-crusted salmon + couscous</span>
+      <span class="meal-macros">540 cal · 36P · 48C · 18F</span>
+    </div>
+    <div class="day-total">
+      <div class="total-item">Total: <span>&nbsp;1,740 cal</span></div>
+      <div class="total-item">Protein: <span style="color: #FF6B6B;">&nbsp;130g</span></div>
+      <div class="total-item">Carbs: <span style="color: #4DABF7;">&nbsp;140C</span></div>
+      <div class="total-item">Fat: <span style="color: #C084FC;">&nbsp;64g</span></div>
+    </div>
+  </div>
+
+  <!-- Day 7 -->
+  <div class="day-block-sm">
+    <div class="day-label">Day 7 — Sunday</div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Breakfast</span>
+      <span class="meal-name">🍞 French toast + turkey bacon</span>
+      <span class="meal-macros">400 cal · 30P · 40C · 12F</span>
+    </div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Lunch</span>
+      <span class="meal-name">🥡 Meal prep leftover bowl</span>
+      <span class="meal-macros">500 cal · 40P · 42C · 18F</span>
+    </div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Snack</span>
+      <span class="meal-name">🍎 Apple + almond butter</span>
+      <span class="meal-macros">280 cal · 8P · 28C · 18F</span>
+    </div>
+    <div class="meal-row-sm">
+      <span class="meal-type">Dinner</span>
+      <span class="meal-name">🍗 Slow cooker pulled chicken + slaw</span>
+      <span class="meal-macros">520 cal · 44P · 32C · 20F</span>
+    </div>
+    <div class="day-total">
+      <div class="total-item">Total: <span>&nbsp;1,700 cal</span></div>
+      <div class="total-item">Protein: <span style="color: #FF6B6B;">&nbsp;122g</span></div>
+      <div class="total-item">Carbs: <span style="color: #4DABF7;">&nbsp;142C</span></div>
+      <div class="total-item">Fat: <span style="color: #C084FC;">&nbsp;68g</span></div>
+    </div>
+  </div>
+
+  <div class="page-number">5</div>
+  <div class="page-watermark">NUTRILISH</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 6 — GROCERY LIST
+════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-number">5</div>
+    <h2>Master Grocery List</h2>
+  </div>
+
+  <img src="../assets/prep-kitchen.png" alt="Kitchen prepped and ready for meal prep day" class="guide-img">
+
+  <p style="margin-bottom: 14px;">Everything you need for the full 7 days. Buy in bulk where quantities allow — it's cheaper and means fewer trips mid-week.</p>
+
+  <div class="grocery-grid">
+
+    <!-- Proteins -->
+    <div class="grocery-category">
+      <h4>🥩 Proteins</h4>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Chicken breast (boneless, skinless)</span>
+        <span class="qty">4 lbs</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Ground turkey 93%</span>
+        <span class="qty">2 lbs</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Salmon fillets</span>
+        <span class="qty">2 lbs</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Lean ground beef 90%</span>
+        <span class="qty">1 lb</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Shrimp (large, peeled)</span>
+        <span class="qty">1 lb</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Chicken thighs (bone-in)</span>
+        <span class="qty">2 lbs</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Tuna (sashimi-grade or canned)</span>
+        <span class="qty">1 lb / 4 cans</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Turkey bacon</span>
+        <span class="qty">1 pkg</span>
+      </div>
+    </div>
+
+    <!-- Grains & Starches -->
+    <div class="grocery-category">
+      <h4>🍚 Grains &amp; Starches</h4>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>White or jasmine rice</span>
+        <span class="qty">5 lb bag</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Brown rice</span>
+        <span class="qty">2 lb bag</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Quinoa</span>
+        <span class="qty">1 lb</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Couscous</span>
+        <span class="qty">12 oz</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Whole grain bread / tortillas</span>
+        <span class="qty">1 loaf / 1 pkg</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Rolled oats</span>
+        <span class="qty">42 oz</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Cornbread mix</span>
+        <span class="qty">1 box</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Protein pancake mix</span>
+        <span class="qty">1 bag</span>
+      </div>
+    </div>
+
+    <!-- Vegetables -->
+    <div class="grocery-category">
+      <h4>🥦 Vegetables</h4>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Broccoli florets</span>
+        <span class="qty">2 lbs</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Sweet potatoes</span>
+        <span class="qty">4 medium</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Asparagus</span>
+        <span class="qty">1 bunch</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Zucchini</span>
+        <span class="qty">3 large</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Baby spinach</span>
+        <span class="qty">10 oz bag</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Bell peppers (mixed)</span>
+        <span class="qty">4</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Romaine lettuce</span>
+        <span class="qty">2 heads</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Mixed stir-fry veggies</span>
+        <span class="qty">2 lb bag</span>
+      </div>
+    </div>
+
+    <!-- Fruits -->
+    <div class="grocery-category">
+      <h4>🍎 Fruits</h4>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Mixed berries (fresh or frozen)</span>
+        <span class="qty">2 lbs</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Blueberries</span>
+        <span class="qty">1 pint</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Bananas</span>
+        <span class="qty">6</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Apples</span>
+        <span class="qty">4</span>
+      </div>
+    </div>
+
+    <!-- Dairy & Eggs -->
+    <div class="grocery-category">
+      <h4>🥚 Dairy &amp; Eggs</h4>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Greek yogurt 0% (plain)</span>
+        <span class="qty">32 oz tub</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Cottage cheese (low-fat)</span>
+        <span class="qty">24 oz</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Eggs</span>
+        <span class="qty">18-count</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Egg whites (carton)</span>
+        <span class="qty">32 oz</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>String cheese</span>
+        <span class="qty">1 pkg</span>
+      </div>
+    </div>
+
+    <!-- Pantry Staples -->
+    <div class="grocery-category">
+      <h4>🫙 Pantry Staples</h4>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Protein powder (whey/plant)</span>
+        <span class="qty">1 tub</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Almond butter (natural)</span>
+        <span class="qty">1 jar</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Hummus</span>
+        <span class="qty">10 oz</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Low-sodium soy sauce</span>
+        <span class="qty">1 bottle</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Olive oil</span>
+        <span class="qty">1 bottle</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Granola (low-sugar)</span>
+        <span class="qty">12 oz</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Protein bars (backup)</span>
+        <span class="qty">4 bars</span>
+      </div>
+      <div class="grocery-item">
+        <span class="check"></span>
+        <span>Canned diced tomatoes</span>
+        <span class="qty">2 cans</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="page-number">6</div>
+  <div class="page-watermark">NUTRILISH</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 7 — PREP DAY TIMELINE
+════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-header">
+    <div class="section-number">6</div>
+    <h2>Sunday Prep Day Schedule</h2>
+  </div>
+
+  <p style="margin-bottom: 20px;">Block off 3.5 hours. You'll have the entire week dialed in by lunch. Follow this sequence — it's optimized to minimize idle time while everything cooks simultaneously.</p>
+
+  <div class="two-col" style="gap: 20px;">
+    <div>
+      <div class="card-highlight" style="margin-bottom: 16px;">
+        <h4 style="margin-bottom: 12px;">Timeline</h4>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="time">9:00 AM</div>
+            <div class="task">Start rice cooker + preheat oven to 400°F</div>
+          </div>
+          <div class="timeline-item">
+            <div class="time">9:15 AM</div>
+            <div class="task">Season + prep all proteins — chicken, turkey, salmon on separate trays</div>
+          </div>
+          <div class="timeline-item">
+            <div class="time">9:30 AM</div>
+            <div class="task">🍗 Chicken breast + 🍠 sweet potatoes into oven (roast 35–40 min)</div>
+          </div>
+          <div class="timeline-item">
+            <div class="time">10:00 AM</div>
+            <div class="task">🦃 Brown ground turkey on stovetop, start turkey chili in slow cooker</div>
+          </div>
+          <div class="timeline-item">
+            <div class="time">10:30 AM</div>
+            <div class="task">🥦 Chop vegetables, load sheet pan for roasted veggies (swap into oven)</div>
+          </div>
+          <div class="timeline-item">
+            <div class="time">11:00 AM</div>
+            <div class="task">🐟 Cook salmon on stovetop, bake egg muffins in muffin tin (20 min)</div>
+          </div>
+          <div class="timeline-item">
+            <div class="time">11:30 AM</div>
+            <div class="task">Prep overnight oats (7 jars), portion smoothie packs into freezer bags</div>
+          </div>
+          <div class="timeline-item">
+            <div class="time">12:00 PM</div>
+            <div class="task">Portion everything into labeled containers — protein, carbs, veggies separated</div>
+          </div>
+          <div class="timeline-item">
+            <div class="time">12:30 PM</div>
+            <div class="task">Clean up, stock fridge (days 1–4), freezer (days 5–7), done.</div>
+          </div>
+        </div>
+      </div>
+      <img src="../assets/salmon-sweet-potato.png" alt="Salmon fillet with roasted sweet potato" class="guide-img-sm">
+    </div>
+
+    <div>
+      <div class="card" style="margin-bottom: 14px;">
+        <h3 style="margin-bottom: 12px; font-size: 15px;">Storage Guide</h3>
+        <div class="checklist">
+          <li>
+            <span class="check filled"></span>
+            <span><strong>Fridge (days 1–4):</strong> Cooked proteins + grains stay fresh 4–5 days</span>
+          </li>
+          <li>
+            <span class="check filled"></span>
+            <span><strong>Freezer (days 5–7):</strong> Portion and freeze Sunday, thaw in fridge Thursday night</span>
+          </li>
+          <li>
+            <span class="check filled"></span>
+            <span><strong>Overnight oats:</strong> All 7 jars can live in the fridge all week</span>
+          </li>
+          <li>
+            <span class="check filled"></span>
+            <span><strong>Smoothie packs:</strong> Freeze portioned bags, blend fresh each morning</span>
+          </li>
+          <li>
+            <span class="check filled"></span>
+            <span><strong>Label everything</strong> with the day and meal — future you will appreciate it</span>
+          </li>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom: 14px;">
+        <h3 style="margin-bottom: 10px; font-size: 15px;">Reheating Rules</h3>
+        <div style="font-size: 11.5px; color: var(--text-secondary); line-height: 1.8;">
+          <div style="display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid var(--border);">
+            <span>Chicken / turkey</span>
+            <span style="color: var(--text); font-weight: 600;">90 sec microwave</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid var(--border);">
+            <span>Salmon / shrimp</span>
+            <span style="color: var(--text); font-weight: 600;">60 sec, cover loosely</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid var(--border);">
+            <span>Rice / grains</span>
+            <span style="color: var(--text); font-weight: 600;">Sprinkle water, 60 sec</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding: 4px 0;">
+            <span>Veggies</span>
+            <span style="color: var(--text); font-weight: 600;">45–60 sec</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pro-tip">
+        <div class="tip-label">Container Tip</div>
+        <p>Invest in quality glass containers. They reheat more evenly, don't absorb odors, and outlast plastic by years. Pyrex or OXO sets are worth every dollar.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-number">7</div>
+  <div class="page-watermark">NUTRILISH</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════
+     PAGE 8 — CTA
+════════════════════════════════════════════════════ -->
+<div class="page page-cta">
+  <div class="app-icon">🍃</div>
+
+  <p style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3em; color: var(--primary); margin-bottom: 20px;">NUTRILISH</p>
+
+  <div class="cta-heading">
+    Want AI-powered meal plans<br>personalized to <span style="color: var(--primary-light);">YOUR macros?</span>
+  </div>
+
+  <p class="cta-sub">
+    NutriLish generates custom meal plans, tracks your nutrition with just a photo, and adapts to your goals — all in one beautifully simple app.
+  </p>
+
+  <div class="feature-pills">
+    <div class="feature-pill"><span class="pill-dot"></span>Photo nutrition tracking</div>
+    <div class="feature-pill"><span class="pill-dot"></span>Custom meal plans</div>
+    <div class="feature-pill"><span class="pill-dot"></span>Macro goals &amp; progress</div>
+    <div class="feature-pill"><span class="pill-dot"></span>AI-powered recommendations</div>
+  </div>
+
+  <a class="btn-primary" href="https://apps.apple.com/app/id6759699590">
+    Download NutriLish Free &rarr;
+  </a>
+
+  <p class="availability">Available on the App Store &bull; iOS 17+</p>
+
+  <div class="page-watermark">NUTRILISH</div>
+  <div class="page-number">8</div>
+</div>
+
+</body>
+</html>

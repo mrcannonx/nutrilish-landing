@@ -1,0 +1,1 @@
+{"error":"Image generation failed","debug":"{\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"* GenerateContentRequest.generation_config.response_mime_type: allowed mimetypes are `text/plain`, `application/json`, `application/xml`, `application/yaml` and `text/x.enum`.\\n\",\n    \"status\": \"INVALID_ARGUMENT\"\n  }\n}\n"}
